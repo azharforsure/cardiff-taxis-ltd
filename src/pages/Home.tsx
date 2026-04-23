@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Hero } from "../components/sections/Hero";
 import { Features } from "../components/sections/Features";
 import { About } from "../components/sections/About";
@@ -31,6 +32,24 @@ export const Home = () => {
       {/* Services Card */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">
         <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-white">
+          <Services />
+        </div>
+      </div>
+
+      <About />
+      
+      {/* Reviews Card */}
+      <div className="px-1 md:px-1.5 py-1 md:py-1.5">
+        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-[#1e252a]">
+          <Reviews />
+        </div>
+      </div>
+
+      <Faqs />
+    </div>
+  );
+};
+e="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-white">
           <Services />
         </div>
       </div>

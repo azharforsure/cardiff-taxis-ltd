@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
 export const Contact = () => {
@@ -217,6 +218,15 @@ export const Contact = () => {
             <div className="bg-white rounded-[24px] p-8 shadow-sm ring-1 ring-black/5">
               <h4 className="font-bold text-[#1a202c] mb-3 text-[17px]">Lost property</h4>
               <p className="text-[#4a5568] text-[14px] md:text-[15px] font-medium leading-[1.6]">Please call dispatch immediately with your booking reference. We log all found items securely at our head office.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+px] md:text-[15px] font-medium leading-[1.6]">Please call dispatch immediately with your booking reference. We log all found items securely at our head office.</p>
             </div>
           </div>
         </div>

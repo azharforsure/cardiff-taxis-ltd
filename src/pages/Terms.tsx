@@ -1,6 +1,12 @@
+import { Helmet } from "react-helmet-async";
+
 export const Terms = () => {
   return (
     <div className="flex flex-col pb-24 min-h-[70vh]">
+      <Helmet>
+        <title>Terms & Conditions | Cardiff Taxis Ltd</title>
+        <meta name="description" content="Read the terms and conditions for using Cardiff Taxis Ltd services. Information on bookings, cancellations, and passenger responsibilities." />
+      </Helmet>
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
         <div className="relative pt-[110px] pb-20 md:pt-[130px] md:pb-28 bg-[#36404a] overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
           <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-10">

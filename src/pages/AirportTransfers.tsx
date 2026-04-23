@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Pricing } from "../components/sections/Pricing";
@@ -80,6 +81,26 @@ export const AirportTransfers = () => {
           </div>
         </div>
       </div>
+
+      <div className="px-1 md:px-1.5 py-1">
+        <FleetSelection />
+      </div>
+
+      <ServiceDetail />
+      <Pricing hideCta />
+
+      {/* Reviews Card - Matches Home card wrapper rhythm */}
+      <div className="px-1 md:px-1.5 py-1 md:py-1.5">
+        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-[#1e252a]">
+          <Reviews />
+        </div>
+      </div>
+
+      <AirportFaqs />
+    </div>
+  );
+};
+div>
 
       <div className="px-1 md:px-1.5 py-1">
         <FleetSelection />

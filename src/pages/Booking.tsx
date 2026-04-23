@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
 export const Booking = () => {
@@ -321,6 +322,16 @@ export const Booking = () => {
                <h3 className="text-xl font-bold mb-3 relative z-10">Need an immediate pick up</h3>
                <p className="text-white/80 text-sm mb-6 relative z-10 leading-relaxed">If a vehicle is required within the next two hours in Cardiff, please call our dispatch team directly for immediate assistance.</p>
                <a href="tel:07459466835" className="inline-flex items-center justify-center w-full h-[54px] rounded-full hover:rounded-2xl bg-white text-[#1a202c] font-bold relative z-10 hover:bg-gray-100 transition-all">
+                  07459 466835
+               </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+l h-[54px] rounded-full hover:rounded-2xl bg-white text-[#1a202c] font-bold relative z-10 hover:bg-gray-100 transition-all">
                   07459 466835
                </a>
             </div>
