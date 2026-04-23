@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cardifftaxisltd.co.uk/sitemap.xml

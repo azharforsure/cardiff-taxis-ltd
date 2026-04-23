@@ -137,17 +137,17 @@ export const Hero = () => {
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 <img
-                  src="https://i.pravatar.cc/150?img=32"
+                  src="/images/avatar_1.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
                 />
                 <img
-                  src="https://i.pravatar.cc/150?img=12"
+                  src="/images/avatar_2.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
                 />
                 <img
-                  src="https://i.pravatar.cc/150?img=43"
+                  src="/images/avatar_3.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
                 />

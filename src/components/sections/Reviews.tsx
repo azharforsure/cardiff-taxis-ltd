@@ -6,21 +6,21 @@ const reviews = [
     name: "Hannah Collins",
     text: "This made travelling so much easier. The car arrived early, the journey was smooth, and we didn't have to think about anything on the day. It was especially reassuring after a long return flight to know someone was waiting.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=5",
+    avatar: "/images/avatar_1.png",
     numReviews: "3 reviews"
   },
   {
     name: "David Smith",
     text: "Cardiff Taxis Ltd makes my corporate travel seamless. Booking is easy, and I can rely on them for all my Bristol and London trips.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=11",
+    avatar: "/images/avatar_2.png",
     numReviews: "7 reviews"
   },
   {
     name: "Emma Williams",
     text: "I use them for private hire around Cardiff. They are consistently punctual, and the prices are very clear with no hidden shocks.",
     rating: 5,
-    avatar: "https://i.pravatar.cc/150?img=43",
+    avatar: "/images/avatar_3.png",
     numReviews: "12 reviews"
   },
 ];
@@ -118,17 +118,17 @@ export const Reviews = () => {
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 <img
-                  src="https://i.pravatar.cc/150?img=32"
+                  src="/images/avatar_1.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-white/20 object-cover"
                 />
                 <img
-                  src="https://i.pravatar.cc/150?img=12"
+                  src="/images/avatar_2.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-white/20 object-cover z-10"
                 />
                 <img
-                  src="https://i.pravatar.cc/150?img=43"
+                  src="/images/avatar_3.png"
                   alt="Review"
                   className="w-[28px] h-[28px] rounded-full border-2 border-white/20 object-cover z-20"
                 />

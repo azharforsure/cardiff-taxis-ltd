@@ -61,9 +61,9 @@ export const Process = () => {
           
           <div className="flex items-center gap-3 md:gap-4">
             <div className="flex items-center -space-x-2">
-              <img src="https://i.pravatar.cc/100?img=47" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[3]" />
-              <img src="https://i.pravatar.cc/100?img=12" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[2]" />
-              <img src="https://i.pravatar.cc/100?img=32" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[1]" />
+              <img src="/images/avatar_1.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[3]" />
+              <img src="/images/avatar_2.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[2]" />
+              <img src="/images/avatar_3.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[1]" />
             </div>
             <span className="text-white font-bold text-[10px] uppercase tracking-[0.1em] opacity-60">
               READ OUR GOOGLE REVIEWS (5/5)
