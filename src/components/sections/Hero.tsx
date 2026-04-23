@@ -26,10 +26,10 @@ export const Hero = () => {
       setError("Please provide your name and phone number so we can call you back.");
       return;
     }
-    
+
     setError("");
     setLoading(true);
-    
+
     try {
       const response = await fetch("https://api.staticforms.xyz/submit", {
         method: "POST",
@@ -78,7 +78,7 @@ export const Hero = () => {
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('/images/main-hero.jpg')",
+              "url('/images/main-hero.png')",
           }}
         >
           <div className="absolute inset-0 bg-[#2f3a43]/60 mix-blend-multiply"></div>
@@ -152,80 +152,80 @@ export const Hero = () => {
           {/* Booking Widget Wrapper */}
           <div className="mt-8 md:mt-12 lg:mt-24 relative z-20 transition-all duration-500">
             <div className="bg-[#f0f2f5] md:bg-white/95 md:backdrop-blur-sm rounded-[24px] md:rounded-[32px] p-2 md:p-3 shadow-2xl flex flex-col xl:flex-row gap-2 lg:gap-3 transition-all duration-300">
-              
+
               {step === 1 && (
-                  <div className="flex flex-col xl:flex-row w-full gap-2 lg:gap-3">
-                    <div className="w-full xl:w-[170px] bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
-                      <select 
-                        value={serviceType}
-                        onChange={(e) => setServiceType(e.target.value)}
-                        className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold cursor-pointer"
-                      >
-                        <option value="airport">Airport Transfer</option>
-                        <option value="city">City Private Hire</option>
-                      </select>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 flex-[1.5] w-full gap-2">
-                      <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
-                        <input
-                          type="text"
-                          value={pickup}
-                          onChange={(e) => setPickup(e.target.value)}
-                          placeholder="Enter pickup or postcode"
-                          className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
-                        />
-                      </div>
-
-                      <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
-                        <input
-                          type="text"
-                          value={dropoff}
-                          onChange={(e) => setDropoff(e.target.value)}
-                          placeholder="Enter drop-off or postcode"
-                          className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row flex-[1] w-full gap-2">
-                      <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors relative shrink-0">
-                        <input
-                          type="time"
-                          defaultValue="21:40"
-                          className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold"
-                          style={{ colorScheme: 'light' }}
-                        />
-                      </div>
-
-                      <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors shrink-0">
-                        <input
-                          type="date"
-                          defaultValue="2025-10-30"
-                          className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold uppercase"
-                          style={{ colorScheme: 'light' }}
-                        />
-                      </div>
-                    </div>
-
-                    <Button
-                      variant="accent"
-                      onClick={handleNextStep}
-                      className="w-full xl:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[15px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 mt-1 md:mt-0"
+                <div className="flex flex-col xl:flex-row w-full gap-2 lg:gap-3">
+                  <div className="w-full xl:w-[170px] bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
+                    <select
+                      value={serviceType}
+                      onChange={(e) => setServiceType(e.target.value)}
+                      className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold cursor-pointer"
                     >
-                      Get free quote
-                      <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[14px] md:rounded-[18px] bg-[#1a232c] flex items-center justify-center text-white shrink-0">
-                        <ArrowRight className="w-5 h-5 stroke-[2.5]" />
-                      </div>
-                    </Button>
+                      <option value="airport">Airport Transfer</option>
+                      <option value="city">City Private Hire</option>
+                    </select>
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 flex-[1.5] w-full gap-2">
+                    <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
+                      <input
+                        type="text"
+                        value={pickup}
+                        onChange={(e) => setPickup(e.target.value)}
+                        placeholder="Enter pickup or postcode"
+                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
+                      />
+                    </div>
+
+                    <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
+                      <input
+                        type="text"
+                        value={dropoff}
+                        onChange={(e) => setDropoff(e.target.value)}
+                        placeholder="Enter drop-off or postcode"
+                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row flex-[1] w-full gap-2">
+                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors relative shrink-0">
+                      <input
+                        type="time"
+                        defaultValue="21:40"
+                        className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold"
+                        style={{ colorScheme: 'light' }}
+                      />
+                    </div>
+
+                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors shrink-0">
+                      <input
+                        type="date"
+                        defaultValue="2025-10-30"
+                        className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold uppercase"
+                        style={{ colorScheme: 'light' }}
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="accent"
+                    onClick={handleNextStep}
+                    className="w-full xl:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[15px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 mt-1 md:mt-0"
+                  >
+                    Get free quote
+                    <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[14px] md:rounded-[18px] bg-[#1a232c] flex items-center justify-center text-white shrink-0">
+                      <ArrowRight className="w-5 h-5 stroke-[2.5]" />
+                    </div>
+                  </Button>
+                </div>
               )}
 
               {step === 2 && (
                 <div className="w-full flex flex-col lg:flex-row flex-wrap items-center gap-2 p-1 md:p-0 animate-in fade-in slide-in-from-right-4">
                   <div className="w-full lg:w-auto px-4 md:px-4 py-2 flex items-center gap-3 shrink-0">
                     <div className="w-10 h-10 rounded-full bg-[#eefcf3] flex items-center justify-center border border-[#0d8a43]/20">
-                       <PhoneCall className="w-5 h-5 text-[#0d8a43]" />
+                      <PhoneCall className="w-5 h-5 text-[#0d8a43]" />
                     </div>
                     <div className="lg:block">
                       <h4 className="text-[14px] md:text-[15px] font-bold text-brand-graphite whitespace-nowrap">Final Details</h4>
@@ -240,7 +240,7 @@ export const Hero = () => {
                           <input
                             type="text"
                             value={flightConfig.number}
-                            onChange={(e) => setFlightConfig({...flightConfig, number: e.target.value})}
+                            onChange={(e) => setFlightConfig({ ...flightConfig, number: e.target.value })}
                             placeholder="Flight Number"
                             className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
                           />
@@ -249,7 +249,7 @@ export const Hero = () => {
                           <input
                             type="number"
                             value={flightConfig.luggage}
-                            onChange={(e) => setFlightConfig({...flightConfig, luggage: e.target.value})}
+                            onChange={(e) => setFlightConfig({ ...flightConfig, luggage: e.target.value })}
                             placeholder="Luggage"
                             min="0"
                             className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold"
@@ -264,7 +264,7 @@ export const Hero = () => {
                       <input
                         type="text"
                         value={contactInfo.name}
-                        onChange={(e) => setContactInfo({...contactInfo, name: e.target.value})}
+                        onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
                         placeholder="Your Name"
                         className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
                       />
@@ -274,7 +274,7 @@ export const Hero = () => {
                       <input
                         type="tel"
                         value={contactInfo.phone}
-                        onChange={(e) => setContactInfo({...contactInfo, phone: e.target.value})}
+                        onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
                         placeholder="Phone Number"
                         className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
                       />
@@ -312,7 +312,7 @@ export const Hero = () => {
                 <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:p-2 animate-in fade-in slide-in-from-right-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full bg-[#0d8a43] flex items-center justify-center shrink-0 shadow-lg shadow-[#0d8a43]/20">
-                       <CheckCircle2 className="w-6 h-6 text-white" />
+                      <CheckCircle2 className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h4 className="text-[18px] font-bold text-brand-graphite leading-tight mb-1">Request Sent Successfully!</h4>
@@ -339,7 +339,7 @@ export const Hero = () => {
                 {error}
               </div>
             )}
-            
+
           </div>
         </div>
       </div>

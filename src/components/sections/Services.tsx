@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Services = () => {
   const [activeCard, setActiveCard] = useState(0);
@@ -12,6 +13,7 @@ export const Services = () => {
       label: "Airport transfers",
       description: "We handle complete pick up and drop off trips for Cardiff, Bristol, and London airports. We actively track flights to ensure we arrive right on time, even if there are delays. When booking, please include flight and luggage details so we can send the perfect vehicle.",
       image: "/images/airport_transfer_new_1776974974543.png",
+      link: "/airport-transfers"
     },
     {
       id: "city",
@@ -20,6 +22,7 @@ export const Services = () => {
       label: "City Private Hire",
       description: "Our drivers are available for private hire across the entire city of Cardiff. Whether you need transportation for a local meeting, a day trip, or an evening out, we have a reliable vehicle ready for you.",
       image: "/images/city_private_hire_new_1776974990983.png",
+      link: "/book"
     },
     {
       id: "fixed",
@@ -28,6 +31,7 @@ export const Services = () => {
       label: "No Hidden Costs",
       description: "We believe in straightforward pricing for every single journey. You will know the exact cost before confirming the booking, ensuring no sudden charges during unexpected traffic or road closures.",
       image: "/images/fixed_fares_new_1776975008336.png",
+      link: "/fleet"
     }
   ];
 
@@ -45,12 +49,14 @@ export const Services = () => {
             </h3>
           </div>
           <div>
-            <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#ffb320] text-[#1a202c] font-bold flex items-center justify-between gap-4 hover:bg-[#ffc34d] transition-all w-full sm:w-auto text-[13px] h-11">
-              Book a trip now
-              <div className="w-8 h-8 rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">
-                <ArrowRight className="w-3.5 h-3.5 text-white" />
-              </div>
-            </button>
+            <Link to="/book" className="block w-full sm:w-auto">
+              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#ffb320] text-[#1a202c] font-bold flex items-center justify-between gap-4 hover:bg-[#ffc34d] transition-all w-full sm:w-auto text-[13px] h-11">
+                Book a trip now
+                <div className="w-8 h-8 rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">
+                  <ArrowRight className="w-3.5 h-3.5 text-white" />
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -83,9 +89,11 @@ export const Services = () => {
                       {service.description}
                     </p>
                     <div>
-                      <button className="rounded-full hover:rounded-xl px-7 h-11 bg-[#2d3748] text-white font-bold text-[13px] hover:bg-[#1a202c] transition-all">
-                        Learn more
-                      </button>
+                      <Link to={service.link}>
+                        <button className="rounded-full hover:rounded-xl px-7 h-11 bg-[#2d3748] text-white font-bold text-[13px] hover:bg-[#1a202c] transition-all">
+                          Learn more
+                        </button>
+                      </Link>
                     </div>
                   </div>
                   <div className="flex-1 relative hidden lg:block p-2 lg:min-w-[320px]">

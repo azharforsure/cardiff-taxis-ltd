@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export const AirportButtons = () => {
   const topButtons = [
@@ -13,13 +14,13 @@ export const AirportButtons = () => {
     <div className="w-full max-w-[1500px] mx-auto overflow-hidden relative mb-0">
       <div className="flex overflow-x-auto gap-3.5 pb-2 px-6 md:px-12 lg:px-[80px] items-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {topButtons.map((btn, i) => (
-          <a
+          <Link
             key={i}
-            href="#"
+            to="/book"
             className="flex-shrink-0 inline-flex items-center justify-center bg-[#EBECEE] hover:bg-[#e1e2e4] text-[#36404a] font-bold text-[13px] px-[26px] h-11 rounded-full hover:rounded-xl transition-all shadow-sm"
           >
             {btn}
-          </a>
+          </Link>
         ))}
       </div>
     </div>

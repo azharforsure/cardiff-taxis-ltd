@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const About = () => {
   return (
@@ -27,12 +28,14 @@ export const About = () => {
               </p>
             </div>
 
-            <button className="w-full sm:w-auto justify-between rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center gap-4 hover:bg-[#1a202c] transition-all text-[13px] h-11">
-              Read more about us
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                <ArrowRight className="w-3.5 h-3.5 text-[#1a202c]" />
-              </div>
-            </button>
+            <Link to="/contact" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto justify-between rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center gap-4 hover:bg-[#1a202c] transition-all text-[13px] h-11">
+                Contact us
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <ArrowRight className="w-3.5 h-3.5 text-[#1a202c]" />
+                </div>
+              </button>
+            </Link>
           </div>
 
           {/* Image */}

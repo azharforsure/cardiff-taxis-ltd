@@ -105,7 +105,7 @@ export const Fleet = () => {
                    </div>
                    
                    <div>
-                     <Link to="/booking" className="inline-block">
+                     <Link to="/book" className="inline-block">
                        <button className="bg-transparent border-2 border-brand-graphite hover:bg-brand-graphite hover:text-white text-brand-graphite rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 h-11 font-bold text-[13px] flex items-center justify-between gap-4 w-full sm:w-auto transition-all group">
                          Book this vehicle
                          <div className="w-8 h-8 rounded-full bg-brand-graphite group-hover:bg-white flex items-center justify-center shrink-0 transition-colors">

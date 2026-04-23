@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
 export const Booking = () => {
@@ -260,7 +261,7 @@ export const Booking = () => {
               </div>
 
               <div className="mt-6">
-                <p className="text-[13px] text-[#4a5568]/70 mb-6 font-medium">By requesting a booking, you agree to our <a href="/terms" className="text-black font-bold underline">Terms & Conditions</a>.</p>
+                <p className="text-[13px] text-[#4a5568]/70 mb-6 font-medium">By requesting a booking, you agree to our <Link to="/terms" className="text-black font-bold underline">Terms & Conditions</Link>.</p>
                 
                 {error && <p className="text-red-500 text-xs font-bold mb-4">{error}</p>}
                 

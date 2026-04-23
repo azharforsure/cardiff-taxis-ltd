@@ -1,4 +1,5 @@
 import { ArrowRight, Plane, Car } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "../ui/Button";
 
 export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
@@ -34,12 +35,14 @@ export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </div>
             </button>
-            <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center justify-between gap-4 hover:bg-[#1a202c] transition-all w-full lg:w-auto text-[13px] h-11">
-              Book now
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                <ArrowRight className="w-3.5 h-3.5 text-[#2d3748]" />
-              </div>
-            </button>
+            <Link to="/book" className="w-full lg:w-auto">
+              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center justify-between gap-4 hover:bg-[#1a202c] transition-all w-full text-[13px] h-11">
+                Book now
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <ArrowRight className="w-3.5 h-3.5 text-[#2d3748]" />
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -95,14 +98,14 @@ export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
                     </div>
                   </button>
                 </a>
-                <a href="/book" className="w-full sm:w-auto">
+                <Link to="/book" className="w-full sm:w-auto">
                   <button className="rounded-full hover:rounded-xl pl-6 pr-2 py-1.5 bg-[#2d3748] text-white font-semibold flex items-center justify-between gap-4 hover:bg-[#1a202c] transition-all w-full sm:w-auto text-[15px]">
                     Book now
                     <div className="w-[34px] h-[34px] rounded-full bg-white flex items-center justify-center shrink-0">
                       <ArrowRight className="w-4 h-4 text-[#2d3748]" />
                     </div>
                   </button>
-                </a>
+                </Link>
               </div>
             </div>
 
