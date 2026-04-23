@@ -111,9 +111,8 @@ export const Footer = () => {
             </Link>
           </div>
           <p className="min-w-[250px] text-right">
-            Website built by Martin Digital
-          </p>
-        </div>
+            Website built by Cardiff Taxis
+          </p>        </div>
       </div>
     </footer>
   );
