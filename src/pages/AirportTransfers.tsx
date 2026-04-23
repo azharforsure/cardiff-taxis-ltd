@@ -10,6 +10,11 @@ import { AirportFaqs } from "../components/sections/AirportFaqs";
 export const AirportTransfers = () => {
   return (
     <div className="flex flex-col min-h-[70vh] pb-0">
+      <Helmet>
+        <title>Airport Transfers Cardiff | To Bristol, Heathrow & London | Cardiff Taxis</title>
+        <meta name="description" content="Fixed-rate airport transfers from Cardiff to Bristol, Heathrow, Gatwick, and Stansted. 24/7 service with flight tracking and professional drivers. Get a free quote now." />
+        <meta name="keywords" content="cardiff to bristol airport taxi, cardiff to heathrow taxi, cardiff airport transfer, gatwick taxi cardiff, stansted airport transfer cardiff" />
+      </Helmet>
       
       {/* Hero Header */}
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
@@ -81,26 +86,6 @@ export const AirportTransfers = () => {
           </div>
         </div>
       </div>
-
-      <div className="px-1 md:px-1.5 py-1">
-        <FleetSelection />
-      </div>
-
-      <ServiceDetail />
-      <Pricing hideCta />
-
-      {/* Reviews Card - Matches Home card wrapper rhythm */}
-      <div className="px-1 md:px-1.5 py-1 md:py-1.5">
-        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-[#1e252a]">
-          <Reviews />
-        </div>
-      </div>
-
-      <AirportFaqs />
-    </div>
-  );
-};
-div>
 
       <div className="px-1 md:px-1.5 py-1">
         <FleetSelection />
