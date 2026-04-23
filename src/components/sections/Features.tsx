@@ -19,8 +19,8 @@ export const Features = () => {
           <div className="flex-[1.5] w-full relative">
             <div className="w-full h-[240px] md:h-[320px] rounded-[24px] overflow-hidden bg-gray-100">
               <img
-                src="/images/fixed_fares_new_1776975008336.png"
-                alt="Dependable transfers"
+                src="/images/features_new.png"
+                alt="Dependable transfers in Cardiff"
                 className="w-full h-full object-cover"
               />
             </div>

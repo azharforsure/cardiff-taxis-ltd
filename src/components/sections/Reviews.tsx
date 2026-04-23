@@ -3,21 +3,21 @@ import { ArrowLeft, ArrowRight, ArrowRight as ArrowRightIcon } from "lucide-reac
 
 const reviews = [
   {
-    name: "Hannah Collins",
+    name: "Sian Roberts",
     text: "This made travelling so much easier. The car arrived early, the journey was smooth, and we didn't have to think about anything on the day. It was especially reassuring after a long return flight to know someone was waiting.",
     rating: 5,
     avatar: "/images/avatar_1.png",
     numReviews: "3 reviews"
   },
   {
-    name: "David Smith",
+    name: "Gareth Davies",
     text: "Cardiff Taxis Ltd makes my corporate travel seamless. Booking is easy, and I can rely on them for all my Bristol and London trips.",
     rating: 5,
     avatar: "/images/avatar_2.png",
     numReviews: "7 reviews"
   },
   {
-    name: "Emma Williams",
+    name: "Elin Thomas",
     text: "I use them for private hire around Cardiff. They are consistently punctual, and the prices are very clear with no hidden shocks.",
     rating: 5,
     avatar: "/images/avatar_3.png",
@@ -88,7 +88,7 @@ export const Reviews = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5 tracking-tight">{currentReview.name}</h4>
-                  <p className="text-[12px] text-brand-muted font-bold uppercase tracking-wider">Number of reviews</p>
+                  <p className="text-[12px] text-brand-muted font-bold uppercase tracking-wider">{currentReview.numReviews}</p>
                 </div>
               </div>
             </div>

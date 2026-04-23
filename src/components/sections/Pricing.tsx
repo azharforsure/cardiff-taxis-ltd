@@ -29,17 +29,11 @@ export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
             </p>
           </div>
           <div className="flex gap-3 flex-col sm:flex-row shrink-0 lg:pt-8 w-full lg:w-auto">
-            <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#cbd5e1] text-[#0f172a] font-bold flex items-center justify-between gap-4 hover:bg-[#94a3b8] transition-all w-full lg:w-auto text-[13px] h-11">
-              View full pricing
-              <div className="w-8 h-8 rounded-full bg-[#1e293b] flex items-center justify-center shrink-0">
-                <ArrowRight className="w-3.5 h-3.5 text-white" />
-              </div>
-            </button>
             <Link to="/book" className="w-full lg:w-auto">
-              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center justify-between gap-4 hover:bg-[#1a202c] transition-all w-full text-[13px] h-11">
-                Book now
+              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#2d3748] text-white font-bold flex items-center justify-between gap-4 hover:bg-[#1a202c] transition-all w-full text-[13px] h-11 shadow-md">
+                Book a transfer now
                 <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                  <ArrowRight className="w-3.5 h-3.5 text-[#2d3748]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#2d3748] stroke-[2.5]" />
                 </div>
               </button>
             </Link>
