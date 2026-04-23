@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #2f3a43;
+  --color-brand-secondary: #c9d2d9;
+  --color-brand-accent: #f5b642;
+  --color-brand-accent-hover: #dfa338;
+  --color-brand-white: #f9fafb;
+  --color-brand-section: #f9fafb;
+  --color-brand-graphite: #1e252a;
+  --color-brand-border: #e5e7e9;
+  --color-brand-muted: #8d8d8d;
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  
+  --radius-xl: 30px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-white);
+    color: var(--color-brand-graphite);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@theme {
+  --animate-blob: blob 7s infinite;
+  --animate-fade-in-up: fadeInUp 0.5s ease-out;
+
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
