@@ -1,20 +1,6 @@
-import { Helmet } from "react-helmet-async";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Pricing } from "../components/sections/Pricing";
-import { ServiceDetail } from "../components/sections/ServiceDetail";
-import { FleetSelection } from "../components/sections/FleetSelection";
-import { Reviews } from "../components/sections/Reviews";
-import { AirportFaqs } from "../components/sections/AirportFaqs";
-
 export const AirportTransfers = () => {
   return (
     <div className="flex flex-col min-h-[70vh] pb-0">
-      <Helmet>
-        <title>Airport Transfers Cardiff | To Bristol, Heathrow & London | Cardiff Taxis</title>
-        <meta name="description" content="Fixed-rate airport transfers from Cardiff to Bristol, Heathrow, Gatwick, and Stansted. 24/7 service with flight tracking and professional drivers. Get a free quote now." />
-        <meta name="keywords" content="cardiff to bristol airport taxi, cardiff to heathrow taxi, cardiff airport transfer, gatwick taxi cardiff, stansted airport transfer cardiff" />
-      </Helmet>
       
       {/* Hero Header */}
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
