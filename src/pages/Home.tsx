@@ -1,3 +1,12 @@
+import { Hero } from "../components/sections/Hero";
+import { Features } from "../components/sections/Features";
+import { About } from "../components/sections/About";
+import { Pricing } from "../components/sections/Pricing";
+import { Services } from "../components/sections/Services";
+import { Process } from "../components/sections/Process";
+import { Reviews } from "../components/sections/Reviews";
+import { Faqs } from "../components/sections/Faqs";
+
 export const Home = () => {
   return (
     <div className="flex flex-col">

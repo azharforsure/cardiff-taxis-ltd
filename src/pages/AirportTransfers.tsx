@@ -1,3 +1,11 @@
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Pricing } from "../components/sections/Pricing";
+import { ServiceDetail } from "../components/sections/ServiceDetail";
+import { FleetSelection } from "../components/sections/FleetSelection";
+import { Reviews } from "../components/sections/Reviews";
+import { AirportFaqs } from "../components/sections/AirportFaqs";
+
 export const AirportTransfers = () => {
   return (
     <div className="flex flex-col min-h-[70vh] pb-0">

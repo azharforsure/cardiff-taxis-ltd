@@ -2,7 +2,6 @@ import { Pricing } from "../components/sections/Pricing";
 import { Reviews } from "../components/sections/Reviews";
 import { Faqs } from "../components/sections/Faqs";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { ArrowRight, Baby, Accessibility, Dog, Briefcase } from "lucide-react";
 
 export const Fleet = () => {

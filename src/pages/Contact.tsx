@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
 export const Contact = () => {
