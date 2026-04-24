@@ -111,11 +111,11 @@ export const Hero = () => {
               <a href="tel:07817385655" className="w-full sm:w-auto">
                 <Button
                   variant="accent"
-                  className="text-brand-graphite pl-5 pr-1.5 py-1.5 font-bold h-[44px] w-full flex items-center justify-between gap-4 text-[13px] rounded-full hover:rounded-2xl shadow-lg hover:bg-brand-accent-hover transition-all"
+                  className="text-brand-graphite pl-6 pr-2 py-2 font-bold h-[56px] w-full flex items-center justify-between gap-4 text-[16px] rounded-full hover:rounded-2xl shadow-lg hover:bg-brand-accent-hover transition-all"
                 >
                   Give us a call
-                  <div className="w-8 h-8 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
-                    <ArrowRight className="w-3.5 h-3.5" />
+                  <div className="w-10 h-10 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
+                    <ArrowRight className="w-4 h-4" />
                   </div>
                 </Button>
               </a>
