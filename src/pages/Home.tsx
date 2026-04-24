@@ -46,7 +46,7 @@ export const Home = () => {
       
       {/* Reviews Card */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">
-        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-[#1e252a]">
+        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-brand-graphite">
           <Reviews />
         </div>
       </div>

@@ -17,7 +17,7 @@ export const AirportButtons = () => {
           <Link
             key={i}
             to="/book"
-            className="flex-shrink-0 inline-flex items-center justify-center bg-[#EBECEE] hover:bg-[#e1e2e4] text-[#36404a] font-bold text-[16px] px-[26px] h-12 rounded-full hover:rounded-xl transition-all shadow-sm"
+            className="flex-shrink-0 inline-flex items-center justify-center bg-brand-secondary hover:bg-brand-muted text-brand-primary font-bold text-[16px] px-[26px] h-12 rounded-full hover:rounded-xl transition-all shadow-sm"
           >
             {btn}
           </Link>

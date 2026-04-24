@@ -82,7 +82,7 @@ export const Reviews = () => {
               </p>
 
               <div className="flex items-center gap-4">
-                <div className="w-[56px] h-[64px] bg-[#f8f9fa] border border-brand-border/40 flex items-center justify-center p-1 rounded-sm overflow-hidden">
+                <div className="w-[56px] h-[64px] bg-brand-section border border-brand-border/40 flex items-center justify-center p-1 rounded-sm overflow-hidden">
                   <img src={currentReview.avatar} alt={currentReview.name} className="w-full h-full object-cover" />
                 </div>
                 <div>

@@ -34,7 +34,7 @@ export const AirportFaqs = () => {
 
   // SVG path for a 24x24 inverse corner (solid bottom-left, transparent curve top-right)
   const inverseCorner = (
-    <svg className="w-6 h-6 text-[#f9fafb] fill-current" viewBox="0 0 24 24">
+    <svg className="w-6 h-6 text-brand-section fill-current" viewBox="0 0 24 24">
       <path d="M0 24H24C10.7452 24 0 13.2548 0 0V24Z" />
     </svg>
   );
@@ -45,16 +45,16 @@ export const AirportFaqs = () => {
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           <div className="w-full lg:w-[45%] flex flex-col items-start pr-0">
-            <span className="text-[15px] font-semibold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
+            <span className="text-[15px] font-semibold text-brand-graphite/60 uppercase tracking-[0.2em] mb-4 block">
               FAQS
             </span>
-            <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-[#2d3748] tracking-tight mb-12">
+            <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-brand-graphite tracking-tight mb-12">
               Everything you need to know before booking.
             </h3>
             
             {/* Image Container with Custom Corner Cutout */}
             <div className="relative w-full max-w-[480px]">
-              <div className="rounded-[32px] overflow-hidden aspect-[4/3] w-full bg-[#f3f4f6]">
+              <div className="rounded-[32px] overflow-hidden aspect-[4/3] w-full bg-brand-section">
                 <img
                   src="/images/airport_faq_1776973728050.png"
                   alt="Chauffeur greeting passenger at airport terminal"
@@ -63,7 +63,7 @@ export const AirportFaqs = () => {
               </div>
               
               {/* Overlay Button Container */}
-              <div className="absolute bottom-0 left-0 bg-[#f9fafb] pt-4 pr-4 sm:pt-5 sm:pr-5 drop-shadow-none rounded-tr-[32px] z-10 w-fit">
+              <div className="absolute bottom-0 left-0 bg-brand-section pt-4 pr-4 sm:pt-5 sm:pr-5 drop-shadow-none rounded-tr-[32px] z-10 w-fit">
                    {/* Top-left inverse corner (above the cutout) */}
                    <div className="absolute bottom-full left-0">
                      {inverseCorner}
@@ -75,9 +75,9 @@ export const AirportFaqs = () => {
                    </div>
                    
                    <div className="relative z-10 flex h-full">
-                     <Link to="/book" className="flex items-center justify-between gap-4 bg-[#2d3748] hover:bg-[#1a202c] text-white font-bold text-[16px] h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl transition-all w-fit shadow-md border-none">
+                     <Link to="/book" className="flex items-center justify-between gap-4 bg-brand-graphite hover:bg-brand-primary text-white font-bold text-[16px] h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl transition-all w-fit shadow-md border-none">
                         Book a trip
-                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d3748] shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-brand-primary shrink-0">
                           <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                         </div>
                      </Link>
@@ -93,17 +93,17 @@ export const AirportFaqs = () => {
                 <div
                   key={i}
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="border-b border-[#e5e7eb] py-6 sm:py-8 cursor-pointer flex flex-col group first:pt-0"
+                  className="border-b border-brand-border py-6 sm:py-8 cursor-pointer flex flex-col group first:pt-0"
                 >
                   <div className="flex justify-between items-center w-full gap-8">
-                    <h4 className="text-[17px] md:text-[18px] font-bold text-[#2d3748] group-hover:text-brand-primary transition-colors tracking-tight leading-snug">
+                    <h4 className="text-[17px] md:text-[18px] font-bold text-brand-primary group-hover:text-brand-accent transition-colors tracking-tight leading-snug">
                       {faq.q}
                     </h4>
                     <div className="flex items-center justify-center shrink-0">
                       {isOpen ? (
-                        <Minus className="w-5 h-5 text-[#2d3748] stroke-[2px]" />
+                        <Minus className="w-5 h-5 text-brand-primary stroke-[2px]" />
                       ) : (
-                        <Plus className="w-5 h-5 text-[#2d3748] stroke-[2px]" />
+                        <Plus className="w-5 h-5 text-brand-primary stroke-[2px]" />
                       )}
                     </div>
                   </div>
@@ -114,7 +114,7 @@ export const AirportFaqs = () => {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="pt-4 text-[15px] font-semibold text-[#2d3748]/70 leading-[1.6]">
+                      <p className="pt-4 text-[15px] font-semibold text-brand-primary/70 leading-[1.6]">
                         {faq.a}
                       </p>
                     </div>

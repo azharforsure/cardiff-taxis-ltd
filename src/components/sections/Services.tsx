@@ -36,7 +36,7 @@ export const Services = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-[#323d4a]" id="services">
+    <section className="py-16 lg:py-24 bg-brand-graphite" id="services">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-[80px]">
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center mb-16">
@@ -50,9 +50,9 @@ export const Services = () => {
           </div>
           <div>
             <Link to="/book" className="block w-full sm:w-auto">
-              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#ffb320] text-[#1a202c] font-bold flex items-center justify-between gap-4 hover:bg-[#ffc34d] transition-all w-full sm:w-auto text-[16px] h-12">
+              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-brand-accent text-brand-graphite font-bold flex items-center justify-between gap-4 hover:bg-brand-accent-hover transition-all w-full sm:w-auto text-[16px] h-12">
                 Book a trip now
-                <div className="w-8 h-8 rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-brand-graphite flex items-center justify-center shrink-0">
                   <ArrowRight className="w-3.5 h-3.5 text-white" />
                 </div>
               </button>
@@ -70,7 +70,7 @@ export const Services = () => {
                 key={service.id}
                 onMouseEnter={() => setActiveCard(index)}
                 onClick={() => setActiveCard(index)}
-                className={`relative bg-[#f8f9fa] rounded-[32px] overflow-hidden transition-[width] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex cursor-pointer group ${
+                className={`relative bg-brand-section rounded-[32px] overflow-hidden transition-[width] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex cursor-pointer group ${
                   isActive ? "lg:w-[66%] flex-col lg:flex-row" : "lg:w-[17%] flex-col hidden lg:flex"
                 } ${!isActive && "hidden lg:flex"}`} // Hide inactive entirely on mobile
               >
@@ -81,16 +81,16 @@ export const Services = () => {
                   }`}
                 >
                   <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center lg:min-w-[320px]">
-                    <span className="text-[15px] text-[#4a5568] font-semibold tracking-wider mb-4 whitespace-nowrap">{service.label}</span>
-                    <h4 className="text-[24px] md:text-[26px] font-bold text-[#1a202c] leading-[1.1] tracking-tight mb-8 pb-8 border-b border-[#e2e8f0]">
+                    <span className="text-[15px] text-brand-muted font-semibold tracking-wider mb-4 whitespace-nowrap">{service.label}</span>
+                    <h4 className="text-[24px] md:text-[26px] font-bold text-brand-graphite leading-[1.1] tracking-tight mb-8 pb-8 border-b border-brand-border">
                       {service.fullTitle}
                     </h4>
-                    <p className="text-[#4a5568] text-[15px] leading-relaxed mb-8 line-clamp-4 font-medium">
+                    <p className="text-brand-muted text-[15px] leading-relaxed mb-8 line-clamp-4 font-medium">
                       {service.description}
                     </p>
                     <div>
                       <Link to={service.link}>
-                        <button className="rounded-full hover:rounded-xl px-7 h-12 bg-[#2d3748] text-white font-bold text-[16px] hover:bg-[#1a202c] transition-all">
+                        <button className="rounded-full hover:rounded-xl px-7 h-12 bg-brand-primary text-white font-bold text-[16px] hover:bg-brand-graphite transition-all">
                           Learn more
                         </button>
                       </Link>
@@ -113,12 +113,12 @@ export const Services = () => {
                     !isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
                 >
-                  <h4 className="text-[22px] md:text-[26px] font-bold text-[#1a202c] leading-[1.2] whitespace-pre-line">
+                  <h4 className="text-[22px] md:text-[26px] font-bold text-brand-graphite leading-[1.2] whitespace-pre-line">
                     {service.title}
                   </h4>
                   <div className="flex justify-end mt-auto">
-                    <div className="w-[36px] h-[36px] rounded-full bg-[#1a202c] flex items-center justify-center group-hover:bg-[#ffb320] group-hover:rounded-xl transition-all shadow-sm">
-                      <ArrowRight className="w-4 h-4 text-white group-hover:text-[#1a202c]" />
+                    <div className="w-[36px] h-[36px] rounded-full bg-brand-graphite group-hover:bg-brand-accent group-hover:rounded-xl transition-all shadow-sm">
+                      <ArrowRight className="w-4 h-4 text-white group-hover:text-brand-graphite" />
                     </div>
                   </div>
                 </div>
@@ -138,12 +138,12 @@ export const Services = () => {
               <div 
                 key={service.id + "-mobile"}
                 onClick={() => setActiveCard(index)}
-                className="bg-[#f8f9fa] rounded-[32px] p-6 flex justify-between items-center cursor-pointer hover:bg-white transition-colors"
+                className="bg-brand-section rounded-[32px] p-6 flex justify-between items-center cursor-pointer hover:bg-white transition-colors"
               >
-                <h4 className="text-[22px] sm:text-[26px] font-bold text-[#1a202c]">
+                <h4 className="text-[22px] sm:text-[26px] font-bold text-brand-graphite">
                   {service.title.replace('\n', ' ')}
                 </h4>
-                <div className="w-[36px] h-[36px] rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">
+                <div className="w-[36px] h-[36px] rounded-full bg-brand-graphite flex items-center justify-center shrink-0">
                   <ArrowRight className="w-4 h-4 text-white" />
                 </div>
               </div>

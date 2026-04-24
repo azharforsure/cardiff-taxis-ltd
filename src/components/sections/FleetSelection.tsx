@@ -46,7 +46,7 @@ export const FleetSelection = () => {
   ];
 
   return (
-    <section className="bg-[#2a3036] rounded-[32px] overflow-hidden py-16 lg:py-24 lg:px-4">
+    <section className="bg-brand-graphite rounded-[32px] overflow-hidden py-16 lg:py-24 lg:px-4">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-[80px]">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-16">
@@ -62,9 +62,9 @@ export const FleetSelection = () => {
             </p>
           </div>
           
-          <Link to="/book" className="rounded-full hover:rounded-2xl pl-6 pr-2 py-2 bg-white text-[#2d3748] font-bold flex items-center justify-between gap-4 hover:bg-gray-100 transition-all text-[16px] h-[56px] shadow-md w-fit">
+          <Link to="/book" className="rounded-full hover:rounded-2xl pl-6 pr-2 py-2 bg-white text-brand-primary font-bold flex items-center justify-between gap-4 hover:bg-gray-100 transition-all text-[16px] h-[56px] shadow-md w-fit">
             Book a trip
-            <div className="w-10 h-10 rounded-full bg-[#2d3748] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center shrink-0">
               <ArrowRight className="w-4 h-4 text-white" strokeWidth={2.5}/>
             </div>
           </Link>
@@ -81,7 +81,7 @@ export const FleetSelection = () => {
               transition={{ delay: index * 0.1 }}
               className="bg-white rounded-[24px] p-4 flex flex-col min-h-[380px]"
             >
-              <div className="flex-1 flex items-center justify-center mb-6 bg-[#f9fafb] rounded-[16px] w-full pt-12 pb-10 px-4 h-[240px]">
+              <div className="flex-1 flex items-center justify-center mb-6 bg-brand-section rounded-[16px] w-full pt-12 pb-10 px-4 h-[240px]">
                 <img 
                   src={vehicle.image} 
                   alt={vehicle.name}
@@ -90,12 +90,12 @@ export const FleetSelection = () => {
               </div>
               
               <div className="flex justify-between items-end pb-4 px-2">
-                <h4 className="text-[15px] font-bold text-[#111827] mb-1">{vehicle.name}</h4>
+                <h4 className="text-[15px] font-bold text-brand-graphite mb-1">{vehicle.name}</h4>
                 
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-end gap-3.5">
                     {vehicle.specs.map((spec, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-[#374151]">
+                      <div key={i} className="flex items-center gap-1.5 text-brand-muted">
                         {spec.icon}
                         <span className="text-[15px] font-bold">{spec.val}</span>
                       </div>
@@ -103,7 +103,7 @@ export const FleetSelection = () => {
                   </div>
                   <div className="flex items-center justify-end gap-3.5">
                     {vehicle.altSpecs.map((spec, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-[#374151]">
+                      <div key={i} className="flex items-center gap-1.5 text-brand-muted">
                         {spec.icon}
                         <span className="text-[15px] font-bold">{spec.val}</span>
                       </div>
@@ -116,7 +116,7 @@ export const FleetSelection = () => {
         </div>
 
         {/* Bottom Banner */}
-        <div className="bg-[#b3becc] rounded-[24px] p-2 pl-2 flex flex-col sm:flex-row items-center gap-5 lg:w-fit cursor-pointer hover:bg-[#a6b2c2] transition-colors">
+        <div className="bg-brand-secondary rounded-[24px] p-2 pl-2 flex flex-col sm:flex-row items-center gap-5 lg:w-fit cursor-pointer hover:bg-brand-muted transition-colors">
           <div className="w-[60px] h-[60px] rounded-[18px] overflow-hidden shrink-0">
             <img 
               src="/images/about_taxi_new_1776975028206.png" 
@@ -124,7 +124,7 @@ export const FleetSelection = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <p className="text-[#111827] text-[15px] font-semibold pr-8 pt-1 sm:pt-0 pb-2 sm:pb-0">
+          <p className="text-brand-graphite text-[15px] font-semibold pr-8 pt-1 sm:pt-0 pb-2 sm:pb-0">
             Child seats are exempt in UK public transport. Need help choosing a vehicle? Give us a call to discuss passenger and luggage requirements.
           </p>
         </div>

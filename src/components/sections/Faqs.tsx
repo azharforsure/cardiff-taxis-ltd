@@ -37,10 +37,10 @@ export const Faqs = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           
           <div className="w-full lg:w-[40%] flex flex-col items-start pr-0 lg:pr-4">
-            <span className="text-[15px] font-semibold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
+            <span className="text-[15px] font-semibold text-brand-graphite/60 uppercase tracking-[0.2em] mb-4 block">
               FAQS
             </span>
-            <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-[#2d3748] tracking-tight">
+            <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-brand-primary tracking-tight">
               Everything you need to know before booking.
             </h3>
           </div>
@@ -55,14 +55,14 @@ export const Faqs = () => {
                   className="border-b border-black/[0.06] py-6 cursor-pointer flex flex-col group"
                 >
                   <div className="flex justify-between items-center w-full gap-8">
-                    <h4 className="text-[18px] md:text-[20px] font-bold text-[#1a202c] group-hover:text-brand-accent transition-colors tracking-tight">
+                    <h4 className="text-[18px] md:text-[20px] font-bold text-brand-graphite group-hover:text-brand-accent transition-colors tracking-tight">
                       {faq.q}
                     </h4>
                     <div className="flex items-center justify-center shrink-0">
                       {isOpen ? (
-                        <Minus className="w-6 h-6 text-[#1a202c]" strokeWidth={1.5} />
+                        <Minus className="w-6 h-6 text-brand-graphite" strokeWidth={1.5} />
                       ) : (
-                        <Plus className="w-6 h-6 text-[#1a202c]" strokeWidth={1.5} />
+                        <Plus className="w-6 h-6 text-brand-graphite" strokeWidth={1.5} />
                       )}
                     </div>
                   </div>
@@ -73,7 +73,7 @@ export const Faqs = () => {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="pt-4 text-[15px] text-[#2d3748] leading-relaxed font-semibold">
+                      <p className="pt-4 text-[15px] text-brand-primary leading-relaxed font-semibold">
                         {faq.a}
                       </p>
                     </div>

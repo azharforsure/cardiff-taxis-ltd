@@ -60,7 +60,7 @@ export const Fleet = () => {
                 className="w-full h-full object-cover"
              />
           </div>
-          <div className="absolute inset-0 z-10 bg-brand-primary/60 backdrop-blur-[4px] mix-blend-multiply"></div>
+          <div className="absolute inset-0 z-10 bg-brand-primary/60 backdrop-blur-[2px] mix-blend-multiply"></div>
           <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-primary via-brand-primary/20 to-transparent"></div>
           <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-20">
             <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
@@ -183,7 +183,7 @@ export const Fleet = () => {
           </div>
           
           <div className="flex-1 w-full lg:max-w-[480px]">
-            <div className="bg-[#35414d] border border-white/10 rounded-[24px] p-8 md:p-10 shadow-sm h-full">
+            <div className="bg-brand-graphite border border-white/10 rounded-[24px] p-8 md:p-10 shadow-sm h-full">
               <h3 className="text-[20px] font-bold mb-8 text-white inline-flex items-center gap-3">
                 <Briefcase className="w-6 h-6 text-white" strokeWidth={1.5} />
                 Luggage Guide
@@ -212,7 +212,7 @@ export const Fleet = () => {
 
       {/* Reviews Card - Matches Home card wrapper rhythm */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">
-        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-[#1e252a]">
+        <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05] bg-brand-graphite">
           <Reviews />
         </div>
       </div>

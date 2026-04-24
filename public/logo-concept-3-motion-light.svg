@@ -6,24 +6,24 @@
   </defs>
   <g transform="translate(20, 30)">
     <!-- Speed Lines (Subtle) -->
-    <path d="M 10 20 L 40 20 M 5 45 L 30 45 M 15 70 L 45 70" stroke="#f5b642" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 10 20 L 40 20 M 5 45 L 30 45 M 15 70 L 45 70" stroke="#D4AF37" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
     
     <!-- Sleek Car Shape - Completely solid brand gold, zero white -->
-    <path d="M 40 60 L 50 30 L 80 30 L 100 60 L 115 60 A 10 10 0 0 1 125 70 L 125 80 L 35 80 L 35 70 A 10 10 0 0 1 40 60 Z" fill="#f5b642"/>
+    <path d="M 40 60 L 50 30 L 80 30 L 100 60 L 115 60 A 10 10 0 0 1 125 70 L 125 80 L 35 80 L 35 70 A 10 10 0 0 1 40 60 Z" fill="#D4AF37"/>
     
     <!-- Wheels - Dark to match background tones -->
-    <circle cx="60" cy="80" r="12" fill="#1a202c"/>
-    <circle cx="60" cy="80" r="4" fill="#f5b642"/>
-    <circle cx="100" cy="80" r="12" fill="#1a202c"/>
-    <circle cx="100" cy="80" r="4" fill="#f5b642"/>
+    <circle cx="60" cy="80" r="12" fill="#0A0A0A"/>
+    <circle cx="60" cy="80" r="4" fill="#D4AF37"/>
+    <circle cx="100" cy="80" r="12" fill="#0A0A0A"/>
+    <circle cx="100" cy="80" r="4" fill="#D4AF37"/>
     
     <!-- Window - Darker tone -->
-    <path d="M 53 35 L 75 35 L 85 55 L 45 55 Z" fill="#2d3748"/>
+    <path d="M 53 35 L 75 35 L 85 55 L 45 55 Z" fill="#171717"/>
   </g>
   
   <!-- Upright, ultra-bold, tight typography (No more italics) -->
-  <text x="170" y="75" font-family="'Montserrat', system-ui, sans-serif" font-weight="800" font-size="42" fill="#f9fafb" letter-spacing="-1">CARDIFF TAXIS</text>
+  <text x="170" y="75" font-family="'Montserrat', system-ui, sans-serif" font-weight="800" font-size="42" fill="#FFFFFF" letter-spacing="-1">CARDIFF TAXIS</text>
   
   <!-- Professional subtitle instead of a taxi checkerboard -->
-  <text x="173" y="100" font-family="'Montserrat', system-ui, sans-serif" font-weight="600" font-size="12" fill="#f5b642" letter-spacing="4" text-transform="uppercase" opacity="0.8">Private Hire &amp; Transfers</text>
+  <text x="173" y="100" font-family="'Montserrat', system-ui, sans-serif" font-weight="600" font-size="12" fill="#D4AF37" letter-spacing="4" text-transform="uppercase" opacity="0.8">Private Hire &amp; Transfers</text>
 </svg>

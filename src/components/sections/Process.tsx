@@ -37,7 +37,7 @@ export const Process = () => {
           ].map((step, index) => (
             <div
               key={index}
-              className="bg-[#35414d] border border-white/[0.08] rounded-[24px] p-10 lg:p-12 relative shadow-2xl shadow-black/40"
+              className="bg-brand-graphite border border-white/[0.08] rounded-[24px] p-10 lg:p-12 relative shadow-2xl shadow-black/40"
             >
               <div className="mb-6">
                 <step.icon className="w-6 h-6 md:w-7 md:h-7 text-white stroke-[1.5]" />

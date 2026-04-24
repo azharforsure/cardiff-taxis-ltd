@@ -9,7 +9,7 @@ export const Features = () => {
         {/* Top Split */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 mb-24 items-center">
           <div className="flex-[1.2] w-full">
-            <span className="text-[15px] font-bold text-brand-graphite/60 uppercase tracking-[0.2em] mb-4 block">
+            <span className="text-[14px] font-bold text-brand-graphite mb-3 uppercase tracking-wider opacity-60">
               WHY CHOOSE CARDIFF TAXIS LTD
             </span>
             <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-brand-graphite max-w-[600px] tracking-tight">
@@ -18,7 +18,7 @@ export const Features = () => {
           </div>
 
           <div className="flex-[1.5] w-full relative">
-            <div className="w-full h-[240px] md:h-[320px] rounded-[24px] overflow-hidden bg-gray-100">
+            <div className="w-full h-[240px] md:h-[320px] rounded-[24px] overflow-hidden bg-brand-section">
               <img
                 src="/images/features_family.png"
                 alt="Family arriving at airport terminal"
@@ -26,9 +26,9 @@ export const Features = () => {
               />
             </div>
             {/* Cutout overlapping button wrapper */}
-            <div className="absolute bottom-0 right-0 bg-[#f9fafb] pt-4 pl-4 sm:pt-5 sm:pl-5 rounded-tl-[16px] md:rounded-tl-[24px] w-[80%] sm:w-auto">
+            <div className="absolute bottom-0 right-0 bg-white pt-4 pl-4 sm:pt-5 sm:pl-5 rounded-tl-[16px] md:rounded-tl-[24px] w-[80%] sm:w-auto">
               <Link to="/book" className="block w-full">
-                <Button className="bg-brand-graphite hover:bg-[#1a232c] text-white rounded-full hover:rounded-2xl pl-6 pr-2 py-2 h-[56px] font-bold text-[16px] flex items-center justify-between gap-4 w-full shadow-lg transition-all group">
+                <Button className="bg-brand-graphite hover:bg-brand-primary text-white rounded-full hover:rounded-2xl pl-6 pr-2 py-2 h-[56px] font-bold text-[16px] flex items-center justify-between gap-4 w-full shadow-lg transition-all group">
                   View prices
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <ArrowRight className="w-4 h-4 text-brand-graphite stroke-[2.5]" />
@@ -60,11 +60,11 @@ export const Features = () => {
             },
           ].map((item) => (
             <div key={item.title} className="flex flex-col">
-              <div className="h-[1px] w-full bg-black/[0.06] mb-6"></div>
-              <h4 className="text-[18px] font-bold text-brand-graphite mb-3">
+              <div className="h-[1px] w-full bg-brand-graphite/[0.06] mb-6"></div>
+              <h4 className="text-[20px] font-bold text-brand-graphite mb-2">
                 {item.title}
               </h4>
-              <p className="text-[15px] text-brand-graphite/60 font-semibold leading-[1.6]">
+              <p className="text-brand-muted text-[15px] leading-relaxed font-medium">
                 {item.desc}
               </p>
             </div>
@@ -74,13 +74,14 @@ export const Features = () => {
 
       {/* Plane and Dashed Lines spanning width */}
       <div className="w-full mt-16 md:mt-12 mb-2 md:mb-4 flex flex-row items-center justify-between px-0 relative z-20 overflow-hidden">
-        <div className="flex-[0.4] h-[2px] border-t-2 border-dashed border-brand-graphite/40"></div>
+        <div className="flex-[0.4] h-[2px] border-t-2 border-dashed border-brand-graphite/30"></div>
         <img
           src="/images/plane.png"
           alt=""
-          className="w-[80px] md:w-[7rem] shrink-0 rotate-[-15deg] px-4 opacity-80 hover:scale-110 hover:translate-x-2 transition-transform duration-500 cursor-pointer"
+          className="w-[80px] md:w-[7rem] shrink-0 rotate-[-15deg] px-4 opacity-70 hover:scale-110 hover:translate-x-2 transition-transform duration-500 cursor-pointer"
+          style={{ filter: 'brightness(0)' }}
         />
-        <div className="flex-[1] h-[2px] border-t-2 border-dashed border-brand-graphite/40"></div>
+        <div className="flex-[1] h-[2px] border-t-2 border-dashed border-brand-graphite/30"></div>
       </div>
     </section>
   );
