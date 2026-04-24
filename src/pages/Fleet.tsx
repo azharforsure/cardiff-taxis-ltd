@@ -52,15 +52,30 @@ export const Fleet = () => {
       </Helmet>
       {/* Hero Header Card - Matches Home hero wrapper */}
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
-        <div className="relative pt-[100px] pb-16 md:pt-[130px] md:pb-24 bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
-          <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-10">
-            <span className="text-white/60 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
+        <div className="relative pt-[180px] pb-[140px] md:pt-[260px] md:pb-[200px] bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
+          <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+             <img 
+                src="/images/fleet_minibus_1776973773526.png" 
+                alt="Cardiff Taxis Fleet" 
+                className="w-full h-full object-cover"
+             />
+          </div>
+          <div className="absolute inset-0 z-10 bg-brand-primary/60 backdrop-blur-[4px] mix-blend-multiply"></div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-primary via-brand-primary/20 to-transparent"></div>
+          <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-20">
+            <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
               CARDIFF TAXI FLEET
             </span>
-            <h1 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white mb-6 leading-[1.1] tracking-tight">Fleet and Pricing Options</h1>
-            <p className="text-[14px] font-medium text-white/80 max-w-[600px] mx-auto leading-relaxed">
+            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-6 leading-[1.1] tracking-tight">Fleet and Pricing Options</h1>
+            <p className="text-[15px] font-semibold text-white/80 max-w-[600px] mx-auto leading-relaxed mb-10">
               We offer comfortable saloons for solo travellers and spacious minibuses for larger groups. Select the ideal vehicle for any journey.
             </p>
+            <Link to="/book" className="inline-flex items-center justify-between gap-4 bg-brand-accent hover:bg-brand-accent/90 text-brand-graphite font-bold text-[16px] h-[56px] px-2 pl-6 rounded-full hover:rounded-2xl transition-all mx-auto shadow-lg">
+              Book your vehicle
+              <div className="w-10 h-10 rounded-full bg-brand-graphite flex items-center justify-center flex-shrink-0 text-white shadow-sm">
+                 <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -89,14 +104,14 @@ export const Fleet = () => {
                 <div className="flex-1 flex flex-col justify-center w-full">
                    {/* Content */}
                    <div className="mb-4">
-                     <span className="text-brand-graphite/60 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase">
+                     <span className="text-brand-graphite/60 text-[15px] font-semibold tracking-[0.2em] uppercase">
                        {vehicle.capacity}
                      </span>
                    </div>
                    <h2 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-brand-graphite mb-5 leading-[1.1] tracking-tight">
                      {vehicle.name}
                    </h2>
-                   <p className="text-brand-graphite/60 text-[14px] md:text-[15px] leading-relaxed mb-10 max-w-xl font-medium">
+                   <p className="text-brand-graphite/60 text-[15px] leading-relaxed mb-10 max-w-xl font-semibold">
                      {vehicle.description}
                    </p>
                    
@@ -104,19 +119,17 @@ export const Fleet = () => {
                      {vehicle.features.map((feature, idx) => (
                        <div key={idx} className="flex items-center gap-3">
                          <div className="w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0"></div>
-                         <span className="text-[14px] font-bold text-brand-graphite">{feature}</span>
+                         <span className="text-[15px] font-bold text-brand-graphite">{feature}</span>
                        </div>
                      ))}
                    </div>
                    
                    <div>
-                     <Link to="/book" className="inline-block">
-                       <button className="bg-transparent border-2 border-brand-graphite hover:bg-brand-graphite hover:text-white text-brand-graphite rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 h-11 font-bold text-[13px] flex items-center justify-between gap-4 w-full sm:w-auto transition-all group">
-                         Book this vehicle
-                         <div className="w-8 h-8 rounded-full bg-brand-graphite group-hover:bg-white flex items-center justify-center shrink-0 transition-colors">
-                           <ArrowRight className="w-3.5 h-3.5 text-white group-hover:text-brand-graphite stroke-[2.5]" />
-                         </div>
-                       </button>
+                     <Link to="/book" className="inline-flex bg-transparent border-2 border-brand-graphite hover:bg-brand-graphite hover:text-white text-brand-graphite rounded-full hover:rounded-2xl pl-6 pr-2 py-2 h-[56px] font-bold text-[16px] items-center justify-between gap-4 w-full sm:w-auto transition-all group">
+                       Book this vehicle
+                       <div className="w-10 h-10 rounded-full bg-brand-graphite group-hover:bg-white flex items-center justify-center shrink-0 transition-colors group-hover:scale-105">
+                         <ArrowRight className="w-4 h-4 text-white group-hover:text-brand-graphite stroke-[2.5]" />
+                       </div>
                      </Link>
                    </div>
                 </div>
@@ -130,11 +143,11 @@ export const Fleet = () => {
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">
         <div className="bg-brand-primary rounded-[12px] md:rounded-[22px] p-6 md:p-12 lg:p-[80px] flex flex-col lg:flex-row gap-12 lg:gap-24 shadow-md ring-1 ring-black/[0.05]">
           <div className="flex-1 w-full max-w-xl">
-            <span className="text-white/60 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
+            <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
               SPECIAL REQUIREMENTS
             </span>
             <h2 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-white tracking-tight mb-5">Special Requirements and Extras</h2>
-            <p className="text-[14px] text-white/70 font-medium mb-10 md:mb-12 leading-[1.6]">
+            <p className="text-[15px] text-white/70 font-semibold mb-10 md:mb-12 leading-[1.6]">
               We accommodate specific vehicle requirements to ensure every passenger travels comfortably. Please mention any necessary extras when booking.
             </p>
             
@@ -145,7 +158,7 @@ export const Fleet = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-[16px] md:text-[18px] text-white mb-1.5">Child & Infant Seats</h4>
-                  <p className="text-[14px] text-white/70 font-medium leading-[1.6] mt-1">Provided free of charge upon request. Subject to availability.</p>
+                  <p className="text-[15px] text-white/70 font-semibold leading-[1.6] mt-1">Provided free of charge upon request. Subject to availability.</p>
                 </div>
               </li>
               <li className="flex items-start gap-4 md:gap-6">
@@ -154,7 +167,7 @@ export const Fleet = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-[16px] md:text-[18px] text-white mb-1.5">Wheelchair Accessibility</h4>
-                  <p className="text-[14px] text-white/70 font-medium leading-[1.6] mt-1">We have a selection of wheelchair-accessible minivans available.</p>
+                  <p className="text-[15px] text-white/70 font-semibold leading-[1.6] mt-1">We have a selection of wheelchair-accessible minivans available.</p>
                 </div>
               </li>
               <li className="flex items-start gap-4 md:gap-6">
@@ -163,7 +176,7 @@ export const Fleet = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-[16px] md:text-[18px] text-white mb-1.5">Pet Friendly</h4>
-                  <p className="text-[14px] text-white/70 font-medium leading-[1.6] mt-1">Pets are welcome as long as they are kept in a secure carrier and you inform us beforehand.</p>
+                  <p className="text-[15px] text-white/70 font-semibold leading-[1.6] mt-1">Pets are welcome as long as they are kept in a secure carrier and you inform us beforehand.</p>
                 </div>
               </li>
             </ul>
@@ -178,15 +191,15 @@ export const Fleet = () => {
               <div className="flex flex-col gap-6">
                 <div className="pb-6 border-b border-white/10">
                   <div className="font-bold text-[13px] text-white uppercase tracking-[0.1em] mb-2.5">Standard Cabin Bag</div>
-                  <div className="text-[14px] text-white/70 font-medium leading-[1.6]">Approx 56 x 45 x 25 cm. Counts as a secondary item alongside large suitcases.</div>
+                  <div className="text-[15px] text-white/70 font-semibold leading-[1.6]">Approx 56 x 45 x 25 cm. Counts as a secondary item alongside large suitcases.</div>
                 </div>
                 <div className="pb-6 border-b border-white/10">
                   <div className="font-bold text-[13px] text-white uppercase tracking-[0.1em] mb-2.5">Large Check-in Suitcase</div>
-                  <div className="text-[14px] text-white/70 font-medium leading-[1.6]">Up to 23kg. Our stated vehicle capacities refer to this size.</div>
+                  <div className="text-[15px] text-white/70 font-semibold leading-[1.6]">Up to 23kg. Our stated vehicle capacities refer to this size.</div>
                 </div>
                 <div>
                   <div className="font-bold text-[13px] text-white uppercase tracking-[0.1em] mb-2.5">Prams & Golf Clubs</div>
-                  <div className="text-[14px] text-white/70 font-medium leading-[1.6]">Count as one large suitcase. Please ensure your chosen vehicle has enough overhead space.</div>
+                  <div className="text-[15px] text-white/70 font-semibold leading-[1.6]">Count as one large suitcase. Please ensure your chosen vehicle has enough overhead space.</div>
                 </div>
               </div>
             </div>

@@ -1,22 +1,23 @@
 import { Calendar, BarChart2, Car, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Process = () => {
   return (
     <section className="py-16 lg:py-24 bg-brand-primary relative z-10 font-sans">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-[80px]">
         <div className="flex flex-col items-center text-center max-w-[700px] mx-auto mb-12 md:mb-16">
-          <span className="text-[10px] md:text-[11px] font-bold text-white/60 uppercase tracking-[0.2em] mb-4 block">
+          <span className="text-[15px] font-bold text-white/60 uppercase tracking-[0.2em] mb-4 block">
             HOW IT WORKS
           </span>
-          <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white mb-6 leading-[1.1] tracking-tight">
-            3 simple steps to <br className="hidden md:block"/> book a ride today
+          <h3 className="text-[32px] sm:text-[38px] md:text-[44px] lg:text-[48px] font-bold text-white mb-6 leading-[1.1] tracking-tight">
+            Secure your journey in <br className="hidden md:block"/> three simple steps
           </h3>
-          <p className="text-white/70 text-[14px] font-medium leading-relaxed">
+          <p className="text-white/70 text-[15px] font-normal leading-relaxed">
             Booking a ride takes just a few minutes. We manage the driving while you relax, offering fixed prices and consistent flight monitoring.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative mb-12 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mb-12 md:mb-16">
           {[
             {
               icon: Calendar,
@@ -36,15 +37,15 @@ export const Process = () => {
           ].map((step, index) => (
             <div
               key={index}
-              className="bg-[#35414d] border border-white/[0.08] rounded-[24px] p-8 lg:p-10 relative"
+              className="bg-[#35414d] border border-white/[0.08] rounded-[24px] p-10 lg:p-12 relative shadow-2xl shadow-black/40"
             >
               <div className="mb-6">
                 <step.icon className="w-6 h-6 md:w-7 md:h-7 text-white stroke-[1.5]" />
               </div>
-              <h4 className="text-[18px] md:text-[20px] font-semibold text-white mb-2 md:mb-3 leading-snug">
+              <h4 className="text-[26px] font-medium text-white mb-2 md:mb-3 leading-snug">
                 {step.title}
               </h4>
-              <p className="text-white/70 font-medium leading-relaxed text-[14px]">
+              <p className="text-white/70 font-normal leading-relaxed text-[15px]">
                 {step.description}
               </p>
             </div>
@@ -52,20 +53,20 @@ export const Process = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8">
-          <button className="bg-white hover:bg-gray-50 text-brand-primary h-11 pl-6 pr-1.5 rounded-full hover:rounded-2xl font-bold text-[13px] flex items-center justify-between gap-4 transition-all w-full sm:w-auto">
+          <Link to="/airport-transfers" className="bg-white hover:bg-gray-50 text-brand-primary h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl font-bold text-[16px] flex items-center justify-between gap-4 transition-all w-full sm:w-auto shadow-lg group">
             View airport pricing
-            <div className="w-8 h-8 bg-brand-primary rounded-full flex items-center justify-center text-white">
-              <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            <div className="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </div>
-          </button>
+          </Link>
           
           <div className="flex items-center gap-3 md:gap-4">
             <div className="flex items-center -space-x-2">
-              <img src="/images/avatar_1.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[3]" />
-              <img src="/images/avatar_2.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[2]" />
-              <img src="/images/avatar_3.png" alt="Reviewer" className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover relative z-[1]" />
+              <img src="/images/avatar_1.png" alt="Reviewer" className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover relative z-[3]" />
+              <img src="/images/avatar_2.png" alt="Reviewer" className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover relative z-[2]" />
+              <img src="/images/avatar_3.png" alt="Reviewer" className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover relative z-[1]" />
             </div>
-            <span className="text-white font-bold text-[10px] uppercase tracking-[0.1em] opacity-60">
+            <span className="text-white font-bold text-[13px] uppercase tracking-[0.1em]">
               READ OUR GOOGLE REVIEWS (5/5)
             </span>
           </div>

@@ -37,10 +37,10 @@ export const ServiceDetail = () => {
                  </div>
                  
                  <div className="relative z-10 flex h-full">
-                   <Link to="/book" className="flex items-center justify-between gap-4 bg-[#2d3748] hover:bg-[#1a202c] text-white font-bold text-[13px] h-11 pl-6 pr-1.5 rounded-full hover:rounded-2xl transition-all w-fit shadow-md border-none">
+                   <Link to="/book" className="flex items-center justify-between gap-4 bg-[#2d3748] hover:bg-[#1a202c] text-white font-bold text-[16px] h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl transition-all w-fit shadow-lg border-none group">
                       Book a trip
-                      <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2d3748] shrink-0">
-                        <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d3748] shrink-0 group-hover:scale-105 transition-transform">
+                        <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                       </div>
                    </Link>
                  </div>
@@ -49,14 +49,14 @@ export const ServiceDetail = () => {
 
           {/* Text Content */}
           <div className="flex-1 flex flex-col items-start text-left lg:max-w-xl">
-            <span className="text-[10px] md:text-[11px] font-bold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
+            <span className="text-[15px] font-semibold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
               ALWAYS READY, ALWAYS ON TIME
             </span>
             <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-[#2d3748] mb-8 tracking-tight">
               Friendly and reliable private hire services
             </h3>
             
-            <div className="space-y-6 text-[14px] text-[#2d3748]/70 leading-relaxed font-medium mb-10 pr-0 md:pr-10">
+            <div className="space-y-6 text-[15px] text-[#2d3748]/70 leading-relaxed font-semibold mb-10 pr-0 md:pr-10">
               <p>
                 We offer a dedicated meet and greet service for all airport pickups. A driver will be waiting at arrivals to assist with heavy luggage and guide you directly to the car.
               </p>

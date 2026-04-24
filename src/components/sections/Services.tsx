@@ -41,8 +41,8 @@ export const Services = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center mb-16">
           <div className="max-w-2xl">
-            <span className="text-[10px] md:text-[11px] font-bold text-white/60 uppercase tracking-[0.2em] mb-4 block">
-              OUR SERVICES
+            <span className="text-[15px] font-semibold text-white/60 tracking-[0.2em] mb-4 block">
+              Our services
             </span>
             <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white leading-[1.1] tracking-tight">
               Private hire services for <br className="hidden md:block"/> airports and the city
@@ -50,7 +50,7 @@ export const Services = () => {
           </div>
           <div>
             <Link to="/book" className="block w-full sm:w-auto">
-              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#ffb320] text-[#1a202c] font-bold flex items-center justify-between gap-4 hover:bg-[#ffc34d] transition-all w-full sm:w-auto text-[13px] h-11">
+              <button className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-[#ffb320] text-[#1a202c] font-bold flex items-center justify-between gap-4 hover:bg-[#ffc34d] transition-all w-full sm:w-auto text-[16px] h-12">
                 Book a trip now
                 <div className="w-8 h-8 rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">
                   <ArrowRight className="w-3.5 h-3.5 text-white" />
@@ -81,16 +81,16 @@ export const Services = () => {
                   }`}
                 >
                   <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center lg:min-w-[320px]">
-                    <span className="text-[10px] text-[#4a5568] font-bold uppercase tracking-wider mb-4 whitespace-nowrap">{service.label}</span>
-                    <h4 className="text-[28px] md:text-[32px] font-bold text-[#1a202c] leading-[1.1] tracking-tight mb-8 pb-8 border-b border-[#e2e8f0]">
+                    <span className="text-[15px] text-[#4a5568] font-semibold tracking-wider mb-4 whitespace-nowrap">{service.label}</span>
+                    <h4 className="text-[24px] md:text-[26px] font-bold text-[#1a202c] leading-[1.1] tracking-tight mb-8 pb-8 border-b border-[#e2e8f0]">
                       {service.fullTitle}
                     </h4>
-                    <p className="text-[#4a5568] text-[14px] leading-relaxed mb-8 line-clamp-4 font-medium">
+                    <p className="text-[#4a5568] text-[15px] leading-relaxed mb-8 line-clamp-4 font-medium">
                       {service.description}
                     </p>
                     <div>
                       <Link to={service.link}>
-                        <button className="rounded-full hover:rounded-xl px-7 h-11 bg-[#2d3748] text-white font-bold text-[13px] hover:bg-[#1a202c] transition-all">
+                        <button className="rounded-full hover:rounded-xl px-7 h-12 bg-[#2d3748] text-white font-bold text-[16px] hover:bg-[#1a202c] transition-all">
                           Learn more
                         </button>
                       </Link>
@@ -113,7 +113,7 @@ export const Services = () => {
                     !isActive ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                   }`}
                 >
-                  <h4 className="text-[22px] md:text-[26px] xl:text-[30px] font-bold text-[#1a202c] leading-[1.2] whitespace-pre-line">
+                  <h4 className="text-[22px] md:text-[26px] font-bold text-[#1a202c] leading-[1.2] whitespace-pre-line">
                     {service.title}
                   </h4>
                   <div className="flex justify-end mt-auto">
@@ -140,7 +140,7 @@ export const Services = () => {
                 onClick={() => setActiveCard(index)}
                 className="bg-[#f8f9fa] rounded-[32px] p-6 flex justify-between items-center cursor-pointer hover:bg-white transition-colors"
               >
-                <h4 className="text-[22px] font-bold text-[#1a202c]">
+                <h4 className="text-[22px] sm:text-[26px] font-bold text-[#1a202c]">
                   {service.title.replace('\n', ' ')}
                 </h4>
                 <div className="w-[36px] h-[36px] rounded-full bg-[#1a202c] flex items-center justify-center shrink-0">

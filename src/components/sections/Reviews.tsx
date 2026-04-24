@@ -40,24 +40,23 @@ export const Reviews = () => {
 
   return (
     <div className="relative w-full min-h-[600px] flex flex-col py-16 lg:py-24 px-6 md:px-12 lg:px-[80px]">
-      {/* Blurred Background */}
+      {/* Background Image */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url("/images/main-hero.jpg")',
+          backgroundImage: 'url("/images/main-hero.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'blur(30px) brightness(0.6)',
-          transform: 'scale(1.1)', // To prevent white edges from blur
         }}
       />
-      <div className="absolute inset-0 z-0 bg-black/20" />
+      {/* Glassy Overlay */}
+      <div className="absolute inset-0 z-0 bg-white/20 backdrop-blur-[40px] border-t border-white/30" />
 
       <div className="relative z-10 flex flex-col h-full flex-1">
         {/* Top Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
           <div className="max-w-2xl">
-            <span className="text-white text-[9px] md:text-[10px] font-bold tracking-[0.1em] uppercase mb-4 block">
+            <span className="text-white text-[15px] font-bold tracking-[0.1em] uppercase mb-4 block">
               OUR REVIEWS
             </span>
             <h1 className="text-[32px] sm:text-4xl md:text-[38px] lg:text-[44px] font-bold text-white leading-[1.1] tracking-tight">
@@ -65,10 +64,10 @@ export const Reviews = () => {
             </h1>
           </div>
 
-          <button className="bg-white hover:bg-white/90 text-brand-graphite pl-6 pr-1.5 py-1.5 font-bold rounded-full hover:rounded-2xl flex justify-between w-full sm:w-auto items-center gap-4 text-[13px] h-11 transition-all group shrink-0">
+          <button className="bg-white hover:bg-white/90 text-brand-graphite pl-6 pr-1.5 py-1.5 font-bold rounded-full hover:rounded-2xl flex justify-between w-full sm:w-auto items-center gap-4 text-[16px] h-14 transition-all group shrink-0">
             Book a trip now
-            <div className="w-8 h-8 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
-              <ArrowRightIcon className="w-3.5 h-3.5" />
+            <div className="w-10 h-10 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
+              <ArrowRightIcon className="w-4 h-4" />
             </div>
           </button>
         </div>
@@ -78,7 +77,7 @@ export const Reviews = () => {
           {/* Quote Card */}
           <div className="max-w-[620px] w-full">
             <div className="bg-white rounded-[24px] md:rounded-[32px] p-6 lg:p-8 md:p-[48px] shadow-2xl relative">
-              <p className="text-brand-graphite text-[14px] md:text-[15px] leading-relaxed font-medium mb-12">
+              <p className="text-brand-graphite text-[18px] leading-relaxed font-medium mb-12">
                 "{currentReview.text}"
               </p>
 
@@ -87,8 +86,8 @@ export const Reviews = () => {
                   <img src={currentReview.avatar} alt={currentReview.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5 tracking-tight">{currentReview.name}</h4>
-                  <p className="text-[12px] text-brand-muted font-bold uppercase tracking-wider">{currentReview.numReviews}</p>
+                  <h4 className="font-semibold text-brand-graphite text-[15px] mb-0.5 tracking-tight">{currentReview.name}</h4>
+                  <p className="text-[13px] text-brand-muted font-normal uppercase tracking-wider">{currentReview.numReviews}</p>
                 </div>
               </div>
             </div>
@@ -133,7 +132,7 @@ export const Reviews = () => {
                   className="w-[28px] h-[28px] rounded-full border-2 border-white/20 object-cover z-20"
                 />
               </div>
-              <span className="text-white text-[10px] font-bold tracking-[0.05em] uppercase whitespace-nowrap">
+              <span className="text-white text-[13px] font-bold tracking-[0.05em] uppercase whitespace-nowrap">
                 READ OUR GOOGLE REVIEWS (5/5)
               </span>
             </div>

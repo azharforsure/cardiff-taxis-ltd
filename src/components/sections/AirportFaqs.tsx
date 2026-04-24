@@ -45,7 +45,7 @@ export const AirportFaqs = () => {
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           <div className="w-full lg:w-[45%] flex flex-col items-start pr-0">
-            <span className="text-[10px] md:text-[11px] font-bold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
+            <span className="text-[15px] font-semibold text-[#1a202c]/60 uppercase tracking-[0.2em] mb-4 block">
               FAQS
             </span>
             <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold leading-[1.1] text-[#2d3748] tracking-tight mb-12">
@@ -75,10 +75,10 @@ export const AirportFaqs = () => {
                    </div>
                    
                    <div className="relative z-10 flex h-full">
-                     <Link to="/book" className="flex items-center justify-between gap-4 bg-[#2d3748] hover:bg-[#1a202c] text-white font-bold text-[13px] h-11 pl-6 pr-1.5 rounded-full hover:rounded-2xl transition-all w-fit shadow-md border-none">
+                     <Link to="/book" className="flex items-center justify-between gap-4 bg-[#2d3748] hover:bg-[#1a202c] text-white font-bold text-[16px] h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl transition-all w-fit shadow-md border-none">
                         Book a trip
-                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2d3748] shrink-0">
-                          <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#2d3748] shrink-0">
+                          <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                         </div>
                      </Link>
                    </div>
@@ -96,7 +96,7 @@ export const AirportFaqs = () => {
                   className="border-b border-[#e5e7eb] py-6 sm:py-8 cursor-pointer flex flex-col group first:pt-0"
                 >
                   <div className="flex justify-between items-center w-full gap-8">
-                    <h4 className="text-[15px] md:text-[16px] font-bold text-[#2d3748] group-hover:text-brand-primary transition-colors tracking-tight leading-snug">
+                    <h4 className="text-[17px] md:text-[18px] font-bold text-[#2d3748] group-hover:text-brand-primary transition-colors tracking-tight leading-snug">
                       {faq.q}
                     </h4>
                     <div className="flex items-center justify-center shrink-0">
@@ -114,7 +114,7 @@ export const AirportFaqs = () => {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="pt-4 text-[14px] font-medium text-[#2d3748]/70 leading-[1.6]">
+                      <p className="pt-4 text-[15px] font-semibold text-[#2d3748]/70 leading-[1.6]">
                         {faq.a}
                       </p>
                     </div>

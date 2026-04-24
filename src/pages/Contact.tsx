@@ -52,13 +52,22 @@ export const Contact = () => {
         <meta name="description" content="Get in touch with Cardiff Taxis Ltd for bookings, inquiries, or support. Our dispatch team is available 24/7. Call or message us today." />
       </Helmet>
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
-        <div className="relative pt-[110px] pb-20 md:pt-[130px] md:pb-28 bg-[#36404a] overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
-          <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-10">
-            <span className="text-white/60 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
+        <div className="relative pt-[180px] pb-[140px] md:pt-[260px] md:pb-[200px] bg-[#36404a] overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
+          <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+             <img 
+                src="/images/about_taxi_new_1776975028206.png" 
+                alt="Contact Us" 
+                className="w-full h-full object-cover"
+             />
+          </div>
+          <div className="absolute inset-0 z-10 bg-[#36404a]/60 backdrop-blur-[4px] mix-blend-multiply"></div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#36404a] via-[#36404a]/20 to-transparent"></div>
+          <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-20">
+            <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
               GET IN TOUCH
             </span>
-            <h1 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white mb-5 leading-[1.05] tracking-tight">Get in Touch</h1>
-            <p className="text-[14px] text-white/80 max-w-2xl mx-auto font-medium leading-relaxed">
+            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-5 leading-[1.05] tracking-tight">Get in Touch</h1>
+            <p className="text-[15px] text-white/80 max-w-2xl mx-auto font-semibold leading-relaxed">
               Reach out regarding upcoming journeys, lost property, or setting up a corporate account. Our dispatch team is available around the clock.
             </p>
           </div>
@@ -71,7 +80,7 @@ export const Contact = () => {
           {/* Contact Info */}
           <div className="p-8 md:p-12 bg-[#2d3748] text-white flex flex-col justify-between rounded-t-[32px] lg:rounded-tr-none lg:rounded-l-[32px]">
             <div>
-              <h3 className="text-2xl font-bold mb-8">Cardiff Taxis Ltd</h3>
+              <h3 className="text-[26px] font-bold mb-8">Cardiff Taxis Ltd</h3>
               <div className="flex flex-col gap-6">
                 <a href="tel:07459466835" className="flex items-start gap-4 hover:text-[#f2ba4d] transition-colors group">
                   <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#f2ba4d]/20">
@@ -80,8 +89,8 @@ export const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold mb-1">Phone</div>
-                    <div className="text-white/80">07459 466835</div>
+                    <div className="font-bold text-[16px] mb-1">Phone</div>
+                    <div className="text-white/80 font-medium">07459 466835</div>
                   </div>
                 </a>
 
@@ -92,8 +101,8 @@ export const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold mb-1">Email</div>
-                    <div className="text-white/80">bookings@cardifftaxisltd.co.uk</div>
+                    <div className="font-bold text-[16px] mb-1">Email</div>
+                    <div className="text-white/80 font-medium">bookings@cardifftaxisltd.co.uk</div>
                   </div>
                 </a>
 
@@ -105,14 +114,14 @@ export const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold mb-1">Company Registered Details</div>
-                    <div className="text-white/80">Reg No: 16436130<br/>Cardiff, Wales</div>
+                    <div className="font-bold text-[16px] mb-1">Company Registered Details</div>
+                    <div className="text-white/80 font-medium">Reg No: 16436130<br/>Cardiff, Wales</div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="mt-16 text-sm text-white/50">
+            <div className="mt-16 text-[13px] font-bold uppercase tracking-wider text-white/40">
               Available 24 hours a day, 7 days a week.
             </div>
           </div>
@@ -127,10 +136,10 @@ export const Contact = () => {
                   <CheckCircle2 className="w-8 h-8 text-green-600" />
                 </div>
                 <h4 className="text-xl font-bold text-[#1a202c] mb-2">Message Sent!</h4>
-                <p className="text-[#4a5568] font-medium">Thank you for reaching out. Our team will get back to you shortly.</p>
+                <p className="text-[#4a5568] font-semibold">Thank you for reaching out. Our team will get back to you shortly.</p>
                 <button 
                   onClick={() => setSubmitted(false)}
-                  className="mt-8 text-sm font-bold text-[#f2ba4d] hover:underline"
+                  className="mt-8 text-[16px] font-bold text-[#f2ba4d] hover:underline"
                 >
                   Send another message
                 </button>
@@ -144,7 +153,7 @@ export const Contact = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full h-[54px] rounded-[16px] bg-[#f8f9fa] border-none px-4 text-[14px] md:text-[15px] font-bold text-[#1a202c]" 
+                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-[#f8f9fa] border border-gray-100 px-4 text-[14px] md:text-[15px] font-semibold text-[#1a202c]" 
                     placeholder="John Doe" 
                   />
                 </div>
@@ -155,7 +164,7 @@ export const Contact = () => {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full h-[54px] rounded-[16px] bg-[#f8f9fa] border-none px-4 text-[14px] md:text-[15px] font-bold text-[#1a202c]" 
+                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-[#f8f9fa] border border-gray-100 px-4 text-[14px] md:text-[15px] font-semibold text-[#1a202c]" 
                     placeholder="john@example.com" 
                   />
                 </div>
@@ -166,7 +175,7 @@ export const Contact = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full h-[54px] rounded-[16px] bg-[#f8f9fa] border-none px-4 text-[14px] md:text-[15px] font-bold text-[#1a202c]" 
+                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-[#f8f9fa] border border-gray-100 px-4 text-[14px] md:text-[15px] font-semibold text-[#1a202c]" 
                     placeholder="Your phone number" 
                   />
                 </div>
@@ -176,7 +185,7 @@ export const Contact = () => {
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="w-full min-h-[140px] rounded-[16px] bg-[#f8f9fa] border-none p-4 resize-y text-[14px] md:text-[15px] font-bold text-[#1a202c]" 
+                    className="w-full min-h-[140px] rounded-[16px] md:rounded-[20px] bg-[#f8f9fa] border border-gray-100 p-4 resize-y text-[14px] md:text-[15px] font-semibold text-[#1a202c]" 
                     placeholder="How can we help?"
                   ></textarea>
                 </div>
@@ -185,7 +194,7 @@ export const Contact = () => {
                 
                 <button 
                   disabled={loading}
-                  className="h-[60px] md:h-[64px] rounded-[16px] md:rounded-[22px] bg-[#f2ba4d] text-[#1a202c] font-bold text-[15px] hover:bg-[#e0a83b] hover:rounded-xl transition-all mt-2 shadow-lg flex items-center justify-center gap-3 disabled:opacity-70"
+                  className="h-[60px] md:h-[64px] rounded-[16px] md:rounded-[22px] bg-[#f2ba4d] text-[#1a202c] font-bold text-[16px] hover:bg-[#e0a83b] hover:rounded-[12px] md:hover:rounded-[14px] transition-all mt-2 shadow-lg flex items-center justify-center gap-3 disabled:opacity-70"
                 >
                   {loading ? (
                     <>
@@ -203,25 +212,25 @@ export const Contact = () => {
         {/* Quick Help */}
         <div className="mt-32 max-w-4xl mx-auto">
           <div className="text-center mb-12 px-6">
-            <h2 className="text-[26px] md:text-[32px] font-bold text-[#1a202c] leading-[1.1] tracking-tight">Quick Answers</h2>
-            <p className="text-[#4a5568]/80 mt-4 text-[14px] font-medium leading-relaxed">Helpful information regarding bookings and services.</p>
+            <h2 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-[#1a202c] leading-[1.1] tracking-tight">Quick Answers</h2>
+            <p className="text-[#4a5568]/80 mt-4 text-[15px] font-semibold leading-relaxed">Helpful information regarding bookings and services.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-[24px] p-8 shadow-sm ring-1 ring-black/5">
               <h4 className="font-bold text-[#1a202c] mb-3 text-[17px]">Amending a booking</h4>
-              <p className="text-[#4a5568] text-[14px] md:text-[15px] font-medium leading-[1.6]">You can amend a booking by calling our dispatch line directly. Please provide at least 2 hours notice for local changes.</p>
+              <p className="text-[#4a5568] text-[15px] font-semibold leading-[1.6]">You can amend a booking by calling our dispatch line directly. Please provide at least 2 hours notice for local changes.</p>
             </div>
             <div className="bg-white rounded-[24px] p-8 shadow-sm ring-1 ring-black/5">
               <h4 className="font-bold text-[#1a202c] mb-3 text-[17px]">Public holiday operations</h4>
-              <p className="text-[#4a5568] text-[14px] md:text-[15px] font-medium leading-[1.6]">We operate 24 hours a day, 365 days a year, including Christmas and New Year. Please note special peak rates may apply.</p>
+              <p className="text-[#4a5568] text-[15px] font-semibold leading-[1.6]">We operate 24 hours a day, 365 days a year, including Christmas and New Year. Please note special peak rates may apply.</p>
             </div>
             <div className="bg-white rounded-[24px] p-8 shadow-sm ring-1 ring-black/5">
               <h4 className="font-bold text-[#1a202c] mb-3 text-[17px]">Setting up a multi-stop ride</h4>
-              <p className="text-[#4a5568] text-[14px] md:text-[15px] font-medium leading-[1.6]">Yes. If you need multiple drop-offs for a group, please outline this in the message box when booking for an accurate quote.</p>
+              <p className="text-[#4a5568] text-[15px] font-semibold leading-[1.6]">Yes. If you need multiple drop-offs for a group, please outline this in the message box when booking for an accurate quote.</p>
             </div>
             <div className="bg-white rounded-[24px] p-8 shadow-sm ring-1 ring-black/5">
               <h4 className="font-bold text-[#1a202c] mb-3 text-[17px]">Lost property</h4>
-              <p className="text-[#4a5568] text-[14px] md:text-[15px] font-medium leading-[1.6]">Please call dispatch immediately with your booking reference. We log all found items securely at our head office.</p>
+              <p className="text-[#4a5568] text-[15px] font-semibold leading-[1.6]">Please call dispatch immediately with your booking reference. We log all found items securely at our head office.</p>
             </div>
           </div>
         </div>

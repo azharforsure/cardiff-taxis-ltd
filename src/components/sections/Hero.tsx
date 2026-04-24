@@ -72,7 +72,7 @@ export const Hero = () => {
 
   return (
     <div className="w-full relative">
-      <div className="relative pt-[110px] pb-[20px] md:pt-[140px] lg:pt-[170px] md:pb-[28px] w-full flex flex-col justify-start min-h-auto transition-all duration-500">
+      <div className="relative pt-[140px] pb-[32px] md:pt-[150px] lg:pt-[180px] md:pb-[48px] w-full flex flex-col justify-start min-h-auto transition-all duration-500">
         {/* Background Image & Overlay */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
@@ -82,21 +82,28 @@ export const Hero = () => {
           }}
         >
           <div className="absolute inset-0 bg-[#2f3a43]/60 mix-blend-multiply"></div>
+          <div 
+            className="absolute inset-0 backdrop-blur-[12px]"
+            style={{
+              maskImage: 'linear-gradient(to right, black 30%, transparent 75%)',
+              WebkitMaskImage: 'linear-gradient(to right, black 30%, transparent 75%)'
+            }}
+          ></div>
           <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/80 to-transparent"></div>
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-[80px] mt-0 md:mt-4 lg:mt-6 transition-all duration-500">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-[80px] mt-0 md:mt-2 lg:mt-4 transition-all duration-500">
           <div className="max-w-[640px]">
-            <span className="text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
-              CARDIFF • BRISTOL • LONDON
+            <span className="text-white text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
+              SERVING CARDIFF, BRISTOL & LONDON
             </span>
 
-            <h1 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white mb-5 leading-[1.1] tracking-tight">
+            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-5 leading-[1.1] tracking-tight">
               24/7 Airport Transfers and Private Hire in Cardiff
             </h1>
 
-            <p className="text-[14px] text-white/80 mb-8 max-w-[480px] font-medium leading-relaxed">
+            <p className="text-[15px] text-white/80 mb-8 max-w-[480px] font-semibold leading-relaxed">
               We provide reliable pick up and drop off services to and from Cardiff, Bristol, and London airports. We also offer a complete private hire service covering the entire city of Cardiff, ensuring you reach any destination safely.
             </p>
 
@@ -104,11 +111,11 @@ export const Hero = () => {
               <a href="tel:07459466835" className="w-full sm:w-auto">
                 <Button
                   variant="accent"
-                  className="text-brand-graphite pl-5 pr-1.5 py-1.5 font-bold h-[44px] w-full flex items-center justify-between gap-4 text-[13px] rounded-full hover:rounded-2xl shadow-lg hover:bg-brand-accent-hover transition-all"
+                  className="text-brand-graphite pl-6 pr-2 py-2 font-bold h-[56px] w-full flex items-center justify-between gap-4 text-[16px] rounded-full hover:rounded-2xl shadow-lg hover:bg-brand-accent-hover transition-all"
                 >
                   Give us a call
-                  <div className="w-8 h-8 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
-                    <ArrowRight className="w-3.5 h-3.5" />
+                  <div className="w-10 h-10 rounded-full bg-brand-graphite flex items-center justify-center text-white shrink-0">
+                    <ArrowRight className="w-4 h-4" />
                   </div>
                 </Button>
               </a>
@@ -120,11 +127,11 @@ export const Hero = () => {
               >
                 <Button
                   variant="glass"
-                  className="bg-[#EAECEE]/90 hover:bg-[#EAECEE] text-brand-graphite border-none px-5 font-bold h-[44px] w-full flex items-center justify-center gap-3 rounded-full hover:rounded-2xl text-[13px]"
+                  className="bg-[#EAECEE]/90 hover:bg-[#EAECEE] text-brand-graphite border-none pl-6 pr-3 font-bold h-[56px] w-full flex items-center justify-between gap-3 rounded-full hover:rounded-2xl text-[16px]"
                 >
                   WhatsApp us
                   <svg
-                    className="w-[16px] h-[16px] text-brand-graphite opacity-80"
+                    className="w-[32px] h-[32px] text-brand-graphite opacity-80"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
@@ -134,41 +141,43 @@ export const Hero = () => {
               </a>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex -space-x-2">
-                <img
-                  src="/images/avatar_1.png"
-                  alt="Review"
-                  className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
-                />
-                <img
-                  src="/images/avatar_2.png"
-                  alt="Review"
-                  className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
-                />
-                <img
-                  src="/images/avatar_3.png"
-                  alt="Review"
-                  className="w-[28px] h-[28px] rounded-full border-2 border-brand-primary object-cover"
-                />
-              </div>
-              <span className="text-white text-[9px] font-bold tracking-[0.05em] uppercase">
-                READ OUR GOOGLE REVIEWS (5/5)
-              </span>
+
+          </div>
+
+          <div className="mt-[36px] md:mt-[56px] lg:mt-[96px] mb-5 flex items-center gap-4">
+            <div className="flex -space-x-3">
+              <img
+                src="/images/avatar_1.png"
+                alt="Review"
+                className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover shadow-md"
+              />
+              <img
+                src="/images/avatar_2.png"
+                alt="Review"
+                className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover shadow-md"
+              />
+              <img
+                src="/images/avatar_3.png"
+                alt="Review"
+                className="w-[36px] h-[36px] rounded-full border-2 border-brand-primary object-cover shadow-md"
+              />
             </div>
+            <span className="text-white text-[13px] font-bold tracking-[0.05em] uppercase">
+              READ OUR GOOGLE REVIEWS (5/5)
+            </span>
           </div>
 
           {/* Booking Widget Wrapper */}
-          <div className="mt-8 md:mt-12 lg:mt-24 relative z-20 transition-all duration-500">
+          <div className="mt-0 relative z-20 transition-all duration-500">
             <div className="bg-[#f0f2f5] md:bg-white/95 md:backdrop-blur-sm rounded-[24px] md:rounded-[32px] p-2 md:p-3 shadow-2xl flex flex-col xl:flex-row gap-2 lg:gap-3 transition-all duration-300">
 
               {step === 1 && (
                 <div className="flex flex-col xl:flex-row w-full gap-2 lg:gap-3">
-                  <div className="w-full xl:w-[170px] bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
+                  <div className="w-full xl:w-[170px] bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
                     <select
                       value={serviceType}
                       onChange={(e) => setServiceType(e.target.value)}
-                      className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold cursor-pointer"
+                      className="w-full bg-transparent focus:outline-none text-black text-[15px] font-semibold cursor-pointer"
                     >
                       <option value="airport">Airport Transfer</option>
                       <option value="city">City Private Hire</option>
@@ -176,42 +185,42 @@ export const Hero = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 flex-[1.5] w-full gap-2">
-                    <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
+                    <div className="w-full bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
                       <input
                         type="text"
                         value={pickup}
                         onChange={(e) => setPickup(e.target.value)}
                         placeholder="Enter pickup or postcode"
-                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
+                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
                       />
                     </div>
 
-                    <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
+                    <div className="w-full bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
                       <input
                         type="text"
                         value={dropoff}
                         onChange={(e) => setDropoff(e.target.value)}
                         placeholder="Enter drop-off or postcode"
-                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] font-bold placeholder:truncate"
+                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
                       />
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:flex-row flex-[1] w-full gap-2">
-                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors relative shrink-0">
+                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors relative shrink-0">
                       <input
                         type="time"
                         defaultValue="21:40"
-                        className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold"
+                        className="w-full h-full bg-transparent focus:outline-none text-black text-[15px] font-semibold"
                         style={{ colorScheme: 'light' }}
                       />
                     </div>
 
-                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors shrink-0">
+                    <div className="w-full sm:flex-1 bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors shrink-0">
                       <input
                         type="date"
                         defaultValue="2025-10-30"
-                        className="w-full h-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-bold uppercase"
+                        className="w-full h-full bg-transparent focus:outline-none text-black text-[15px] font-semibold uppercase"
                         style={{ colorScheme: 'light' }}
                       />
                     </div>
@@ -220,7 +229,7 @@ export const Hero = () => {
                   <Button
                     variant="accent"
                     onClick={handleNextStep}
-                    className="w-full xl:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[15px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 mt-1 md:mt-0"
+                    className="w-full xl:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[16px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 mt-1 md:mt-0"
                   >
                     Get free quote
                     <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[14px] md:rounded-[18px] bg-[#1a232c] flex items-center justify-center text-white shrink-0">
@@ -238,30 +247,30 @@ export const Hero = () => {
                     </div>
                     <div className="lg:block">
                       <h4 className="text-[14px] md:text-[15px] font-bold text-brand-graphite whitespace-nowrap">Final Details</h4>
-                      <p className="text-[12px] font-medium text-brand-graphite/60 lg:hidden">Where should we send your quote?</p>
+                      <p className="text-[12px] font-semibold text-brand-graphite/60 lg:hidden">Where should we send your quote?</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col md:flex-row w-full lg:flex-[0.8] gap-2 mt-[3px] md:mt-0 shrink-0 min-w-0">
                     {serviceType === "airport" && (
                       <>
-                        <div className="w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
+                        <div className="w-full bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
                           <input
                             type="text"
                             value={flightConfig.number}
                             onChange={(e) => setFlightConfig({ ...flightConfig, number: e.target.value })}
                             placeholder="Flight Number"
-                            className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
+                            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
                           />
                         </div>
-                        <div className="w-full md:w-[120px] bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 shrink-0">
+                        <div className="w-full md:w-[120px] bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 shrink-0">
                           <input
                             type="number"
                             value={flightConfig.luggage}
                             onChange={(e) => setFlightConfig({ ...flightConfig, luggage: e.target.value })}
                             placeholder="Luggage"
                             min="0"
-                            className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold"
+                            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold"
                           />
                         </div>
                       </>
@@ -269,23 +278,23 @@ export const Hero = () => {
                   </div>
 
                   <div className="flex flex-col md:flex-row w-full lg:flex-[1.5] gap-2 mt-[3px] lg:mt-0 min-w-0">
-                    <div className="flex-[1] w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
+                    <div className="flex-[1] w-full bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
                       <input
                         type="text"
                         value={contactInfo.name}
                         onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
                         placeholder="Your Name"
-                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
+                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
                       />
                     </div>
 
-                    <div className="flex-[1] w-full bg-white md:bg-[#f8f9fa] border-none md:border md:border-brand-border/40 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
+                    <div className="flex-[1] w-full bg-white md:bg-[#f8f9fa] border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
                       <input
                         type="tel"
                         value={contactInfo.phone}
                         onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
                         placeholder="Phone Number"
-                        className="w-full bg-transparent focus:outline-none text-brand-graphite placeholder:text-brand-graphite/60 text-[14px] md:text-[15px] font-bold placeholder:truncate"
+                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
                       />
                     </div>
                   </div>
@@ -294,7 +303,7 @@ export const Hero = () => {
                     <Button
                       variant="glass"
                       onClick={() => setStep(1)}
-                      className="w-full lg:w-auto h-[60px] md:h-[64px] px-0 lg:px-6 text-brand-graphite font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] bg-[#f8f9fa] md:bg-black/5 hover:bg-black/10 transition-colors border-none md:border"
+                      className="w-full lg:w-auto h-[60px] md:h-[64px] px-0 lg:px-8 text-brand-graphite text-[16px] font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] bg-[#f8f9fa] md:bg-black/5 hover:bg-black/10 transition-colors border-none md:border"
                     >
                       Back
                     </Button>
@@ -302,7 +311,7 @@ export const Hero = () => {
                       variant="accent"
                       onClick={handleSubmitRequest}
                       disabled={loading}
-                      className="flex-1 lg:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[15px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 transition-colors"
+                      className="flex-1 lg:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[16px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 transition-colors"
                     >
                       {loading ? "Sending..." : "Request Callback"}
                       <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[16px] md:rounded-[18px] bg-[#1a232c] flex items-center justify-center text-white shrink-0">
@@ -324,8 +333,8 @@ export const Hero = () => {
                       <CheckCircle2 className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h4 className="text-[18px] font-bold text-brand-graphite leading-tight mb-1">Request Sent Successfully!</h4>
-                      <p className="text-[14px] font-medium text-brand-graphite/70">
+                      <h4 className="text-[15px] font-bold text-brand-graphite leading-tight mb-1">Request Sent Successfully!</h4>
+                      <p className="text-[14px] font-semibold text-brand-graphite/70">
                         Our dispatch team is calculating the best route and will call you on <strong>{contactInfo.phone}</strong> shortly.
                       </p>
                     </div>
@@ -333,7 +342,7 @@ export const Hero = () => {
                   <Button
                     variant="glass"
                     onClick={resetForm}
-                    className="w-full md:w-auto h-[50px] px-6 text-brand-graphite font-bold rounded-[16px] hover:rounded-[10px] bg-black/5 border border-black/10 hover:bg-black/10 transition-colors whitespace-nowrap"
+                    className="w-full md:w-auto h-[56px] px-8 text-brand-graphite text-[16px] font-bold rounded-[16px] hover:rounded-[10px] bg-black/5 border border-black/10 hover:bg-black/10 transition-colors whitespace-nowrap"
                   >
                     Start new request
                   </Button>

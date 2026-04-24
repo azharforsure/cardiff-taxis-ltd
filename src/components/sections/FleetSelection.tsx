@@ -51,21 +51,21 @@ export const FleetSelection = () => {
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-16">
           <div className="max-w-xl">
-            <span className="text-[10px] md:text-[11px] font-bold text-white/80 tracking-[0.2em] uppercase mb-4 block">
+            <span className="text-[15px] font-semibold text-white/80 tracking-[0.2em] uppercase mb-4 block">
               OUR FLEET
             </span>
             <h2 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white mb-6 leading-[1.1] tracking-tight">
               Choose the perfect vehicle for<br className="hidden lg:block"/> passengers and luggage
             </h2>
-            <p className="text-[14px] text-white/80 font-medium leading-relaxed max-w-[480px]">
+            <p className="text-[15px] text-white/80 font-semibold leading-relaxed max-w-[480px]">
               Every vehicle in our fleet is well maintained, spacious, and driven by an experienced local professional.
             </p>
           </div>
           
-          <Link to="/book" className="rounded-full hover:rounded-2xl pl-6 pr-1.5 py-1.5 bg-white text-[#2d3748] font-bold flex items-center justify-between gap-4 hover:bg-gray-100 transition-all text-[13px] h-11 shadow-md w-fit">
+          <Link to="/book" className="rounded-full hover:rounded-2xl pl-6 pr-2 py-2 bg-white text-[#2d3748] font-bold flex items-center justify-between gap-4 hover:bg-gray-100 transition-all text-[16px] h-[56px] shadow-md w-fit">
             Book a trip
-            <div className="w-8 h-8 rounded-full bg-[#2d3748] flex items-center justify-center shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 text-white" strokeWidth={2.5}/>
+            <div className="w-10 h-10 rounded-full bg-[#2d3748] flex items-center justify-center shrink-0">
+              <ArrowRight className="w-4 h-4 text-white" strokeWidth={2.5}/>
             </div>
           </Link>
         </div>
@@ -90,14 +90,14 @@ export const FleetSelection = () => {
               </div>
               
               <div className="flex justify-between items-end pb-4 px-2">
-                <h4 className="text-[15px] font-medium text-[#111827] mb-1">{vehicle.name}</h4>
+                <h4 className="text-[15px] font-bold text-[#111827] mb-1">{vehicle.name}</h4>
                 
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-end gap-3.5">
                     {vehicle.specs.map((spec, i) => (
                       <div key={i} className="flex items-center gap-1.5 text-[#374151]">
                         {spec.icon}
-                        <span className="text-[14px]">{spec.val}</span>
+                        <span className="text-[15px] font-bold">{spec.val}</span>
                       </div>
                     ))}
                   </div>
@@ -105,7 +105,7 @@ export const FleetSelection = () => {
                     {vehicle.altSpecs.map((spec, i) => (
                       <div key={i} className="flex items-center gap-1.5 text-[#374151]">
                         {spec.icon}
-                        <span className="text-[14px]">{spec.val}</span>
+                        <span className="text-[15px] font-bold">{spec.val}</span>
                       </div>
                     ))}
                   </div>
@@ -124,7 +124,7 @@ export const FleetSelection = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <p className="text-[#111827] text-[15px] font-medium pr-8 pt-1 sm:pt-0 pb-2 sm:pb-0">
+          <p className="text-[#111827] text-[15px] font-semibold pr-8 pt-1 sm:pt-0 pb-2 sm:pb-0">
             Child seats are exempt in UK public transport. Need help choosing a vehicle? Give us a call to discuss passenger and luggage requirements.
           </p>
         </div>
