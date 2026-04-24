@@ -25,11 +25,11 @@ export const Footer = () => {
                 bookings@cardifftaxisltd.co.uk
               </a>
               <a
-                href="tel:07459466835"
+                href="tel:07817385655"
                 className="flex items-center gap-3 hover:text-brand-accent transition-colors"
               >
                 <Phone className="w-[18px] h-[18px] font-light" strokeWidth={2} />
-                07459 466835
+                07817 385655
               </a>
             </div>
           </div>

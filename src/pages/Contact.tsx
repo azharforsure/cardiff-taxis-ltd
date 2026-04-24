@@ -82,15 +82,15 @@ export const Contact = () => {
             <div>
               <h3 className="text-[26px] font-bold mb-8">Cardiff Taxis Ltd</h3>
               <div className="flex flex-col gap-6">
-                <a href="tel:07459466835" className="flex items-start gap-4 hover:text-brand-accent transition-colors group">
+                <a href="tel:07817385655" className="flex items-start gap-4 hover:text-brand-accent transition-colors group">
                   <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-brand-accent/20">
                     <svg className="w-5 h-5 text-white group-hover:text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
                   <div>
-                    <div className="font-bold text-[16px] mb-1">Phone</div>
-                    <div className="text-white/80 font-medium">07459 466835</div>
+                    <div className="font-bold mb-1 text-white">Phone</div>
+                    <div className="text-white/80 font-medium">07817 385655</div>
                   </div>
                 </a>
 

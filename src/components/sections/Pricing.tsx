@@ -84,7 +84,7 @@ export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
                 If the journey you have in mind does not fit the standard options above, speak to our team directly and we will arrange a suitable vehicle.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="tel:07459466835" className="w-full sm:w-auto">
+                <a href="tel:07817385655" className="w-full sm:w-auto">
                   <button className="rounded-full hover:rounded-xl pl-6 pr-2 py-1.5 bg-brand-primary text-white font-bold flex items-center justify-between gap-4 hover:bg-brand-graphite transition-all w-full sm:w-auto text-[16px] h-12">
                     Give us a call
                     <div className="w-[34px] h-[34px] rounded-full bg-white flex items-center justify-center shrink-0">
