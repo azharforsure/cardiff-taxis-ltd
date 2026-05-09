@@ -120,11 +120,16 @@ export async function mountSumUpWidget(
     id: containerId,
     checkoutId,
     onResponse: (type: string, body: any) => {
-      // The body contains the checkout object. 
-      // We should check that the status is PAID or SUCCESSFUL.
-      if (type === "success" && (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING")) {
+      console.log("SumUp SDK Response:", type, body);
+      
+      // Detailed status check
+      const isSuccessful = type === "success" && 
+        (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING");
+
+      if (isSuccessful) {
         onSuccess(body);
-      } else if (type === "error" || body.status === "FAILED" || body.status === "DECLINED") {
+      } else {
+        // If type is success but status isn't PAID, it's actually an error/failure
         onError(body);
       }
     },
@@ -134,17 +139,9 @@ export async function mountSumUpWidget(
 /**
  * Unmount/destroy the SumUp widget.
  */
-export function unmountSumUpWidget(containerId?: string): void {
+export function unmountSumUpWidget(): void {
   const SumUpCard = (window as any).SumUpCard;
   if (SumUpCard?.unmount) {
     SumUpCard.unmount();
-  }
-  
-  // Extra safety for React: manually clear the container if ID is provided
-  if (containerId) {
-    const container = document.getElementById(containerId);
-    if (container) {
-      container.innerHTML = "";
-    }
   }
 }

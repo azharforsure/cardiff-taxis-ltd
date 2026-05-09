@@ -49,7 +49,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
   // Cleanup SumUp widget on unmount
   useEffect(() => {
     return () => {
-      unmountSumUpWidget("sumup-card-container");
+      unmountSumUpWidget();
     };
   }, []);
 
@@ -93,13 +93,16 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         "sumup-card-container",
         checkout.id,
         async (body) => {
+          // Unmount first to avoid React "removeChild" crashes
+          unmountSumUpWidget();
+          
           // Payment succeeded — send booking confirmation email
-          unmountSumUpWidget("sumup-card-container");
           setPaymentState("success");
           await sendBookingConfirmation(ref);
           window.scrollTo({ top: 0, behavior: "smooth" });
         },
         (errorBody) => {
+          unmountSumUpWidget();
           setPaymentState("error");
           setError(
             "Payment was not completed. Please try again or call us at 07817 385655."
@@ -369,7 +372,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         <Button
           variant="glass"
           onClick={() => {
-            unmountSumUpWidget("sumup-card-container");
+            unmountSumUpWidget();
             setPaymentState("details");
           }}
           className="h-[56px] px-8 text-brand-graphite text-[15px] font-bold rounded-[16px] bg-brand-section hover:bg-black/10 transition-colors border border-gray-200"
