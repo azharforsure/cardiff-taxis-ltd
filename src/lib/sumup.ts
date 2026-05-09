@@ -110,26 +110,15 @@ export async function mountSumUpWidget(
     throw new Error("SumUp SDK not available");
   }
 
-  // Clear any loading indicators before mounting
-  const container = document.getElementById(containerId);
-  if (container) {
-    container.innerHTML = "";
-  }
-
   SumUpCard.mount({
     id: containerId,
     checkoutId,
     onResponse: (type: string, body: any) => {
-      console.log("SumUp SDK Response:", type, body);
-      
-      // Detailed status check
-      const isSuccessful = type === "success" && 
-        (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING");
-
-      if (isSuccessful) {
+      // The body contains the checkout object. 
+      // We should check that the status is PAID or SUCCESSFUL.
+      if (type === "success" && (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING")) {
         onSuccess(body);
-      } else {
-        // If type is success but status isn't PAID, it's actually an error/failure
+      } else if (type === "error" || body.status === "FAILED" || body.status === "DECLINED") {
         onError(body);
       }
     },

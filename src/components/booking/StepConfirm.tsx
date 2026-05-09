@@ -93,16 +93,12 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         "sumup-card-container",
         checkout.id,
         async (body) => {
-          // Unmount first to avoid React "removeChild" crashes
-          unmountSumUpWidget();
-          
           // Payment succeeded — send booking confirmation email
           setPaymentState("success");
           await sendBookingConfirmation(ref);
           window.scrollTo({ top: 0, behavior: "smooth" });
         },
         (errorBody) => {
-          unmountSumUpWidget();
           setPaymentState("error");
           setError(
             "Payment was not completed. Please try again or call us at 07817 385655."
@@ -331,13 +327,9 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
 
           <div
             id="sumup-card-container"
-            className="min-h-[200px] flex items-center justify-center"
+            className="min-h-[200px]"
           >
-            {/* SumUp SDK mounts here */}
-            <div className="flex flex-col items-center gap-3 text-brand-muted">
-              <Loader2 className="w-6 h-6 animate-spin" />
-              <span className="text-[14px] font-semibold">Loading payment form...</span>
-            </div>
+            {/* The SDK will mount here. Keeping it empty to avoid React unmount crashes. */}
           </div>
 
           {/* Accepted cards */}
