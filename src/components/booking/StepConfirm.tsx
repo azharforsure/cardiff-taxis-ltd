@@ -49,7 +49,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
   // Cleanup SumUp widget on unmount
   useEffect(() => {
     return () => {
-      unmountSumUpWidget();
+      unmountSumUpWidget("sumup-card-container");
     };
   }, []);
 
@@ -94,6 +94,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         checkout.id,
         async (body) => {
           // Payment succeeded — send booking confirmation email
+          unmountSumUpWidget("sumup-card-container");
           setPaymentState("success");
           await sendBookingConfirmation(ref);
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -368,7 +369,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         <Button
           variant="glass"
           onClick={() => {
-            unmountSumUpWidget();
+            unmountSumUpWidget("sumup-card-container");
             setPaymentState("details");
           }}
           className="h-[56px] px-8 text-brand-graphite text-[15px] font-bold rounded-[16px] bg-brand-section hover:bg-black/10 transition-colors border border-gray-200"

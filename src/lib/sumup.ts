@@ -134,9 +134,17 @@ export async function mountSumUpWidget(
 /**
  * Unmount/destroy the SumUp widget.
  */
-export function unmountSumUpWidget(): void {
+export function unmountSumUpWidget(containerId?: string): void {
   const SumUpCard = (window as any).SumUpCard;
   if (SumUpCard?.unmount) {
     SumUpCard.unmount();
+  }
+  
+  // Extra safety for React: manually clear the container if ID is provided
+  if (containerId) {
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.innerHTML = "";
+    }
   }
 }
