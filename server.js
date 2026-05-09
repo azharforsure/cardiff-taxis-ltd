@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080; // Standard for many Node hosts
 
 app.use(cors());
 app.use(express.json());
@@ -86,13 +86,16 @@ app.post('/api/create-checkout', async (req, res) => {
   await handler(req, customRes);
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(join(__dirname, 'dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(join(__dirname, 'dist', 'index.html'));
-  });
-}
+// Serve static files
+app.use(express.static(join(__dirname, 'dist')));
+
+// Fallback for SPA routing
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  res.sendFile(join(__dirname, 'dist', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`API Server running at http://localhost:${port}`);

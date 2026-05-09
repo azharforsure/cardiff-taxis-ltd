@@ -45,6 +45,7 @@ export interface SumUpCheckoutResponse {
 export async function createSumUpCheckout(
   request: SumUpCheckoutRequest
 ): Promise<SumUpCheckoutResponse> {
+  // Use relative path for production (same-origin)
   const response = await fetch("/api/create-checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
