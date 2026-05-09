@@ -120,9 +120,11 @@ export async function mountSumUpWidget(
     id: containerId,
     checkoutId,
     onResponse: (type: string, body: any) => {
-      if (type === "success") {
+      // The body contains the checkout object. 
+      // We should check that the status is PAID or SUCCESSFUL.
+      if (type === "success" && (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING")) {
         onSuccess(body);
-      } else if (type === "error") {
+      } else if (type === "error" || body.status === "FAILED" || body.status === "DECLINED") {
         onError(body);
       }
     },
