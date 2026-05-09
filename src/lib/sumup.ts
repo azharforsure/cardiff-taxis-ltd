@@ -116,13 +116,15 @@ export async function mountSumUpWidget(
     onResponse: (type: string, body: any) => {
       console.log("SumUp SDK Response Type:", type);
       console.log("SumUp SDK Response Body:", body);
-      
-      // The body contains the checkout object. 
-      // We should check that the status is PAID or SUCCESSFUL.
-      if (type === "success" && (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING")) {
+
+      const isSuccess = type === "success" && 
+        (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING");
+
+      if (isSuccess) {
         onSuccess(body);
       } else {
-        console.warn("Payment failed or status not PAID. Status:", body?.status);
+        // Handle failure, including 'invalid' type
+        console.error("Payment failed or status not PAID. Status:", body.status, "Type:", type);
         onError(body);
       }
     },
