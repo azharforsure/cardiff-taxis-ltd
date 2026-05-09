@@ -110,21 +110,20 @@ export async function mountSumUpWidget(
     throw new Error("SumUp SDK not available");
   }
 
+  // Clear any loading indicators before mounting
+  const container = document.getElementById(containerId);
+  if (container) {
+    container.innerHTML = "";
+  }
+
   SumUpCard.mount({
     id: containerId,
     checkoutId,
     onResponse: (type: string, body: any) => {
-      console.log("SumUp SDK Response Type:", type);
-      console.log("SumUp SDK Response Body:", body);
-
-      const isSuccess = type === "success" && 
-        (body.status === "PAID" || body.status === "SUCCESSFUL" || body.status === "PAID_PENDING");
-
-      if (isSuccess) {
+      console.log(`SumUp Widget Response [${type}]:`, body);
+      if (type === "success") {
         onSuccess(body);
-      } else {
-        // Handle failure, including 'invalid' type
-        console.error("Payment failed or status not PAID. Status:", body.status, "Type:", type);
+      } else if (type === "error") {
         onError(body);
       }
     },

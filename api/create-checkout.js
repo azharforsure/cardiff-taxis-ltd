@@ -37,7 +37,12 @@ export default async function handler(req, res) {
       checkout_reference: checkoutReference,
       merchant_code: SUMUP_MERCHANT_CODE,
       description: description || "Cardiff Taxis Booking",
-      pay_to_email: customerEmail || undefined,
+      personal_details: customerEmail ? {
+        email: customerEmail
+      } : undefined,
+      transaction_control: {
+        settlement: "AUTO"
+      }
     };
 
     // If a redirect URL is provided, use hosted checkout
@@ -47,6 +52,8 @@ export default async function handler(req, res) {
         redirect_url: redirectUrl,
       };
     }
+
+    console.log("Creating SumUp checkout with payload:", JSON.stringify(payload, null, 2));
 
     const response = await fetch("https://api.sumup.com/v0.1/checkouts", {
       method: "POST",
@@ -62,14 +69,19 @@ export default async function handler(req, res) {
     if (contentType && contentType.includes("application/json")) {
       data = await response.json();
     } else {
+      const text = await response.text();
+      console.error("Non-JSON response from SumUp:", text);
       return res.status(500).json({ error: "External API error", detail: "Non-JSON response" });
     }
 
     if (!response.ok) {
+      console.error("SumUp API error:", data);
       return res.status(response.status).json({
         error: data.message || "Failed to create checkout",
       });
     }
+
+    console.log("SumUp checkout created successfully:", data.id);
 
     // Return the checkout ID (and hosted URL if applicable)
     return res.status(200).json({

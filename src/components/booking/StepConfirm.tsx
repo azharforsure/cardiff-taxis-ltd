@@ -93,12 +93,26 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         "sumup-card-container",
         checkout.id,
         async (body) => {
-          // Payment succeeded — send booking confirmation email
-          setPaymentState("success");
-          await sendBookingConfirmation(ref);
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          // Payment response received. 
+          // IMPORTANT: 'success' type means the communication was successful.
+          // We MUST check body.status to ensure the payment was actually PAID.
+          if (body.status === "PAID") {
+            unmountSumUpWidget();
+            setPaymentState("success");
+            await sendBookingConfirmation(ref);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            console.error("SumUp payment not PAID. Status:", body.status, JSON.stringify(body, null, 2));
+            unmountSumUpWidget();
+            setPaymentState("error");
+            setError(
+              `Payment status: ${body.status || "Unsuccessful"}. Reason: ${body.status_msg || "Unknown error"}. Please check your card details and try again.`
+            );
+          }
         },
         (errorBody) => {
+          console.error("SumUp Widget Error:", errorBody);
+          unmountSumUpWidget();
           setPaymentState("error");
           setError(
             "Payment was not completed. Please try again or call us at 07817 385655."
@@ -107,6 +121,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
       );
     } catch (err: any) {
       console.error("Payment error:", err);
+      unmountSumUpWidget();
       setPaymentState("error");
       setError(
         err.message?.includes("Failed to fetch") || err.message?.includes("Checkout creation")
@@ -326,10 +341,21 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
           </div>
 
           <div
-            id="sumup-card-container"
-            className="min-h-[200px]"
+            className="min-h-[200px] flex items-center justify-center relative"
           >
-            {/* The SDK will mount here. Keeping it empty to avoid React unmount crashes. */}
+            {/* The actual mounting point for SumUp SDK. Keep it empty for React. */}
+            <div id="sumup-card-container" className="w-full z-10"></div>
+
+            {/* Overlay loader that gets hidden once the SumUp widget is injected */}
+            <style>{`
+              #sumup-card-container:not(:empty) ~ .sumup-loader {
+                display: none;
+              }
+            `}</style>
+            <div className="sumup-loader absolute inset-0 flex flex-col items-center justify-center gap-3 text-brand-muted pointer-events-none opacity-50 z-0">
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <span className="text-[14px] font-semibold">Loading payment form...</span>
+            </div>
           </div>
 
           {/* Accepted cards */}
