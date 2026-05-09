@@ -4,12 +4,12 @@ import { Button } from "../ui/Button";
 
 export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
   const fleetRates = [
-    { name: "Saloon", firstMile: "£28", perMile: "£1.20" },
-    { name: "Estate", firstMile: "£32", perMile: "£1.25" },
-    { name: "Executive", firstMile: "£37", perMile: "£1.60" },
-    { name: "People Carrier", firstMile: "£37", perMile: "£1.60" },
-    { name: "Executive People Carrier", firstMile: "£53", perMile: "£2.00" },
-    { name: "8-Seater Minibus", firstMile: "£55", perMile: "£2.00" },
+    { name: "Saloon", startPrice: "£4", perMile: "£2.50" },
+    { name: "Estate", startPrice: "£8", perMile: "£2.50" },
+    { name: "Executive", startPrice: "£8", perMile: "£3.00" },
+    { name: "People Carrier", startPrice: "£10", perMile: "£3.00" },
+    { name: "Executive People Carrier", startPrice: "£15", perMile: "£3.00" },
+    { name: "8-Seater Minibus", startPrice: "£12", perMile: "£3.00" },
   ];
 
   return (
@@ -57,13 +57,13 @@ export const Pricing = ({ hideCta = false }: { hideCta?: boolean }) => {
               </div>
               <div className="flex flex-col gap-2 mt-6">
                 <div className="flex items-center justify-between border-b border-brand-border group-hover:border-white/10 pb-2 transition-colors duration-300">
-                  <span className="text-[14px] text-brand-muted group-hover:text-white/60 font-medium transition-colors duration-300">First mile</span>
+                  <span className="text-[14px] text-brand-muted group-hover:text-white/60 font-medium transition-colors duration-300">Start price</span>
                   <span className="text-[18px] font-bold text-brand-graphite group-hover:text-white transition-colors duration-300">
-                    {vehicle.firstMile}
+                    {vehicle.startPrice}
                   </span>
                 </div>
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-[14px] text-brand-muted group-hover:text-white/60 font-medium transition-colors duration-300">Remaining journey</span>
+                  <span className="text-[14px] text-brand-muted group-hover:text-white/60 font-medium transition-colors duration-300">Per mile</span>
                   <span className="text-[16px] font-bold text-brand-graphite group-hover:text-white transition-colors duration-300">
                     {vehicle.perMile} <span className="text-[13px] font-medium">/ mile</span>
                   </span>

@@ -1,347 +1,243 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { BookingWidget } from "../components/booking/BookingWidget";
+import { BookingProvider, useBooking } from "../context/BookingContext";
+import type { ServiceType } from "../context/BookingContext";
 
-export const Booking = () => {
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  
-  const [formData, setFormData] = useState({
-    serviceType: "airport",
-    pickup: "",
-    dropoff: "",
-    date: "",
-    time: "",
-    vehicle: "saloon",
-    flightNumber: "",
-    luggage: "",
-    name: "",
-    phone: "",
-    email: ""
-  });
+/**
+ * Step Indicator rendered inside the page header.
+ */
+const StepIndicator = () => {
+  const booking = useBooking();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch("https://api.staticforms.xyz/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          accessKey: "sf_a185997c08c3aee04f0e9794",
-          subject: `New Booking Request: ${formData.name}`,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: `
-            SERVICE DETAILS:
-            - Type: ${formData.serviceType}
-            - Vehicle: ${formData.vehicle}
-            - Date: ${formData.date}
-            - Time: ${formData.time}
-            
-            JOURNEY:
-            - From: ${formData.pickup}
-            - To: ${formData.dropoff}
-            
-            ADDITIONAL INFO:
-            - Flight: ${formData.flightNumber || 'N/A'}
-            - Luggage: ${formData.luggage || '0'}
-            
-            CONTACT:
-            - Name: ${formData.name}
-            - Phone: ${formData.phone}
-            - Email: ${formData.email}
-          `,
-          replyTo: "@",
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        throw new Error("Failed to send");
-      }
-    } catch (err) {
-      setError("Failed to submit booking. Please call our dispatch team directly.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="flex flex-col pb-24 min-h-[70vh] items-center justify-center px-6">
-        <div className="bg-white p-12 rounded-[32px] shadow-xl text-center max-w-lg w-full animate-in fade-in zoom-in-95">
-          <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-8 mx-auto">
-            <CheckCircle2 className="w-10 h-10 text-green-600" />
-          </div>
-          <h2 className="text-3xl font-bold text-brand-graphite mb-4">Booking Requested!</h2>
-          <p className="text-brand-muted font-medium mb-8">
-            Thank you, {formData.name}. Our dispatch team is reviewing your details and will contact you shortly to confirm the price and booking.
-          </p>
-          <button 
-            onClick={() => {
-              setSubmitted(false);
-              setFormData({ ...formData, pickup: "", dropoff: "" });
-            }}
-            className="w-full h-[60px] rounded-[20px] bg-brand-accent text-brand-graphite font-bold text-[16px] hover:bg-brand-accent-hover transition-all"
-          >
-            Make another booking
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const steps = [
+    { num: 1, label: "Journey" },
+    { num: 2, label: "Quote" },
+    { num: 3, label: "Payment" },
+  ];
 
   return (
-    <div className="flex flex-col pb-24 min-h-[70vh]">
-      <Helmet>
-        <title>Book a Taxi Cardiff | Online Booking Request | Cardiff Taxis Ltd</title>
-        <meta name="description" content="Request your Cardiff taxi or airport transfer online. Simple booking process for all vehicle types. Fixed prices and instant confirmation." />
-      </Helmet>
-      <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
-        <div className="relative pt-[180px] pb-[140px] md:pt-[260px] md:pb-[200px] bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
-          <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
-             <img 
-                src="/images/service_detail_header_1776973788710.png" 
-                alt="Secure Booking" 
-                className="w-full h-full object-cover"
-             />
-          </div>
-          <div className="absolute inset-0 z-10 bg-brand-primary/60 backdrop-blur-[2px] mix-blend-multiply"></div>
-          <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-primary via-brand-primary/20 to-transparent"></div>
-          <div className="text-center w-full max-w-[1400px] mx-auto px-6 relative z-20">
-            <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
-              SECURE YOUR TRANSFER
+    <div className="flex items-center justify-center gap-3 md:gap-4 w-full max-w-[520px] mx-auto mt-8 md:mt-10">
+      {steps.map((step, index) => (
+        <div key={step.num} className="flex items-center gap-3 md:gap-4">
+          <div
+            className={`flex items-center gap-2.5 rounded-full px-4 md:px-5 py-2.5 md:py-3 transition-all duration-300 ${
+              booking.currentStep === step.num
+                ? "bg-brand-accent shadow-lg shadow-brand-accent/20"
+                : booking.currentStep > step.num
+                ? "bg-white/20 backdrop-blur-sm"
+                : "bg-white/10 backdrop-blur-sm"
+            }`}
+          >
+            <div
+              className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold shrink-0 transition-all ${
+                booking.currentStep === step.num
+                  ? "bg-brand-graphite text-white"
+                  : booking.currentStep > step.num
+                  ? "bg-white text-brand-graphite"
+                  : "bg-white/20 text-white/60"
+              }`}
+            >
+              {booking.currentStep > step.num ? "✓" : step.num}
+            </div>
+            <span
+              className={`text-[13px] md:text-[14px] font-bold whitespace-nowrap transition-colors ${
+                booking.currentStep === step.num
+                  ? "text-brand-graphite"
+                  : booking.currentStep > step.num
+                  ? "text-white"
+                  : "text-white/50"
+              }`}
+            >
+              {step.label}
             </span>
-            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-5 leading-[1.05] tracking-tight">Book a Transfer Today</h1>
-            <p className="text-[15px] text-white/80 max-w-2xl mx-auto font-semibold leading-relaxed">
-              Submit the details below to request a ride. Our dispatch team will review the information and confirm the final price.
-            </p>
           </div>
+          {index < 2 && (
+            <div
+              className={`w-6 md:w-8 h-[2px] rounded-full shrink-0 transition-colors ${
+                booking.currentStep > step.num
+                  ? "bg-brand-accent/60"
+                  : "bg-white/15"
+              }`}
+            />
+          )}
         </div>
-      </div>
+      ))}
+    </div>
+  );
+};
 
-      <div className="px-6 md:px-12 lg:px-[80px] w-full max-w-[1400px] mx-auto -mt-16 md:-mt-20 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          <div className="lg:col-span-2 bg-white rounded-[24px] md:rounded-[32px] shadow-xl ring-1 ring-black/5 p-6 md:p-12">
-            <h2 className="text-[26px] font-bold text-brand-graphite mb-8 tracking-tight">Journey Details</h2>
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-2">
-                <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Service Type *</label>
-                <select 
-                  className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent cursor-pointer"
-                  value={formData.serviceType}
-                  onChange={(e) => setFormData({...formData, serviceType: e.target.value})}
-                  required
-                >
-                  <option value="airport">Airport Transfer (Cardiff, Bristol, London)</option>
-                  <option value="city">City Private Hire (Cardiff only)</option>
-                </select>
-              </div>
+/**
+ * Inner component that pre-fills booking context from URL params.
+ */
+const BookingPageInner = () => {
+  const [searchParams] = useSearchParams();
+  const booking = useBooking();
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Pickup Location *</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={formData.pickup}
-                    onChange={(e) => setFormData({...formData, pickup: e.target.value})}
-                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                    placeholder="Airport, City, or Postcode" 
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Drop-off Location *</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={formData.dropoff}
-                    onChange={(e) => setFormData({...formData, dropoff: e.target.value})}
-                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                    placeholder="Airport, City, or Postcode" 
-                  />
-                </div>
-              </div>
+  useEffect(() => {
+    // Pre-fill from URL params (passed from Hero widget)
+    const pickupParam = searchParams.get("pickup");
+    const dropoffParam = searchParams.get("dropoff");
+    const serviceParam = searchParams.get("service");
+    const dateParam = searchParams.get("date");
+    const timeParam = searchParams.get("time");
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Date *</label>
-                  <input 
-                    type="date" 
-                    required
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Time *</label>
-                  <input 
-                    type="time" 
-                    required
-                    value={formData.time}
-                    onChange={(e) => setFormData({...formData, time: e.target.value})}
-                    className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                  />
-                </div>
-              </div>
+    if (pickupParam) {
+      try {
+        booking.setPickup(JSON.parse(pickupParam));
+      } catch {}
+    }
+    if (dropoffParam) {
+      try {
+        booking.setDropoff(JSON.parse(dropoffParam));
+      } catch {}
+    }
+    if (serviceParam === "airport" || serviceParam === "city") {
+      booking.setServiceType(serviceParam as ServiceType);
+    }
+    if (dateParam) booking.setDate(dateParam);
+    if (timeParam) booking.setTime(timeParam);
 
-              <div className="flex flex-col gap-2 mt-4">
-                <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Select Vehicle *</label>
-                <select 
-                  required
-                  value={formData.vehicle}
-                  onChange={(e) => setFormData({...formData, vehicle: e.target.value})}
-                  className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent cursor-pointer"
-                >
-                  <option value="saloon">Saloon (up to 4 passengers)</option>
-                  <option value="estate">Estate (extra luggage space)</option>
-                  <option value="executive">Executive</option>
-                  <option value="people_carrier">People Carrier</option>
-                  <option value="executive_pc">Executive People Carrier</option>
-                  <option value="8_seater">8-Seater Minibus</option>
-                </select>
-              </div>
+    // If we have both pickup and dropoff from params, auto-advance to step 2
+    if (pickupParam && dropoffParam) {
+      booking.setStep(2);
+    }
+  }, []); // Only on mount
 
-              {formData.serviceType === "airport" && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Flight Number</label>
-                    <input 
-                      type="text" 
-                      value={formData.flightNumber}
-                      onChange={(e) => setFormData({...formData, flightNumber: e.target.value})}
-                      className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                      placeholder="e.g. BA1234" 
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">Luggage Count</label>
-                    <input 
-                      type="number" 
-                      min="0" 
-                      value={formData.luggage}
-                      onChange={(e) => setFormData({...formData, luggage: e.target.value})}
-                      className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                      placeholder="Number of bags" 
-                    />
-                  </div>
-                </div>
-              )}
+  return <BookingWidget mode="full" />;
+};
 
-              <div className="mt-8 pt-8 border-t border-gray-100">
-                <h3 className="text-[22px] font-bold text-brand-graphite mb-6 tracking-tight">Contact Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-2">
-                    <input 
-                      type="text" 
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                      placeholder="Full Name *" 
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <input 
-                      type="tel" 
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                      placeholder="Phone Number *" 
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2 md:col-span-2">
-                    <input 
-                      type="email" 
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full h-[54px] md:h-[64px] rounded-[16px] md:rounded-[20px] bg-brand-section border-none px-4 text-brand-graphite text-[15px] font-semibold focus:ring-2 focus:ring-brand-accent" 
-                      placeholder="Email Address *" 
-                    />
-                  </div>
-                </div>
-              </div>
+/**
+ * Layout controller — decides grid vs full-width based on step.
+ */
+const BookingLayout = () => {
+  const booking = useBooking();
+  const showSidebar = booking.currentStep === 1;
 
-              <div className="mt-6">
-                <p className="text-[13px] text-brand-muted/70 mb-6 font-semibold">By requesting a booking, you agree to our <Link to="/terms" className="text-brand-primary font-bold underline">Terms & Conditions</Link>.</p>
-                
-                {error && <p className="text-red-500 text-xs font-bold mb-4">{error}</p>}
-                
-                <button 
-                  disabled={loading}
-                  className="w-full h-[60px] md:h-[64px] rounded-[16px] md:rounded-[22px] bg-brand-accent text-brand-graphite font-bold text-[16px] hover:bg-brand-accent-hover hover:rounded-[12px] md:hover:rounded-[14px] transition-all mt-2 shadow-lg flex items-center justify-center gap-3 disabled:opacity-70"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-6 h-6 animate-spin" />
-                      Processing Request...
-                    </>
-                  ) : "Request Booking"}
-                </button>
-              </div>
-            </form>
-          </div>
+  return (
+    <div className="px-4 md:px-8 lg:px-12 xl:px-[80px] w-full max-w-[1400px] mx-auto -mt-12 md:-mt-16 relative z-20">
+      <div
+        className={`grid gap-6 lg:gap-8 transition-all duration-500 ${
+          showSidebar
+            ? "grid-cols-1 lg:grid-cols-3"
+            : "grid-cols-1"
+        }`}
+      >
+        {/* Main Booking Widget */}
+        <div
+          className={`bg-white rounded-[20px] md:rounded-[28px] shadow-xl ring-1 ring-black/5 p-5 md:p-8 lg:p-10 transition-all duration-500 ${
+            showSidebar ? "lg:col-span-2" : ""
+          }`}
+        >
+          <BookingPageInner />
+        </div>
 
-          <div className="lg:col-span-1 flex flex-col gap-6">
-            <div className="bg-white rounded-[24px] md:rounded-[32px] shadow-xl ring-1 ring-black/5 p-8 border-t-4 border-brand-accent">
-              <h3 className="text-xl font-bold text-brand-graphite mb-6">Why Choose Our Service</h3>
-              <ul className="flex flex-col gap-6">
-                <li className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-section flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+        {/* Sidebar — only visible on Step 1 */}
+        {showSidebar && (
+          <div className="lg:col-span-1 flex flex-col gap-5 animate-in fade-in slide-in-from-right-4 duration-500">
+            {/* Why Choose Us */}
+            <div className="bg-white rounded-[20px] md:rounded-[28px] shadow-xl ring-1 ring-black/5 p-6 md:p-8 border-t-4 border-brand-accent">
+              <h3 className="text-lg font-bold text-brand-graphite mb-5">Why Choose Our Service</h3>
+              <ul className="flex flex-col gap-5">
+                <li className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-section flex items-center justify-center shrink-0">
+                    <svg className="w-4.5 h-4.5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-graphite mb-1">Fixed Fares</h4>
-                    <p className="text-[14px] text-brand-muted leading-snug font-semibold">The quoted price remains fixed with no hidden fees or surge charges.</p>
+                    <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5">Fixed Fares</h4>
+                    <p className="text-[13px] text-brand-muted leading-snug font-semibold">No hidden fees or surge charges.</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-section flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <li className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-section flex items-center justify-center shrink-0">
+                    <svg className="w-4.5 h-4.5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-graphite mb-1">Flight Tracking</h4>
-                    <p className="text-[14px] text-brand-muted leading-snug font-semibold">Our dispatch team monitors flight numbers to adjust for delays automatically.</p>
+                    <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5">Flight Tracking</h4>
+                    <p className="text-[13px] text-brand-muted leading-snug font-semibold">Adjusted pickup for delayed flights.</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-brand-section flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                <li className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-section flex items-center justify-center shrink-0">
+                    <svg className="w-4.5 h-4.5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-graphite mb-1">Pay the Driver Directly</h4>
-                    <p className="text-[14px] text-brand-muted leading-snug font-semibold">Complete payment by card or cash directly to the driver at the end of the journey.</p>
+                    <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5">Secure Payment</h4>
+                    <p className="text-[13px] text-brand-muted leading-snug font-semibold">Visa, Mastercard, Apple Pay via SumUp.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-section flex items-center justify-center shrink-0">
+                    <svg className="w-4.5 h-4.5 text-brand-graphite" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z" /></svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-brand-graphite text-[15px] mb-0.5">5% Return Discount</h4>
+                    <p className="text-[13px] text-brand-muted leading-snug font-semibold">Save on return journeys automatically.</p>
                   </div>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-brand-primary rounded-[24px] md:rounded-[32px] shadow-xl p-8 text-white relative overflow-hidden">
-               <div className="absolute -right-10 -bottom-10 opacity-10">
-                 <svg className="w-40 h-40" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A.991.991 0 013 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9zM12 4.15L6.04 7.5 12 10.85l5.96-3.35L12 4.15zM5 15.91l6 3.38v-6.71L5 9.19v6.72zm14 0v-6.72l-6 3.39v6.71l6-3.38z"/></svg>
+            {/* Quick Call Card */}
+            <div className="bg-brand-primary rounded-[20px] md:rounded-[28px] shadow-xl p-6 md:p-8 text-white relative overflow-hidden">
+               <div className="absolute -right-8 -bottom-8 opacity-10">
+                 <svg className="w-32 h-32" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                </div>
-               <h3 className="text-xl font-bold mb-3 relative z-10">Need an immediate pick up</h3>
-               <p className="text-white/80 text-[14px] mb-6 relative z-10 leading-relaxed font-semibold">If a vehicle is required within the next two hours in Cardiff, please call our dispatch team directly for immediate assistance.</p>
-               <a href="tel:07817385655" className="inline-flex items-center justify-center w-full h-[56px] rounded-full hover:rounded-2xl bg-white text-brand-graphite font-bold text-[16px] relative z-10 hover:bg-gray-100 transition-all">
+               <h3 className="text-lg font-bold mb-2 relative z-10">Need an immediate pick up?</h3>
+               <p className="text-white/70 text-[13px] mb-5 relative z-10 leading-relaxed font-semibold">Vehicle needed within 2 hours? Call our dispatch team directly.</p>
+               <a href="tel:07817385655" className="inline-flex items-center justify-center w-full h-[52px] rounded-full hover:rounded-2xl bg-white text-brand-graphite font-bold text-[15px] relative z-10 hover:bg-gray-100 transition-all">
                   07817 385655
                </a>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
 };
 
+export const Booking = () => {
+  return (
+    <BookingProvider>
+      <div className="flex flex-col pb-24 min-h-[70vh]">
+        <Helmet>
+          <title>Book a Taxi Cardiff | Instant Quote & Online Booking | Cardiff Taxis Ltd</title>
+          <meta name="description" content="Book your Cardiff taxi or airport transfer online. Get an instant quote with route map, choose your vehicle, and confirm — all in minutes. Fixed prices, secure online payment." />
+        </Helmet>
+
+        {/* Hero Banner with Step Indicator */}
+        <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
+          <div className="relative pt-[150px] pb-[80px] md:pt-[200px] md:pb-[100px] bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
+            <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+               <img 
+                  src="/images/service_detail_header_1776973788710.png" 
+                  alt="Secure Booking" 
+                  className="w-full h-full object-cover"
+               />
+            </div>
+            <div className="absolute inset-0 z-10 bg-brand-primary/60 backdrop-blur-[2px] mix-blend-multiply"></div>
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-brand-primary via-brand-primary/20 to-transparent"></div>
+            <div className="w-full max-w-[1400px] mx-auto px-6 relative z-20">
+              <div className="text-center">
+                <span className="text-white/60 text-[13px] md:text-[15px] font-semibold tracking-[0.2em] uppercase mb-3 block">
+                  BOOK YOUR TRANSFER
+                </span>
+                <h1 className="text-[26px] sm:text-[30px] md:text-[36px] lg:text-[42px] font-bold text-white mb-4 leading-[1.1] tracking-tight">Book a Transfer Today</h1>
+                <p className="text-[14px] md:text-[15px] text-white/80 max-w-xl mx-auto font-semibold leading-relaxed">
+                  Get an instant quote, choose your vehicle, and pay securely online.
+                </p>
+              </div>
+
+              {/* Step Indicator in Header */}
+              <StepIndicator />
+            </div>
+          </div>
+        </div>
+
+        {/* Booking Content — layout adapts to current step */}
+        <BookingLayout />
+      </div>
+    </BookingProvider>
+  );
+};

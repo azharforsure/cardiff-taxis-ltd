@@ -31,6 +31,7 @@
 @theme {
   --animate-blob: blob 7s infinite;
   --animate-fade-in-up: fadeInUp 0.5s ease-out;
+  --animate-shake: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
 
   @keyframes blob {
     0% { transform: translate(0px, 0px) scale(1); }
@@ -49,4 +50,60 @@
       transform: translateY(0);
     }
   }
+
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+  }
 }
+
+/* Google Places Autocomplete dropdown styling */
+.pac-container {
+  border-radius: 16px !important;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+  margin-top: 8px !important;
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif !important;
+  padding: 4px !important;
+  overflow: hidden !important;
+  z-index: 10000 !important;
+}
+
+.pac-item {
+  padding: 10px 14px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #171717 !important;
+  margin: 2px 0 !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.pac-item:hover,
+.pac-item-selected {
+  background-color: #F8FAFC !important;
+}
+
+.pac-item-query {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #171717 !important;
+}
+
+.pac-icon {
+  display: none !important;
+}
+
+.pac-matched {
+  font-weight: 800 !important;
+  color: #0A0A0A !important;
+}
+
+.pac-logo::after {
+  display: none !important;
+}
+

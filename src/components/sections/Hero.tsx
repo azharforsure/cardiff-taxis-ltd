@@ -1,75 +1,38 @@
-import { useState } from "react";
-import { ArrowRight, Loader2, PhoneCall, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
+import { BookingProvider, useBooking } from "../../context/BookingContext";
+import { StepJourney } from "../booking/StepJourney";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * Inner component that has access to BookingProvider context.
+ */
+const HeroBookingForm = () => {
+  const navigate = useNavigate();
+  const booking = useBooking();
+
+  const handleNext = () => {
+    // Build query params to carry data to booking page
+    const params = new URLSearchParams();
+    if (booking.pickup) {
+      params.set("pickup", JSON.stringify(booking.pickup));
+    }
+    if (booking.dropoff) {
+      params.set("dropoff", JSON.stringify(booking.dropoff));
+    }
+    params.set("service", booking.serviceType);
+    if (booking.date) params.set("date", booking.date);
+    if (booking.time) params.set("time", booking.time);
+    
+    navigate(`/book?${params.toString()}`);
+  };
+
+  return (
+    <StepJourney compact onNext={handleNext} />
+  );
+};
 
 export const Hero = () => {
-  const [step, setStep] = useState(1);
-  const [serviceType, setServiceType] = useState("airport");
-  const [pickup, setPickup] = useState("");
-  const [dropoff, setDropoff] = useState("");
-  const [flightConfig, setFlightConfig] = useState({ number: "", luggage: "" });
-  const [contactInfo, setContactInfo] = useState({ name: "", phone: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleNextStep = () => {
-    if (!pickup || !dropoff) {
-      setError("Please enter both pickup and drop-off locations.");
-      return;
-    }
-    setError("");
-    setStep(2);
-  };
-
-  const handleSubmitRequest = async () => {
-    if (!contactInfo.name || !contactInfo.phone) {
-      setError("Please provide your name and phone number so we can call you back.");
-      return;
-    }
-
-    setError("");
-    setLoading(true);
-
-    try {
-      const response = await fetch("https://api.staticforms.xyz/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          accessKey: "sf_a185997c08c3aee04f0e9794",
-          subject: `New Callback Request: ${contactInfo.name}`,
-          name: contactInfo.name,
-          phone: contactInfo.phone,
-          message: `
-            Service: ${serviceType}
-            Pickup: ${pickup}
-            Drop-off: ${dropoff}
-            Flight: ${flightConfig.number || 'N/A'}
-            Luggage: ${flightConfig.luggage || '0'}
-          `,
-          replyTo: "@", // Required by some providers
-        }),
-      });
-
-      if (response.ok) {
-        setLoading(false);
-        setStep(3); // Show Success State
-      } else {
-        throw new Error("Failed to send request");
-      }
-    } catch (err) {
-      setLoading(false);
-      setError("Something went wrong. Please try calling us directly.");
-    }
-  };
-
-  const resetForm = () => {
-    setPickup("");
-    setDropoff("");
-    setFlightConfig({ number: "", luggage: "" });
-    setContactInfo({ name: "", phone: "" });
-    setStep(1);
-  };
-
   return (
     <div className="w-full relative">
       <div className="relative pt-[140px] pb-[32px] md:pt-[150px] lg:pt-[180px] md:pb-[48px] w-full flex flex-col justify-start min-h-auto transition-all duration-500">
@@ -167,197 +130,15 @@ export const Hero = () => {
             </span>
           </div>
 
-          {/* Booking Widget Wrapper */}
+          {/* Booking Widget */}
           <div className="mt-0 relative z-20 transition-all duration-500">
-            <div className="bg-brand-section md:bg-white/95 md:backdrop-blur-sm rounded-[24px] md:rounded-[32px] p-2 md:p-3 shadow-2xl flex flex-col xl:flex-row gap-2 lg:gap-3 transition-all duration-300">
-
-              {step === 1 && (
-                <div className="flex flex-col xl:flex-row w-full gap-2 lg:gap-3">
-                    <div className="w-full xl:w-[170px] bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
-                    <select
-                      value={serviceType}
-                      onChange={(e) => setServiceType(e.target.value)}
-                      className="w-full bg-transparent focus:outline-none text-black text-[15px] font-semibold cursor-pointer"
-                    >
-                      <option value="airport">Airport Transfer</option>
-                      <option value="city">City Private Hire</option>
-                    </select>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 flex-[1.5] w-full gap-2">
-                    <div className="w-full bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
-                      <input
-                        type="text"
-                        value={pickup}
-                        onChange={(e) => setPickup(e.target.value)}
-                        placeholder="Enter pickup or postcode"
-                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
-                      />
-                    </div>
-
-                    <div className="w-full bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors">
-                      <input
-                        type="text"
-                        value={dropoff}
-                        onChange={(e) => setDropoff(e.target.value)}
-                        placeholder="Enter drop-off or postcode"
-                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row flex-[1] w-full gap-2">
-                    <div className="w-full sm:flex-1 bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors relative shrink-0">
-                      <input
-                        type="time"
-                        defaultValue="21:40"
-                        className="w-full h-full bg-transparent focus:outline-none text-black text-[15px] font-semibold"
-                        style={{ colorScheme: 'light' }}
-                      />
-                    </div>
-
-                    <div className="w-full sm:flex-1 bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0 transition-colors shrink-0">
-                      <input
-                        type="date"
-                        defaultValue="2025-10-30"
-                        className="w-full h-full bg-transparent focus:outline-none text-black text-[15px] font-semibold uppercase"
-                        style={{ colorScheme: 'light' }}
-                      />
-                    </div>
-                  </div>
-
-                  <Button
-                    variant="accent"
-                    onClick={handleNextStep}
-                    className="w-full xl:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[16px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 mt-1 md:mt-0"
-                  >
-                    Get free quote
-                    <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[14px] md:rounded-[18px] bg-brand-graphite flex items-center justify-center text-white shrink-0">
-                      <ArrowRight className="w-5 h-5 stroke-[2.5]" />
-                    </div>
-                  </Button>
-                </div>
-              )}
-
-              {step === 2 && (
-                <div className="w-full flex flex-col lg:flex-row flex-wrap items-center gap-2 p-1 md:p-0 animate-in fade-in slide-in-from-right-4">
-                  <div className="w-full lg:w-auto px-4 md:px-4 py-2 flex items-center gap-3 shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-[#eefcf3] flex items-center justify-center border border-[#0d8a43]/20">
-                      <PhoneCall className="w-5 h-5 text-[#0d8a43]" />
-                    </div>
-                    <div className="lg:block">
-                      <h4 className="text-[14px] md:text-[15px] font-bold text-brand-graphite whitespace-nowrap">Final Details</h4>
-                      <p className="text-[12px] font-semibold text-brand-graphite/60 lg:hidden">Where should we send your quote?</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row w-full lg:flex-[0.8] gap-2 mt-[3px] md:mt-0 shrink-0 min-w-0">
-                    {serviceType === "airport" && (
-                      <>
-                        <div className="w-full bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
-                          <input
-                            type="text"
-                            value={flightConfig.number}
-                            onChange={(e) => setFlightConfig({ ...flightConfig, number: e.target.value })}
-                            placeholder="Flight Number"
-                            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
-                          />
-                        </div>
-                        <div className="w-full md:w-[120px] bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 shrink-0">
-                          <input
-                            type="number"
-                            value={flightConfig.luggage}
-                            onChange={(e) => setFlightConfig({ ...flightConfig, luggage: e.target.value })}
-                            placeholder="Luggage"
-                            min="0"
-                            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold"
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  <div className="flex flex-col md:flex-row w-full lg:flex-[1.5] gap-2 mt-[3px] lg:mt-0 min-w-0">
-                    <div className="flex-[1] w-full bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
-                      <input
-                        type="text"
-                        value={contactInfo.name}
-                        onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
-                        placeholder="Your Name"
-                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
-                      />
-                    </div>
-
-                    <div className="flex-[1] w-full bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 min-w-0">
-                      <input
-                        type="tel"
-                        value={contactInfo.phone}
-                        onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
-                        placeholder="Phone Number"
-                        className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-500 text-[15px] font-semibold placeholder:truncate"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row gap-2 w-full lg:w-auto mt-2 lg:mt-0 shrink-0 justify-end">
-                    <Button
-                      variant="glass"
-                      onClick={() => setStep(1)}
-                      className="w-full lg:w-auto h-[60px] md:h-[64px] px-0 lg:px-8 text-brand-graphite text-[16px] font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] bg-brand-section md:bg-black/5 hover:bg-black/10 transition-colors border-none md:border"
-                    >
-                      Back
-                    </Button>
-                    <Button
-                      variant="accent"
-                      onClick={handleSubmitRequest}
-                      disabled={loading}
-                      className="flex-1 lg:w-auto h-[60px] md:h-[64px] pl-6 pr-2 py-2 text-brand-graphite shadow-sm whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[16px] hover:bg-brand-accent-hover flex items-center justify-between gap-4 shrink-0 transition-colors"
-                    >
-                      {loading ? "Sending..." : "Request Callback"}
-                      <div className="w-[44px] h-[44px] md:w-[46px] md:h-[46px] rounded-[16px] md:rounded-[18px] bg-brand-graphite flex items-center justify-center text-white shrink-0">
-                        {loading ? (
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                        ) : (
-                          <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
-                        )}
-                      </div>
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {step === 3 && (
-                <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 p-4 md:p-2 animate-in fade-in slide-in-from-right-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#0d8a43] flex items-center justify-center shrink-0 shadow-lg shadow-[#0d8a43]/20">
-                      <CheckCircle2 className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="text-[15px] font-bold text-brand-graphite leading-tight mb-1">Request Sent Successfully!</h4>
-                      <p className="text-[14px] font-semibold text-brand-graphite/70">
-                        Our dispatch team is calculating the best route and will call you on <strong>{contactInfo.phone}</strong> shortly.
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    variant="glass"
-                    onClick={resetForm}
-                    className="w-full md:w-auto h-[56px] px-8 text-brand-graphite text-[16px] font-bold rounded-[16px] hover:rounded-[10px] bg-black/5 border border-black/10 hover:bg-black/10 transition-colors whitespace-nowrap"
-                  >
-                    Start new request
-                  </Button>
-                </div>
-              )}
+            <div className="bg-brand-section md:bg-white/95 md:backdrop-blur-sm rounded-[24px] md:rounded-[32px] p-2 md:p-3 shadow-2xl flex flex-col gap-2 lg:gap-3 transition-all duration-300">
+              <BookingProvider>
+                <HeroBookingForm />
+              </BookingProvider>
             </div>
 
-            {/* Error Message */}
-            {error && step === 1 && (
-              <div className="mt-4 bg-red-50 border border-red-100 text-red-600 px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 text-[14px] font-semibold animate-in fade-in slide-in-from-top-2">
-                <span className="shrink-0 text-lg">⚠️</span>
-                {error}
-              </div>
-            )}
-
+            {/* Error space handled inside StepJourney */}
           </div>
         </div>
       </div>
