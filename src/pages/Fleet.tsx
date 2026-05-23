@@ -208,7 +208,7 @@ export const Fleet = () => {
       </div>
 
       {/* Pricing Module - Matches Home naked section structure */}
-      <Pricing hideCta />
+      <Pricing />
 
       {/* Reviews Card - Matches Home card wrapper rhythm */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">

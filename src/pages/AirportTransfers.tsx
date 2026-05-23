@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Pricing } from "../components/sections/Pricing";
 import { ServiceDetail } from "../components/sections/ServiceDetail";
 import { FleetSelection } from "../components/sections/FleetSelection";
 import { Reviews } from "../components/sections/Reviews";
@@ -38,7 +37,7 @@ export const AirportTransfers = () => {
             <p className="text-[15px] text-white/80 max-w-[520px] mx-auto font-semibold mb-10 leading-relaxed">
               We handle pick up and drop off services connecting Cardiff with Bristol, Cardiff Airport, and major London airports.
             </p>
-            <Link to="/book" className="inline-flex items-center justify-between gap-4 bg-brand-accent hover:bg-brand-accent-hover text-brand-graphite font-bold text-[16px] h-[56px] px-2 pl-6 rounded-full hover:rounded-2xl transition-all mx-auto shadow-lg group">
+            <Link to="/book?service=airport" className="inline-flex items-center justify-between gap-4 bg-brand-accent hover:bg-brand-accent-hover text-brand-graphite font-bold text-[16px] h-[56px] px-2 pl-6 rounded-full hover:rounded-2xl transition-all mx-auto shadow-lg group">
               Book a transfer
               <div className="w-10 h-10 rounded-full bg-brand-graphite flex items-center justify-center flex-shrink-0 text-white shadow-sm group-hover:scale-105 transition-transform">
                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
@@ -92,7 +91,44 @@ export const AirportTransfers = () => {
       </div>
 
       <ServiceDetail />
-      <Pricing hideCta />
+
+      {/* Popular Locations */}
+      <div className="px-1 md:px-1.5 py-1 md:py-1.5">
+        <div className="px-8 md:px-12 lg:px-16 py-16 md:py-24 max-w-[1400px] mx-auto text-center">
+            <span className="text-brand-muted text-[13px] md:text-[14px] font-semibold tracking-[0.2em] uppercase mb-3 block text-center">
+              POPULAR LOCATIONS
+            </span>
+            <h2 className="text-[28px] md:text-[32px] lg:text-[38px] font-bold text-brand-graphite mb-6 leading-[1.1] tracking-tight text-center">
+              We Cover the UK's Major Airports
+            </h2>
+            <p className="text-[16px] text-brand-muted/80 leading-relaxed mb-10 font-semibold max-w-2xl mx-auto text-center">
+              We provide airport transfer services across the UK, including:
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {[
+                { name: "Cardiff Airport", abbr: "CWL" },
+                { name: "Bristol Airport", abbr: "BRS" },
+                { name: "Heathrow Airport", abbr: "LHR" },
+                { name: "Gatwick Airport", abbr: "LGW" },
+                { name: "Stansted Airport", abbr: "STN" },
+                { name: "Luton Airport", abbr: "LTN" },
+                { name: "London City Airport", abbr: "LCY" },
+                { name: "Southend Airport", abbr: "SEN" },
+              ].map((airport) => (
+                <div key={airport.abbr} className="flex items-center gap-3 bg-brand-section rounded-xl p-4 transition-all hover:bg-brand-section/70">
+                  <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-[10px] font-bold">{airport.abbr}</span>
+                  </div>
+                  <span className="text-[14px] font-semibold text-brand-graphite">{airport.name}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-[14px] text-brand-muted/60 font-semibold text-center mt-8">
+              And many other destinations across the United Kingdom.
+            </p>
+        </div>
+      </div>
 
       {/* Reviews Card - Matches Home card wrapper rhythm */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">

@@ -117,7 +117,7 @@ export const Services = () => {
                     {service.title}
                   </h4>
                   <div className="flex justify-end mt-auto">
-                    <div className="w-[36px] h-[36px] rounded-full bg-brand-graphite group-hover:bg-brand-accent group-hover:rounded-xl transition-all shadow-sm">
+                    <div className="w-[36px] h-[36px] rounded-full bg-brand-graphite group-hover:bg-brand-accent group-hover:rounded-xl transition-all shadow-sm flex items-center justify-center">
                       <ArrowRight className="w-4 h-4 text-white group-hover:text-brand-graphite" />
                     </div>
                   </div>

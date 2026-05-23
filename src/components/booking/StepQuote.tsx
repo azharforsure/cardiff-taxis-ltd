@@ -115,7 +115,7 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
   };
 
   const quotes = booking.distanceMiles > 0
-    ? getAllQuotes(booking.distanceMiles, booking.journeyType === "return")
+    ? getAllQuotes(booking.distanceMiles, booking.journeyType === "return", booking.serviceType)
     : [];
 
   if (loading) {

@@ -1,14 +1,20 @@
 /**
  * Vehicle pricing engine for Cardiff Taxis Ltd.
- * Pricing formula: Start Price + (Distance in miles × Per Mile Rate)
+ * Two rate structures:
+ * - Private Hire: startPrice + (distanceMiles × perMile)
+ * - Airport Transfers: firstMile + ((distanceMiles − 1) × perMileAirport)
  * Return journeys receive 5% discount on total.
  */
+
+export type ServiceCategory = "city" | "airport";
 
 export interface VehicleType {
   id: string;
   name: string;
-  startPrice: number; // £
-  perMile: number; // £ per mile
+  startPrice: number; // £ private-hire start price
+  perMile: number; // £ per mile (private hire)
+  firstMile: number; // £ first mile flat rate (airport)
+  perMileAirport: number; // £ per mile after first mile (airport)
   maxPassengers: number;
   maxSuitcases: number;
   maxHandCarry: number;
@@ -22,6 +28,8 @@ export const VEHICLES: VehicleType[] = [
     name: "Saloon",
     startPrice: 4,
     perMile: 2.5,
+    firstMile: 28,
+    perMileAirport: 1.2,
     maxPassengers: 4,
     maxSuitcases: 2,
     maxHandCarry: 2,
@@ -33,6 +41,8 @@ export const VEHICLES: VehicleType[] = [
     name: "Estate",
     startPrice: 8,
     perMile: 2.5,
+    firstMile: 32,
+    perMileAirport: 1.25,
     maxPassengers: 4,
     maxSuitcases: 4,
     maxHandCarry: 3,
@@ -44,6 +54,8 @@ export const VEHICLES: VehicleType[] = [
     name: "Executive",
     startPrice: 8,
     perMile: 3,
+    firstMile: 37,
+    perMileAirport: 1.6,
     maxPassengers: 4,
     maxSuitcases: 2,
     maxHandCarry: 2,
@@ -55,6 +67,8 @@ export const VEHICLES: VehicleType[] = [
     name: "People Carrier",
     startPrice: 10,
     perMile: 3,
+    firstMile: 37,
+    perMileAirport: 1.6,
     maxPassengers: 6,
     maxSuitcases: 4,
     maxHandCarry: 3,
@@ -66,6 +80,8 @@ export const VEHICLES: VehicleType[] = [
     name: "Executive People Carrier",
     startPrice: 15,
     perMile: 3,
+    firstMile: 53,
+    perMileAirport: 2,
     maxPassengers: 6,
     maxSuitcases: 6,
     maxHandCarry: 4,
@@ -77,6 +93,8 @@ export const VEHICLES: VehicleType[] = [
     name: "8-Seater Minibus",
     startPrice: 12,
     perMile: 3,
+    firstMile: 55,
+    perMileAirport: 2,
     maxPassengers: 8,
     maxSuitcases: 8,
     maxHandCarry: 6,
@@ -88,18 +106,35 @@ export const VEHICLES: VehicleType[] = [
 export const RETURN_DISCOUNT = 0.05; // 5% off for return journeys
 
 /**
- * Calculate the fare for a one-way journey.
+ * Calculate a one-way fare for a vehicle.
+ * Uses airport rates when category is "airport", otherwise private hire rates.
  */
-export function calculateFare(vehicle: VehicleType, distanceMiles: number): number {
-  const fare = vehicle.startPrice + distanceMiles * vehicle.perMile;
-  return Math.round(fare * 100) / 100; // round to 2dp
+export function calculateFare(
+  vehicle: VehicleType,
+  distanceMiles: number,
+  category: ServiceCategory = "city",
+): number {
+  let fare: number;
+  if (category === "airport") {
+    // Airport: first mile flat + remaining miles at airport per-mile rate
+    const remainingMiles = Math.max(0, distanceMiles - 1);
+    fare = vehicle.firstMile + remainingMiles * vehicle.perMileAirport;
+  } else {
+    // Private Hire: start price + distance × per mile
+    fare = vehicle.startPrice + distanceMiles * vehicle.perMile;
+  }
+  return Math.round(fare * 100) / 100;
 }
 
 /**
  * Calculate the fare for a return journey (5% discount on total).
  */
-export function calculateReturnFare(vehicle: VehicleType, distanceMiles: number): number {
-  const oneWay = calculateFare(vehicle, distanceMiles);
+export function calculateReturnFare(
+  vehicle: VehicleType,
+  distanceMiles: number,
+  category: ServiceCategory = "city",
+): number {
+  const oneWay = calculateFare(vehicle, distanceMiles, category);
   const total = oneWay * 2;
   const discounted = total * (1 - RETURN_DISCOUNT);
   return Math.round(discounted * 100) / 100;
@@ -108,13 +143,17 @@ export function calculateReturnFare(vehicle: VehicleType, distanceMiles: number)
 /**
  * Get all vehicle quotes for a given distance.
  */
-export function getAllQuotes(distanceMiles: number, isReturn: boolean) {
+export function getAllQuotes(
+  distanceMiles: number,
+  isReturn: boolean,
+  category: ServiceCategory = "city",
+) {
   return VEHICLES.map((v) => ({
     vehicle: v,
     price: isReturn
-      ? calculateReturnFare(v, distanceMiles)
-      : calculateFare(v, distanceMiles),
-    pricePerWay: calculateFare(v, distanceMiles),
+      ? calculateReturnFare(v, distanceMiles, category)
+      : calculateFare(v, distanceMiles, category),
+    pricePerWay: calculateFare(v, distanceMiles, category),
   }));
 }
 

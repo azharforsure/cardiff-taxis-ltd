@@ -44,7 +44,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link to="/fleet" className="hover:text-brand-accent transition-colors">
-                  Our Fleet & Pricing
+                  Our Fleet
                 </Link>
               </li>
               <li>

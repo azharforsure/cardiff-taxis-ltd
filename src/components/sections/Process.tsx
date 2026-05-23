@@ -54,7 +54,7 @@ export const Process = () => {
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8">
           <Link to="/airport-transfers" className="bg-white hover:bg-gray-50 text-brand-primary h-[56px] pl-6 pr-2 rounded-full hover:rounded-2xl font-bold text-[16px] flex items-center justify-between gap-4 transition-all w-full sm:w-auto shadow-lg group">
-            View airport pricing
+            Book an airport transfer
             <div className="w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center text-white group-hover:scale-105 transition-transform">
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </div>

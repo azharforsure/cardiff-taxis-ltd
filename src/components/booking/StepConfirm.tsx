@@ -42,8 +42,8 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
   const price =
     booking.selectedVehicle && booking.distanceMiles > 0
       ? booking.journeyType === "return"
-        ? calculateReturnFare(booking.selectedVehicle, booking.distanceMiles)
-        : calculateFare(booking.selectedVehicle, booking.distanceMiles)
+        ? calculateReturnFare(booking.selectedVehicle, booking.distanceMiles, booking.serviceType)
+        : calculateFare(booking.selectedVehicle, booking.distanceMiles, booking.serviceType)
       : 0;
 
   // Cleanup SumUp widget on unmount

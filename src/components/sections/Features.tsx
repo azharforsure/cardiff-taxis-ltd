@@ -29,7 +29,7 @@ export const Features = () => {
             <div className="absolute bottom-0 right-0 bg-white pt-4 pl-4 sm:pt-5 sm:pl-5 rounded-tl-[16px] md:rounded-tl-[24px] w-[80%] sm:w-auto">
               <Link to="/book" className="block w-full">
                 <Button className="bg-brand-graphite hover:bg-brand-primary text-white rounded-full hover:rounded-2xl pl-6 pr-2 py-2 h-[56px] font-bold text-[16px] flex items-center justify-between gap-4 w-full shadow-lg transition-all group">
-                  View prices
+                  Get a quote
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <ArrowRight className="w-4 h-4 text-brand-graphite stroke-[2.5]" />
                   </div>
