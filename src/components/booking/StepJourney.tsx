@@ -6,6 +6,8 @@ import { useBooking } from "../../context/BookingContext";
 import { PlaceAutocomplete } from "./PlaceAutocomplete";
 import { Button } from "../ui/Button";
 
+import { trackCalculateQuote } from "../../lib/gtag";
+
 interface StepJourneyProps {
   compact?: boolean; // true = hero widget mode
   onNext: () => void;
@@ -37,6 +39,11 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
       return;
     }
     setError("");
+    trackCalculateQuote({
+      pickup: booking.pickup.address,
+      dropoff: booking.dropoff.address,
+      serviceType: booking.serviceType,
+    });
     onNext();
   };
 

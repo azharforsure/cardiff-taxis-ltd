@@ -1,5 +1,8 @@
+"use client";
+
 import { Link } from "../ui/Link";
 import { Mail, Phone, ArrowRight } from "lucide-react";
+import { trackPhoneCall } from "../../lib/gtag";
 
 export const Footer = () => {
   return (
@@ -26,6 +29,7 @@ export const Footer = () => {
               </a>
               <a
                 href="tel:07817385655"
+                onClick={() => trackPhoneCall("07817385655", "footer")}
                 className="flex items-center gap-3 hover:text-brand-accent transition-colors"
               >
                 <Phone className="w-[18px] h-[18px] font-light" strokeWidth={2} />

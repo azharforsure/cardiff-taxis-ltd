@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "../src/index.css";
 import { Navbar } from "../src/components/layout/Navbar";
 import { Footer } from "../src/components/layout/Footer";
 import { AirportButtons } from "../src/components/sections/AirportButtons";
+import { AnalyticsTracker } from "../src/components/analytics/AnalyticsTracker";
+import { GA_TRACKING_ID } from "../src/lib/gtag";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://cardifftaxisltd.co.uk"),
@@ -131,8 +134,28 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_TRACKING_ID}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-white font-sans text-brand-graphite selection:bg-brand-accent/30 relative overflow-x-hidden antialiased">
+        <AnalyticsTracker />
         {/* Background base */}
         <div className="fixed inset-0 bg-brand-white z-[0]"></div>
 

@@ -21,8 +21,11 @@ import {
   metersToMiles,
   formatDuration,
   VEHICLES,
+  calculateFare,
+  calculateReturnFare,
 } from "../../lib/pricing";
 import { calculateRoute } from "../../lib/google-maps";
+import { trackBeginCheckout } from "../../lib/gtag";
 
 interface StepQuoteProps {
   onNext: () => void;
@@ -127,6 +130,14 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
       }
     }
     setError("");
+    const fare = booking.journeyType === "return"
+      ? calculateReturnFare(booking.selectedVehicle, booking.distanceMiles)
+      : calculateFare(booking.selectedVehicle, booking.distanceMiles);
+    trackBeginCheckout({
+      value: fare,
+      vehicle: booking.selectedVehicle.name,
+      journeyType: booking.journeyType,
+    });
     onNext();
   };
 

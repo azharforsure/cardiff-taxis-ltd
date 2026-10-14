@@ -21,6 +21,7 @@ import { Link } from "../ui/Link";
 import { useBooking } from "../../context/BookingContext";
 import { Button } from "../ui/Button";
 import { calculateFare, calculateReturnFare, formatDuration } from "../../lib/pricing";
+import { trackPurchase } from "../../lib/gtag";
 import {
   createSumUpCheckout,
   generateBookingReference,
@@ -101,6 +102,14 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
           if (body.status === "PAID") {
             unmountSumUpWidget();
             setPaymentState("success");
+            trackPurchase({
+              transactionId: ref,
+              value: price,
+              vehicle: booking.selectedVehicle?.name,
+              journeyType: booking.journeyType,
+              pickup: booking.pickup?.address,
+              dropoff: booking.dropoff?.address,
+            });
             await sendBookingConfirmation(ref);
             window.scrollTo({ top: 0, behavior: "smooth" });
           } else {

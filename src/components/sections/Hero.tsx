@@ -5,6 +5,7 @@ import { Button } from "../ui/Button";
 import { BookingProvider, useBooking } from "../../context/BookingContext";
 import { StepJourney } from "../booking/StepJourney";
 import { useRouter } from "next/navigation";
+import { trackPhoneCall, trackWhatsAppClick } from "../../lib/gtag";
 
 /**
  * Inner component that has access to BookingProvider context.
@@ -73,7 +74,11 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
-              <a href="tel:07817385655" className="w-full sm:w-auto">
+              <a
+                href="tel:07817385655"
+                onClick={() => trackPhoneCall("07817385655", "hero_cta")}
+                className="w-full sm:w-auto"
+              >
                 <Button
                   variant="accent"
                   className="text-brand-graphite pl-6 pr-2 py-2 font-bold h-[56px] w-full flex items-center justify-between gap-4 text-[16px] rounded-full hover:rounded-2xl shadow-lg hover:bg-brand-accent-hover transition-all"
@@ -88,6 +93,7 @@ export const Hero = () => {
                 href="https://wa.me/447817385655" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("hero_cta")}
                 className="w-full sm:w-auto"
               >
                 <Button

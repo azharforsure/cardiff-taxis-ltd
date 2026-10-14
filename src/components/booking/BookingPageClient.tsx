@@ -4,6 +4,7 @@ import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { BookingWidget } from "./BookingWidget";
 import { BookingProvider, useBooking, type ServiceType } from "../../context/BookingContext";
+import { trackPhoneCall } from "../../lib/gtag";
 
 /**
  * Step Indicator rendered inside the page header.
@@ -188,7 +189,11 @@ const BookingLayout = () => {
                </div>
                <h3 className="text-lg font-bold mb-2 relative z-10">Need an immediate pick up?</h3>
                <p className="text-white/70 text-[13px] mb-5 relative z-10 leading-relaxed font-semibold">Vehicle needed within 2 hours? Call our dispatch team directly.</p>
-               <a href="tel:07817385655" className="inline-flex items-center justify-center w-full h-[52px] rounded-full hover:rounded-2xl bg-white text-brand-graphite font-bold text-[15px] relative z-10 hover:bg-gray-100 transition-all">
+               <a
+                 href="tel:07817385655"
+                 onClick={() => trackPhoneCall("07817385655", "booking_sidebar")}
+                 className="inline-flex items-center justify-center w-full h-[52px] rounded-full hover:rounded-2xl bg-white text-brand-graphite font-bold text-[15px] relative z-10 hover:bg-gray-100 transition-all"
+               >
                   07817 385655
                </a>
             </div>

@@ -1,5 +1,8 @@
+"use client";
+
 import { Phone, ArrowRight, User, Briefcase } from "lucide-react";
 import { Link } from "../ui/Link";
+import { trackPhoneCall } from "../../lib/gtag";
 
 export const Pricing = () => {
   const priceList = [
@@ -145,6 +148,7 @@ export const Pricing = () => {
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <a
           href="tel:02922649844"
+          onClick={() => trackPhoneCall("02922649844", "pricing_table")}
           className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-brand-primary text-white text-[16px] font-bold shadow-lg shadow-brand-primary/20 transition-all duration-300 hover:scale-105 hover:bg-brand-graphite w-full sm:w-auto"
         >
           <Phone className="w-5 h-5" strokeWidth={2.5} />
