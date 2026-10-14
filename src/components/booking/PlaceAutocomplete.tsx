@@ -88,20 +88,12 @@ export const PlaceAutocomplete = ({
    */
   const processPlace = useCallback(
     (result: PlaceResult) => {
-      if (serviceType === "city" && !isInCardiff(result.lat, result.lng, result.address)) {
-        const msg =
-          "City Private Hire is only available within Cardiff. Please select a location in Cardiff or switch to Airport Transfer.";
-        setWarning(msg);
-        onLocationWarning?.(msg);
-      } else {
-        setWarning("");
-        onLocationWarning?.("");
-      }
-
+      setWarning("");
+      onLocationWarning?.("");
       setInputValue(result.address);
       onChange(result);
     },
-    [serviceType, onChange, onLocationWarning]
+    [onChange, onLocationWarning]
   );
 
   /**
@@ -156,16 +148,12 @@ export const PlaceAutocomplete = ({
         const options: google.maps.places.AutocompleteOptions = {
           componentRestrictions: { country: "gb" },
           fields: ["place_id", "formatted_address", "geometry", "name", "address_components"],
-        };
-
-        // For city private hire, bias results toward Cardiff
-        if (serviceType === "city") {
-          options.bounds = new google.maps.LatLngBounds(
+          bounds: new google.maps.LatLngBounds(
             new google.maps.LatLng(51.38, -3.35),
             new google.maps.LatLng(51.58, -3.0)
-          );
-          options.strictBounds = false;
-        }
+          ),
+          strictBounds: false,
+        };
 
         const autocomplete = new google.maps.places.Autocomplete(
           inputRef.current,

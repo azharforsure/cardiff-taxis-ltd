@@ -5,6 +5,9 @@ import {
   Route,
   Loader2,
   Star,
+  Calendar,
+  Clock,
+  Plane,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useBooking } from "../../context/BookingContext";
@@ -47,6 +50,7 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [reviewIndex, setReviewIndex] = useState(0);
+  const today = new Date().toISOString().split("T")[0];
 
   // Calculate route on mount
   useEffect(() => {
@@ -110,12 +114,22 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
       setError("Please select a vehicle.");
       return;
     }
+    if (booking.journeyType === "return") {
+      if (!booking.returnDate) {
+        setError("Please enter your return date.");
+        return;
+      }
+      if (!booking.returnTime) {
+        setError("Please enter your return pickup time.");
+        return;
+      }
+    }
     setError("");
     onNext();
   };
 
   const quotes = booking.distanceMiles > 0
-    ? getAllQuotes(booking.distanceMiles, booking.journeyType === "return", booking.serviceType)
+    ? getAllQuotes(booking.distanceMiles, booking.journeyType === "return")
     : [];
 
   if (loading) {
@@ -219,6 +233,96 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
           </button>
         </div>
       </div>
+
+      {/* Return Journey Details Input Card */}
+      {booking.journeyType === "return" && (
+        <div className="bg-brand-section/80 border border-gray-200 rounded-[18px] p-5 flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center justify-between border-b border-gray-200 pb-3">
+            <div>
+              <h4 className="text-[14px] font-bold text-brand-graphite">
+                Return Journey Details
+              </h4>
+              <p className="text-[12px] text-brand-muted font-semibold">
+                Please enter your return schedule so Cardiff Taxis Ltd can coordinate your pickup
+              </p>
+            </div>
+            <span className="text-[11px] bg-green-500 text-white rounded-full px-2.5 py-0.5 font-bold">
+              5% Return Discount
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Return Date */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
+                Return Date *
+              </label>
+              <div className="w-full bg-white border border-gray-200 rounded-[14px] h-[52px] flex items-center px-3.5 gap-2">
+                <Calendar className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
+                <input
+                  type="date"
+                  value={booking.returnDate}
+                  onChange={(e) => booking.setReturnDate(e.target.value)}
+                  min={booking.date || today}
+                  className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-semibold"
+                  style={{ colorScheme: "light" }}
+                />
+              </div>
+            </div>
+
+            {/* Return Pickup Time */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
+                Return Pickup Time *
+              </label>
+              <div className="w-full bg-white border border-gray-200 rounded-[14px] h-[52px] flex items-center px-3.5 gap-2">
+                <Clock className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
+                <input
+                  type="time"
+                  value={booking.returnTime}
+                  onChange={(e) => booking.setReturnTime(e.target.value)}
+                  className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-semibold"
+                  style={{ colorScheme: "light" }}
+                />
+              </div>
+            </div>
+
+            {/* Return Flight Number (Optional) */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
+                Return Flight Number (Optional)
+              </label>
+              <div className="w-full bg-white border border-gray-200 rounded-[14px] h-[52px] flex items-center px-3.5 gap-2">
+                <Plane className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
+                <input
+                  type="text"
+                  value={booking.returnFlightNumber}
+                  onChange={(e) => booking.setReturnFlightNumber(e.target.value)}
+                  placeholder="e.g. BA1235 / EZY8422"
+                  className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-semibold"
+                />
+              </div>
+            </div>
+
+            {/* Return Flight Arrival / Landing Time (Optional) */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
+                Flight Arrival / Landing Time (Optional)
+              </label>
+              <div className="w-full bg-white border border-gray-200 rounded-[14px] h-[52px] flex items-center px-3.5 gap-2">
+                <Clock className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
+                <input
+                  type="time"
+                  value={booking.returnArrivalTime}
+                  onChange={(e) => booking.setReturnArrivalTime(e.target.value)}
+                  className="w-full bg-transparent focus:outline-none text-brand-graphite text-[14px] font-semibold"
+                  style={{ colorScheme: "light" }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Luggage */}
       <div className="flex flex-col gap-3">

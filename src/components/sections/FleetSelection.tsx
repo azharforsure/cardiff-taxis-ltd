@@ -5,16 +5,16 @@ import { Link } from "react-router-dom";
 export const FleetSelection = () => {
   const fleet = [
     {
-      name: "8 seater",
+      name: "Minibus",
       image: "/images/fleet_minibus_1776973773526.png",
       specs: [
-        { icon: <User className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "8" },
-        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "6" },
+        { icon: <User className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "7" },
+        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "7" },
         { icon: <Briefcase className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "4" },
       ],
       altSpecs: [
-        { icon: <User className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "8" },
-        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "8" },
+        { icon: <User className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "7" },
+        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "7" },
       ]
     },
     {
@@ -27,7 +27,7 @@ export const FleetSelection = () => {
       ],
       altSpecs: [
         { icon: <User className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "4" },
-        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "4" },
+        { icon: <Luggage className="w-[18px] h-[18px]" strokeWidth={1.5} />, val: "3" },
       ]
     },
     {

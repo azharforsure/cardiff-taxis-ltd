@@ -26,10 +26,10 @@ export const VEHICLES: VehicleType[] = [
   {
     id: "saloon",
     name: "Saloon",
-    startPrice: 4,
-    perMile: 2.5,
-    firstMile: 28,
-    perMileAirport: 1.2,
+    startPrice: 35,
+    perMile: 1.5,
+    firstMile: 35,
+    perMileAirport: 1.5,
     maxPassengers: 4,
     maxSuitcases: 2,
     maxHandCarry: 2,
@@ -39,23 +39,23 @@ export const VEHICLES: VehicleType[] = [
   {
     id: "estate",
     name: "Estate",
-    startPrice: 8,
-    perMile: 2.5,
-    firstMile: 32,
-    perMileAirport: 1.25,
+    startPrice: 45,
+    perMile: 1.6,
+    firstMile: 45,
+    perMileAirport: 1.6,
     maxPassengers: 4,
-    maxSuitcases: 4,
+    maxSuitcases: 3,
     maxHandCarry: 3,
     image: "/images/fleet_estate_new_1776975140733.png",
-    description: "Extra luggage space for families and groups",
+    description: "Extra luggage space for families and groups (up to 3 suitcases)",
   },
   {
     id: "executive",
     name: "Executive",
-    startPrice: 8,
-    perMile: 3,
-    firstMile: 37,
-    perMileAirport: 1.6,
+    startPrice: 60,
+    perMile: 1.8,
+    firstMile: 60,
+    perMileAirport: 1.8,
     maxPassengers: 4,
     maxSuitcases: 2,
     maxHandCarry: 2,
@@ -65,10 +65,10 @@ export const VEHICLES: VehicleType[] = [
   {
     id: "people_carrier",
     name: "People Carrier",
-    startPrice: 10,
-    perMile: 3,
-    firstMile: 37,
-    perMileAirport: 1.6,
+    startPrice: 50,
+    perMile: 1.7,
+    firstMile: 50,
+    perMileAirport: 1.7,
     maxPassengers: 6,
     maxSuitcases: 4,
     maxHandCarry: 3,
@@ -78,51 +78,43 @@ export const VEHICLES: VehicleType[] = [
   {
     id: "executive_pc",
     name: "Executive People Carrier",
-    startPrice: 15,
-    perMile: 3,
-    firstMile: 53,
-    perMileAirport: 2,
+    startPrice: 60,
+    perMile: 2.0,
+    firstMile: 60,
+    perMileAirport: 2.0,
     maxPassengers: 6,
-    maxSuitcases: 6,
+    maxSuitcases: 4,
     maxHandCarry: 4,
     image: "/images/fleet_minibus_1776973773526.png",
     description: "Premium MPV with luxury comfort",
   },
   {
     id: "8_seater",
-    name: "8-Seater Minibus",
-    startPrice: 12,
-    perMile: 3,
-    firstMile: 55,
-    perMileAirport: 2,
-    maxPassengers: 8,
-    maxSuitcases: 8,
+    name: "Minibus",
+    startPrice: 60,
+    perMile: 2.0,
+    firstMile: 60,
+    perMileAirport: 2.0,
+    maxPassengers: 7,
+    maxSuitcases: 7,
     maxHandCarry: 6,
     image: "/images/fleet_minibus_1776973773526.png",
-    description: "Large minibus for groups up to 8",
+    description: "Spacious minibus for groups up to 7 passengers with 7 suitcases",
   },
 ];
 
 export const RETURN_DISCOUNT = 0.05; // 5% off for return journeys
 
 /**
- * Calculate a one-way fare for a vehicle.
- * Uses airport rates when category is "airport", otherwise private hire rates.
+ * Calculate a one-way fare for a vehicle using first-mile + remaining miles rate.
  */
 export function calculateFare(
   vehicle: VehicleType,
   distanceMiles: number,
-  category: ServiceCategory = "city",
+  _category?: ServiceCategory,
 ): number {
-  let fare: number;
-  if (category === "airport") {
-    // Airport: first mile flat + remaining miles at airport per-mile rate
-    const remainingMiles = Math.max(0, distanceMiles - 1);
-    fare = vehicle.firstMile + remainingMiles * vehicle.perMileAirport;
-  } else {
-    // Private Hire: start price + distance × per mile
-    fare = vehicle.startPrice + distanceMiles * vehicle.perMile;
-  }
+  const remainingMiles = Math.max(0, distanceMiles - 1);
+  const fare = vehicle.firstMile + remainingMiles * vehicle.perMileAirport;
   return Math.round(fare * 100) / 100;
 }
 
@@ -132,7 +124,7 @@ export function calculateFare(
 export function calculateReturnFare(
   vehicle: VehicleType,
   distanceMiles: number,
-  category: ServiceCategory = "city",
+  category?: ServiceCategory,
 ): number {
   const oneWay = calculateFare(vehicle, distanceMiles, category);
   const total = oneWay * 2;
@@ -146,7 +138,7 @@ export function calculateReturnFare(
 export function getAllQuotes(
   distanceMiles: number,
   isReturn: boolean,
-  category: ServiceCategory = "city",
+  category?: ServiceCategory,
 ) {
   return VEHICLES.map((v) => ({
     vehicle: v,

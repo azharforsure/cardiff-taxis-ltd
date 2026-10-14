@@ -69,8 +69,8 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-brand-accent transition-colors">
-                  City Private Hire
+                <Link to="/book" className="hover:text-brand-accent transition-colors">
+                  Long Distance Transfers
                 </Link>
               </li>
             </ul>

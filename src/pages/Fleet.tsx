@@ -16,14 +16,14 @@ export const Fleet = () => {
     },
     {
       name: "Estate",
-      capacity: "4 Passengers, 4 Suitcases",
+      capacity: "4 Passengers, 3 Suitcases",
       image: "/images/fleet_estate_new_1776975140733.png",
-      description: "Designed for those who need extra luggage space. The Estate gives you an extended boot for heavier bags or long trips.",
-      features: ["Extra Luggage Space", "Spacious Interior", "Air Conditioning", "Foldable Rear Seats"],
+      description: "Designed for those who need extra luggage space. The Estate gives you an extended boot for up to 3 large suitcases.",
+      features: ["Extra Luggage Space (3 Suitcases)", "Spacious Interior", "Air Conditioning", "Foldable Rear Seats"],
     },
     {
       name: "Executive",
-      capacity: "3 Passengers, 2 Suitcases",
+      capacity: "4 Passengers, 2 Suitcases",
       image: "/images/fleet_saloon_new_1776975126069.png",
       description: "Travel in premium style. Our Executive vehicles are top-of-the-range cars for corporate travel or when you just want a bit of luxury.",
       features: ["Premium Leather Interior", "Complimentary Water", "Tinted Windows", "Professional Driver"],
@@ -36,11 +36,18 @@ export const Fleet = () => {
       features: ["Ample Legroom", "Sliding Doors", "Climate Control", "Ideal for Families"],
     },
     {
+      name: "Executive People Carrier",
+      capacity: "6 Passengers, 4 Suitcases",
+      image: "/images/fleet_minibus_1776973773526.png",
+      description: "Travel in luxury as a group. Our Executive People Carrier offers premium interior comfort and plenty of space for corporate or group travel.",
+      features: ["Luxury Leather Seating", "Complimentary Water", "Climate Control", "Executive Travel"],
+    },
+    {
       name: "8-Seater Minibus",
-      capacity: "8 Passengers, 8 Suitcases",
+      capacity: "7 Passengers, 7 Suitcases",
       image: "/images/about_taxi_new_1776975028206.png",
-      description: "Our largest option for up to 8 people. The Minibus means you can all travel together safely without needing multiple taxis.",
-      features: ["Large Group Capacity", "Extra Luggage Space", "Elevated Seating", "Cost-effective"],
+      description: "Our spacious option for up to 7 passengers with 7 suitcases. Travel together safely without needing multiple taxis.",
+      features: ["7 Passengers Capacity", "7 Suitcases Space", "Elevated Seating", "Cost-effective"],
     }
   ];
 

@@ -21,6 +21,10 @@ export interface BookingState {
 
   // Step 2: Quote
   journeyType: JourneyType;
+  returnDate: string;
+  returnTime: string;
+  returnFlightNumber: string;
+  returnArrivalTime: string;
   luggage: LuggageType;
   selectedVehicle: VehicleType | null;
   distanceMiles: number;
@@ -48,6 +52,10 @@ interface BookingContextType extends BookingState {
   setTime: (time: string) => void;
   setFlightNumber: (fn: string) => void;
   setJourneyType: (type: JourneyType) => void;
+  setReturnDate: (date: string) => void;
+  setReturnTime: (time: string) => void;
+  setReturnFlightNumber: (fn: string) => void;
+  setReturnArrivalTime: (time: string) => void;
   setLuggage: (type: LuggageType) => void;
   setSelectedVehicle: (vehicle: VehicleType | null) => void;
   setRouteInfo: (distanceMiles: number, durationSeconds: number, route: google.maps.DirectionsResult | null) => void;
@@ -68,6 +76,10 @@ const initialState: BookingState = {
   time: "",
   flightNumber: "",
   journeyType: "one_way",
+  returnDate: "",
+  returnTime: "",
+  returnFlightNumber: "",
+  returnArrivalTime: "",
   luggage: "none",
   selectedVehicle: null,
   distanceMiles: 0,
@@ -140,6 +152,22 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, journeyType }));
   }, []);
 
+  const setReturnDate = useCallback((returnDate: string) => {
+    setState((s) => ({ ...s, returnDate }));
+  }, []);
+
+  const setReturnTime = useCallback((returnTime: string) => {
+    setState((s) => ({ ...s, returnTime }));
+  }, []);
+
+  const setReturnFlightNumber = useCallback((returnFlightNumber: string) => {
+    setState((s) => ({ ...s, returnFlightNumber }));
+  }, []);
+
+  const setReturnArrivalTime = useCallback((returnArrivalTime: string) => {
+    setState((s) => ({ ...s, returnArrivalTime }));
+  }, []);
+
   const setLuggage = useCallback((luggage: LuggageType) => {
     setState((s) => ({ ...s, luggage }));
   }, []);
@@ -190,6 +218,10 @@ export function BookingProvider({ children }: { children: ReactNode }) {
         setTime,
         setFlightNumber,
         setJourneyType,
+        setReturnDate,
+        setReturnTime,
+        setReturnFlightNumber,
+        setReturnArrivalTime,
         setLuggage,
         setSelectedVehicle,
         setRouteInfo,

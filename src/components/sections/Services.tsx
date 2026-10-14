@@ -16,11 +16,11 @@ export const Services = () => {
       link: "/airport-transfers"
     },
     {
-      id: "city",
-      title: "City\nPrivate Hire",
-      fullTitle: "Cardiff Private Hire",
-      label: "City Private Hire",
-      description: "Our drivers are available for private hire across the entire city of Cardiff. Whether you need transportation for a local meeting, a day trip, or an evening out, we have a reliable vehicle ready for you.",
+      id: "long-distance",
+      title: "Long Distance\nTransfers",
+      fullTitle: "UK Nationwide Transfers",
+      label: "Long Distance & Seaports",
+      description: "Comfortable, scheduled long-distance transfers connecting Cardiff with major UK airports, seaports, cruise terminals, and business hubs across South Wales and England.",
       image: "/images/city_private_hire_new_1776974990983.png",
       link: "/book"
     },
@@ -45,7 +45,7 @@ export const Services = () => {
               Our services
             </span>
             <h3 className="text-[30px] sm:text-3xl md:text-[34px] lg:text-[40px] font-bold text-white leading-[1.1] tracking-tight">
-              Private hire services for <br className="hidden md:block"/> airports and the city
+              Reliable transfers for <br className="hidden md:block"/> airports & long distance travel
             </h3>
           </div>
           <div>

@@ -144,6 +144,24 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         .map((s, i) => `<li><strong>Stop ${i + 1}:</strong> ${s.address}</li>`)
         .join("");
 
+      const customerReturnHtml = booking.journeyType === "return" ? `
+        <div style="background: #eef7ff; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #b8daff;">
+          <h3 style="margin-top: 0; font-size: 16px; color: #004085; border-bottom: 1px solid #b8daff; padding-bottom: 8px;">🔁 Return Journey Information</h3>
+          <p style="margin: 6px 0;"><strong>Return Date:</strong> ${booking.returnDate}</p>
+          <p style="margin: 6px 0;"><strong>Return Pickup Time:</strong> ${booking.returnTime}</p>
+          ${booking.returnFlightNumber ? `<p style="margin: 6px 0;"><strong>Return Flight Number:</strong> ${booking.returnFlightNumber}</p>` : ""}
+          ${booking.returnArrivalTime ? `<p style="margin: 6px 0;"><strong>Return Landing / Arrival Time:</strong> ${booking.returnArrivalTime}</p>` : ""}
+        </div>
+      ` : "";
+
+      const adminReturnRows = booking.journeyType === "return" ? `
+        <tr style="background: #eef7ff;"><td colspan="2" style="padding: 10px; font-weight: bold; color: #004085; border-top: 2px solid #b8daff; border-bottom: 1px solid #b8daff;">🔁 RETURN JOURNEY DETAILS</td></tr>
+        <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Return Date:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">${booking.returnDate}</td></tr>
+        <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Return Pickup Time:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">${booking.returnTime}</td></tr>
+        ${booking.returnFlightNumber ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Return Flight:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.returnFlightNumber}</td></tr>` : ""}
+        ${booking.returnArrivalTime ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Return Arrival Time:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.returnArrivalTime}</td></tr>` : ""}
+      ` : "";
+
       const customerHtml = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;">
           <div style="background: #111; color: #fff; padding: 20px; text-align: center;">
@@ -160,13 +178,13 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               <p><strong>Status:</strong> <span style="color: green;">✅ PAID via SumUp</span></p>
               <p><strong>Vehicle:</strong> ${booking.selectedVehicle?.name}</p>
               <p><strong>Price:</strong> £${price.toFixed(2)}</p>
-              <p><strong>Service:</strong> ${booking.serviceType === "airport" ? "Airport Transfer" : "City Private Hire"}</p>
-              <p><strong>Journey:</strong> ${booking.journeyType === "return" ? "Return" : "One Way"}</p>
+              <p><strong>Service:</strong> Airport & Long Distance Transfer</p>
+              <p><strong>Journey:</strong> ${booking.journeyType === "return" ? "Return (5% discount applied)" : "One Way"}</p>
               <p><strong>Luggage:</strong> ${formatLuggage(booking.luggage)}</p>
             </div>
 
             <div style="margin: 20px 0;">
-              <h2 style="font-size: 18px;">Journey Information</h2>
+              <h2 style="font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 8px;">Outbound Journey Information</h2>
               <p><strong>Date:</strong> ${booking.date}</p>
               <p><strong>Time:</strong> ${booking.time}</p>
               <p><strong>Pickup:</strong> ${booking.pickup?.address}</p>
@@ -176,6 +194,8 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               <p><strong>Duration:</strong> ${formatDuration(booking.durationSeconds)}</p>
               ${booking.flightNumber ? `<p><strong>Flight Number:</strong> ${booking.flightNumber}</p>` : ""}
             </div>
+
+            ${customerReturnHtml}
 
             <div style="border-top: 1px solid #eee; padding-top: 20px; text-align: center; color: #666; font-size: 12px;">
               <p>Cardiff Taxis LTD | 24/7 Professional Service</p>
@@ -188,7 +208,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
       const adminHtml = `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 2px solid #ffca28; border-radius: 10px; overflow: hidden;">
           <div style="background: #111; color: #fff; padding: 20px; text-align: center;">
-            <h1 style="margin: 0; font-size: 24px;">🚨 NEW PAID BOOKING</h1>
+            <h1 style="margin: 0; font-size: 24px;">🚨 NEW PAID BOOKING ${booking.journeyType === "return" ? "(RETURN)" : "(ONE-WAY)"}</h1>
             <p style="margin: 5px 0 0; color: #ffca28;">Reference: ${ref}</p>
           </div>
           <div style="padding: 20px;">
@@ -201,15 +221,16 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Customer:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.name}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Phone:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.phone}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Email:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.email}</td></tr>
-              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Service:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.serviceType === "airport" ? "Airport Transfer" : "City Private Hire"}</td></tr>
-              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Journey:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.journeyType === "return" ? "Return" : "One Way"}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Service:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">Airport & Long Distance Transfer</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Journey:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.journeyType === "return" ? "Return (5% off)" : "One Way"}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Luggage:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${formatLuggage(booking.luggage)}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Pickup:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.pickup?.address}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Drop-off:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.dropoff?.address}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Distance/Duration:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.distanceMiles} miles (${formatDuration(booking.durationSeconds)})</td></tr>
-              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Date/Time:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.date} at ${booking.time}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Outbound Date/Time:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.date} at ${booking.time}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Vehicle:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.selectedVehicle?.name}</td></tr>
               ${booking.flightNumber ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Flight:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${booking.flightNumber}</td></tr>` : ""}
+              ${adminReturnRows}
             </table>
             
             ${stopsText ? `<div style="margin-top: 15px;"><strong>Stops:</strong><ul>${stopsText}</ul></div>` : ""}
@@ -223,7 +244,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         body: JSON.stringify({
           customerEmail: booking.email,
           subject: `Booking Confirmed: ${ref} - Cardiff Taxis LTD`,
-          adminSubject: `🚨 NEW PAID BOOKING: ${ref} - ${booking.name} (£${price.toFixed(2)})`,
+          adminSubject: `🚨 NEW PAID BOOKING ${booking.journeyType === "return" ? "[RETURN]" : "[ONE-WAY]"}: ${ref} - ${booking.name} (£${price.toFixed(2)})`,
           html: customerHtml,
           adminHtml: adminHtml,
         }),
@@ -269,11 +290,20 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-brand-muted font-medium">Date</span>
+              <span className="text-brand-muted font-medium">Outbound</span>
               <span className="text-brand-graphite font-bold">
                 {booking.date} at {booking.time}
               </span>
             </div>
+            {booking.journeyType === "return" && (
+              <div className="flex justify-between bg-blue-50/70 p-2.5 rounded-lg border border-blue-100 text-[13px]">
+                <span className="text-blue-800 font-semibold">Return</span>
+                <span className="text-blue-900 font-bold text-right">
+                  {booking.returnDate} at {booking.returnTime}
+                  {booking.returnFlightNumber && <span className="block text-[11px] text-blue-700 font-medium">Flight: {booking.returnFlightNumber}</span>}
+                </span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-brand-muted font-medium">Distance</span>
               <span className="text-brand-graphite font-bold">
@@ -283,7 +313,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
             <div className="flex justify-between">
               <span className="text-brand-muted font-medium">Type</span>
               <span className="text-brand-graphite font-bold">
-                {booking.journeyType === "return" ? "Return" : "One Way"}
+                {booking.journeyType === "return" ? "Return (5% off)" : "One Way"}
               </span>
             </div>
             <div className="flex justify-between border-t border-brand-border pt-3">
@@ -470,7 +500,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
             </p>
           </div>
           <div>
-            <p className="text-[12px] text-brand-muted font-semibold">Date</p>
+            <p className="text-[12px] text-brand-muted font-semibold">Outbound Date</p>
             <p className="text-[15px] text-brand-graphite font-bold">
               {booking.date}
             </p>
@@ -484,6 +514,21 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
             </p>
           </div>
         </div>
+
+        {booking.journeyType === "return" && (
+          <div className="bg-blue-50/70 border border-blue-100 rounded-[14px] p-3.5 flex flex-col sm:flex-row justify-between gap-2 text-[13px]">
+            <div>
+              <span className="font-bold text-blue-900 block">🔁 Return Journey:</span>
+              <span className="text-blue-800 font-semibold">{booking.returnDate} at {booking.returnTime}</span>
+            </div>
+            {(booking.returnFlightNumber || booking.returnArrivalTime) && (
+              <div className="text-blue-800 font-medium sm:text-right">
+                {booking.returnFlightNumber && <span>Flight: {booking.returnFlightNumber}</span>}
+                {booking.returnArrivalTime && <span className="block text-[12px]">Landing: {booking.returnArrivalTime}</span>}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Price */}
         <div className="flex items-center justify-between pt-3 border-t border-brand-border">

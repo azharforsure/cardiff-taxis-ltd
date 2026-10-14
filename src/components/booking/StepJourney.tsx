@@ -46,24 +46,12 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
     return (
       <div className="flex flex-col gap-2 lg:gap-3 w-full">
         <div className="flex flex-col xl:flex-row w-full gap-2 lg:gap-3">
-          {/* Service Type */}
-          <div className="w-full xl:w-[180px] bg-white md:bg-brand-section border border-gray-200 rounded-[12px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 transition-colors">
-            <select
-              value={booking.serviceType}
-              onChange={(e) => booking.setServiceType(e.target.value as "airport" | "city")}
-              className="w-full bg-transparent focus:outline-none text-black text-[15px] font-semibold cursor-pointer"
-            >
-              <option value="airport">Airport Transfer</option>
-              <option value="city">City Private Hire</option>
-            </select>
-          </div>
-
           {/* Pickup & Dropoff */}
-          <div className="grid grid-cols-1 md:grid-cols-2 flex-[1.5] w-full gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 flex-[2] w-full gap-2">
             <PlaceAutocomplete
               value={booking.pickup}
               onChange={booking.setPickup}
-              placeholder="Enter pickup location"
+              placeholder="Enter pickup location (airport or address)"
               serviceType={booking.serviceType}
               onLocationWarning={booking.setLocationWarning}
               icon={<CircleDot className="w-[16px] h-[16px] text-green-500 shrink-0" strokeWidth={2.5} />}
@@ -72,7 +60,7 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
             <PlaceAutocomplete
               value={booking.dropoff}
               onChange={booking.setDropoff}
-              placeholder="Enter drop-off location"
+              placeholder="Enter drop-off location (airport or address)"
               serviceType={booking.serviceType}
               onLocationWarning={booking.setLocationWarning}
               icon={<Navigation className="w-[16px] h-[16px] text-red-500 shrink-0" strokeWidth={2.5} />}
@@ -130,44 +118,6 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
   // ─── FULL BOOKING PAGE LAYOUT ───
   return (
     <div className="flex flex-col gap-6">
-      {/* Service Type */}
-      <div className="flex flex-col gap-2">
-        <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
-          Service Type *
-        </label>
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => booking.setServiceType("airport")}
-            className={`h-[60px] md:h-[68px] rounded-[16px] md:rounded-[20px] border-2 font-bold text-[14px] md:text-[15px] transition-all flex items-center justify-center gap-2 ${
-              booking.serviceType === "airport"
-                ? "bg-brand-primary text-white border-brand-primary"
-                : "bg-brand-section text-brand-graphite border-gray-200 hover:border-brand-graphite"
-            }`}
-          >
-            <Plane className="w-[18px] h-[18px]" strokeWidth={2} />
-            Airport Transfer
-          </button>
-          <button
-            type="button"
-            onClick={() => booking.setServiceType("city")}
-            className={`h-[60px] md:h-[68px] rounded-[16px] md:rounded-[20px] border-2 font-bold text-[14px] md:text-[15px] transition-all flex items-center justify-center gap-2 ${
-              booking.serviceType === "city"
-                ? "bg-brand-primary text-white border-brand-primary"
-                : "bg-brand-section text-brand-graphite border-gray-200 hover:border-brand-graphite"
-            }`}
-          >
-            <MapPin className="w-[18px] h-[18px]" strokeWidth={2} />
-            City Private Hire
-          </button>
-        </div>
-        <p className="text-[12px] text-brand-muted font-semibold mt-1">
-          {booking.serviceType === "airport"
-            ? "Cardiff, Bristol & London airports"
-            : "Cardiff city area only"}
-        </p>
-      </div>
-
       {/* Pickup */}
       <div className="flex flex-col gap-2">
         <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
@@ -176,12 +126,8 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
         <PlaceAutocomplete
           value={booking.pickup}
           onChange={booking.setPickup}
-          placeholder={
-            booking.serviceType === "airport"
-              ? "Airport, address, or postcode"
-              : "Cardiff address or postcode"
-          }
-          serviceType={booking.serviceType}
+          placeholder="Airport, address, or postcode"
+          serviceType="airport"
           onLocationWarning={booking.setLocationWarning}
           icon={<CircleDot className="w-[16px] h-[16px] text-green-500 shrink-0" strokeWidth={2.5} />}
         />
@@ -233,12 +179,8 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
         <PlaceAutocomplete
           value={booking.dropoff}
           onChange={booking.setDropoff}
-          placeholder={
-            booking.serviceType === "airport"
-              ? "Airport, address, or postcode"
-              : "Cardiff address or postcode"
-          }
-          serviceType={booking.serviceType}
+          placeholder="Airport, address, or postcode"
+          serviceType="airport"
           onLocationWarning={booking.setLocationWarning}
           icon={<Navigation className="w-[16px] h-[16px] text-red-500 shrink-0" strokeWidth={2.5} />}
         />
@@ -279,24 +221,22 @@ export const StepJourney = ({ compact = false, onNext }: StepJourneyProps) => {
         </div>
       </div>
 
-      {/* Flight Number (Airport only) */}
-      {booking.serviceType === "airport" && (
-        <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
-            Flight Number (Optional)
-          </label>
-          <div className="w-full bg-brand-section border border-gray-200 rounded-[16px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 gap-2">
-            <Plane className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
-            <input
-              type="text"
-              value={booking.flightNumber}
-              onChange={(e) => booking.setFlightNumber(e.target.value)}
-              placeholder="e.g. BA1234"
-              className="w-full bg-transparent focus:outline-none text-brand-graphite text-[15px] font-semibold"
-            />
-          </div>
+      {/* Flight Number (Optional) */}
+      <div className="flex flex-col gap-2">
+        <label className="text-[11px] font-bold text-brand-graphite uppercase tracking-wider">
+          Flight Number (Optional)
+        </label>
+        <div className="w-full bg-brand-section border border-gray-200 rounded-[16px] md:rounded-[20px] h-[54px] md:h-[64px] flex items-center px-4 gap-2">
+          <Plane className="w-[16px] h-[16px] text-brand-muted shrink-0" strokeWidth={2} />
+          <input
+            type="text"
+            value={booking.flightNumber}
+            onChange={(e) => booking.setFlightNumber(e.target.value)}
+            placeholder="e.g. BA1234 (for flight tracking)"
+            className="w-full bg-transparent focus:outline-none text-brand-graphite text-[15px] font-semibold"
+          />
         </div>
-      )}
+      </div>
 
       {/* Error */}
       {error && (
