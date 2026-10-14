@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowRight as ArrowRightIcon } from "lucide-react";
 

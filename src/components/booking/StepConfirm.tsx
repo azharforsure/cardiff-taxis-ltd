@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import {
   ArrowLeft,
@@ -15,7 +17,7 @@ import {
   ShieldCheck,
   Lock,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 import { useBooking } from "../../context/BookingContext";
 import { Button } from "../ui/Button";
 import { calculateFare, calculateReturnFare, formatDuration } from "../../lib/pricing";

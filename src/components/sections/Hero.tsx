@@ -1,14 +1,16 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
 import { BookingProvider, useBooking } from "../../context/BookingContext";
 import { StepJourney } from "../booking/StepJourney";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 /**
  * Inner component that has access to BookingProvider context.
  */
 const HeroBookingForm = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const booking = useBooking();
 
   const handleNext = () => {
@@ -24,7 +26,7 @@ const HeroBookingForm = () => {
     if (booking.date) params.set("date", booking.date);
     if (booking.time) params.set("time", booking.time);
     
-    navigate(`/book?${params.toString()}`);
+    router.push(`/book?${params.toString()}`);
   };
 
   return (

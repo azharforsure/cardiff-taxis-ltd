@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import type { PlaceResult } from "../lib/google-maps";
 import type { VehicleType } from "../lib/pricing";

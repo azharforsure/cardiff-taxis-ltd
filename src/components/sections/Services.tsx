@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const Services = () => {
   const [activeCard, setActiveCard] = useState(0);

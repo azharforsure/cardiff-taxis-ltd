@@ -1,6 +1,8 @@
+"use client";
+
 import { ArrowRight, User, Luggage, Briefcase } from "lucide-react";
 import { motion } from "motion/react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const FleetSelection = () => {
   const fleet = [

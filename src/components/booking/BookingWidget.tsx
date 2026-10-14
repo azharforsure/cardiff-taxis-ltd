@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useBooking } from "../../context/BookingContext";
@@ -64,7 +66,7 @@ export const BookingWidget = ({ mode }: BookingWidgetProps) => {
         <motion.div
           key={booking.currentStep}
           custom={direction}
-          variants={variants}
+          variants={variants as any}
           initial="initial"
           animate="animate"
           exit="exit"

@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const ServiceDetail = () => {
   // SVG path for a 24x24 inverse corner (solid bottom-left, transparent curve top-right)

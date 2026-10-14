@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState, useCallback } from "react";
 import { loadGoogleMaps, isInCardiff } from "../../lib/google-maps";
 import type { PlaceResult } from "../../lib/google-maps";

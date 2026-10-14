@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { BookingWidget } from "../components/booking/BookingWidget";
-import { BookingProvider, useBooking } from "../context/BookingContext";
-import type { ServiceType } from "../context/BookingContext";
+"use client";
+
+import { useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { BookingWidget } from "./BookingWidget";
+import { BookingProvider, useBooking, type ServiceType } from "../../context/BookingContext";
 
 /**
  * Step Indicator rendered inside the page header.
@@ -58,7 +58,7 @@ const StepIndicator = () => {
               className={`w-6 md:w-8 h-[2px] rounded-full shrink-0 transition-colors ${
                 booking.currentStep > step.num
                   ? "bg-brand-accent/60"
-                  : "bg-white/15"
+                  : "bg-white/20"
               }`}
             />
           )}
@@ -72,11 +72,11 @@ const StepIndicator = () => {
  * Inner component that pre-fills booking context from URL params.
  */
 const BookingPageInner = () => {
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const booking = useBooking();
 
   useEffect(() => {
-    // Pre-fill from URL params (passed from Hero widget)
+    if (!searchParams) return;
     const pickupParam = searchParams.get("pickup");
     const dropoffParam = searchParams.get("dropoff");
     const serviceParam = searchParams.get("service");
@@ -103,7 +103,7 @@ const BookingPageInner = () => {
     if (pickupParam && dropoffParam) {
       booking.setStep(2);
     }
-  }, []); // Only on mount
+  }, [searchParams]);
 
   return <BookingWidget mode="full" />;
 };
@@ -130,7 +130,9 @@ const BookingLayout = () => {
             showSidebar ? "lg:col-span-2" : ""
           }`}
         >
-          <BookingPageInner />
+          <Suspense fallback={<div className="p-8 text-center text-brand-muted">Loading booking engine...</div>}>
+            <BookingPageInner />
+          </Suspense>
         </div>
 
         {/* Sidebar — only visible on Step 1 */}
@@ -197,15 +199,10 @@ const BookingLayout = () => {
   );
 };
 
-export const Booking = () => {
+export const BookingPageClient = () => {
   return (
     <BookingProvider>
       <div className="flex flex-col pb-24 min-h-[70vh]">
-        <Helmet>
-          <title>Book a Taxi Cardiff | Instant Quote & Online Booking | Cardiff Taxis Ltd</title>
-          <meta name="description" content="Book your Cardiff taxi or airport transfer online. Get an instant quote with route map, choose your vehicle, and confirm — all in minutes. Fixed prices, secure online payment." />
-        </Helmet>
-
         {/* Hero Banner with Step Indicator */}
         <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
           <div className="relative pt-[150px] pb-[80px] md:pt-[200px] md:pb-[100px] bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">

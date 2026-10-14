@@ -1,6 +1,8 @@
+"use client";
+
 import { Plus, Minus, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const AirportFaqs = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

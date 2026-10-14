@@ -1,5 +1,5 @@
 import { Phone, ArrowRight, User, Briefcase } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const Pricing = () => {
   const priceList = [

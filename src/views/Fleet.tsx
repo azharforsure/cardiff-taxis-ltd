@@ -1,8 +1,7 @@
 import { Pricing } from "../components/sections/Pricing";
 import { Reviews } from "../components/sections/Reviews";
 import { Faqs } from "../components/sections/Faqs";
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Link } from "../components/ui/Link";
 import { ArrowRight, Baby, Accessibility, Dog, Briefcase } from "lucide-react";
 
 export const Fleet = () => {
@@ -53,11 +52,7 @@ export const Fleet = () => {
 
   return (
     <div className="flex flex-col pb-0 min-h-[70vh]">
-      <Helmet>
-        <title>Our Fleet & Pricing | Cardiff Taxis Ltd | Saloon, Estate, Minibus</title>
-        <meta name="description" content="View our range of Cardiff taxi vehicles. From standard saloons to 8-seater minibuses. Competitive fixed pricing for all journey types." />
-      </Helmet>
-      {/* Hero Header Card - Matches Home hero wrapper */}
+            {/* Hero Header Card - Matches Home hero wrapper */}
       <div className="px-1 md:px-1.5 pt-1 md:pt-1.5">
         <div className="relative pt-[180px] pb-[140px] md:pt-[260px] md:pb-[200px] bg-brand-primary overflow-hidden rounded-[12px] md:rounded-[22px] shadow-md ring-1 ring-black/[0.05]">
           <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay">

@@ -1,3 +1,5 @@
+"use client";
+
 import { User, Briefcase, Check } from "lucide-react";
 import type { VehicleType } from "../../lib/pricing";
 

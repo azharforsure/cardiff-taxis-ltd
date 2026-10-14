@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { ArrowRight, Plus, X, Plane, MapPin, Clock, Calendar, CircleDot, Navigation } from "lucide-react";
 import { useBooking } from "../../context/BookingContext";

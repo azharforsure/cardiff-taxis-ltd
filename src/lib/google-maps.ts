@@ -8,7 +8,10 @@ import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
 let initialized = false;
 let mapsReady = false;
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "";
+const API_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+  process.env.VITE_GOOGLE_MAPS_API_KEY ||
+  "";
 
 function ensureOptions() {
   if (!initialized) {

@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 import { Menu, X, PlaneTakeoff } from "lucide-react";
 import { Button } from "../ui/Button";
 
@@ -28,19 +30,6 @@ export const Navbar = () => {
               className="group text-[15px] font-bold transition-all duration-300 hover:bg-white hover:text-brand-graphite px-5 py-1.5 rounded-full flex items-center gap-1.5 text-white whitespace-nowrap"
             >
               {link.name}
-              {link.hasDropdown && (
-                <svg 
-                  className="w-4 h-4 transition-transform group-hover:rotate-180" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="3" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-              )}
             </Link>
           ))}
         </nav>

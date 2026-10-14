@@ -1,5 +1,5 @@
 import { Calendar, BarChart2, Car, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "../ui/Link";
 
 export const Process = () => {
   return (
