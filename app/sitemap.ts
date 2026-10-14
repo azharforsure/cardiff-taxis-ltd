@@ -1,11 +1,10 @@
 import { MetadataRoute } from "next";
-import { AIRPORT_ROUTES } from "../src/lib/routes-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://cardifftaxisltd.co.uk";
   const now = new Date();
 
-  const staticPages: MetadataRoute.Sitemap = [
+  return [
     {
       url: `${baseUrl}/`,
       lastModified: now,
@@ -49,13 +48,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
   ];
-
-  const routePages: MetadataRoute.Sitemap = AIRPORT_ROUTES.map((route) => ({
-    url: `${baseUrl}/airport-transfers/${route.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.85,
-  }));
-
-  return [...staticPages, ...routePages];
 }
