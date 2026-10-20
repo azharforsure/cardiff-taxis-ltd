@@ -12,10 +12,10 @@ export const Pricing = () => {
           PRICING
         </span>
         <h2 className="text-[28px] md:text-[34px] lg:text-[42px] font-bold text-brand-graphite mb-6 leading-[1.1] tracking-tight">
-          Competitive & Transparent Fares
+          Competitive & Fixed Fares
         </h2>
         <p className="text-[16px] text-brand-muted/80 leading-relaxed mb-10 font-semibold max-w-2xl mx-auto">
-          Every journey is quoted upfront before you confirm. No hidden fees, no surprises — just honest, fixed pricing based on your route and vehicle choice.
+          Every journey is quoted upfront before you confirm. With no running meters and no surprise fees, you receive honest, fixed pricing based on your route and vehicle choice.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

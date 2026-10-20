@@ -619,7 +619,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               Secure Online Payment
             </p>
             <p className="text-[12px] text-white/60 font-semibold">
-              Pay securely via SumUp — Visa, Mastercard, and Apple Pay accepted.
+              Pay securely via SumUp. Visa, Mastercard, and Apple Pay accepted.
             </p>
           </div>
           <ShieldCheck className="w-5 h-5 text-green-400 shrink-0 ml-auto" />
@@ -674,7 +674,7 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
           onClick={handleProceedToPayment}
           className="flex-1 h-[60px] md:h-[64px] pl-6 pr-6 py-2 text-brand-graphite whitespace-nowrap font-bold rounded-[16px] md:rounded-[22px] hover:rounded-[12px] md:hover:rounded-[14px] text-[16px] hover:bg-brand-accent-hover flex items-center justify-center gap-3 transition-all"
         >
-          Proceed to Payment — £{price.toFixed(2)}
+          Proceed to Payment (£{price.toFixed(2)})
           <Lock className="w-5 h-5 stroke-[2.5]" />
         </Button>
       </div>

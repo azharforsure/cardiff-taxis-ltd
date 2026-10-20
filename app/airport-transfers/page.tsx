@@ -26,7 +26,7 @@ const airportFaqJsonLd = {
       name: "How much is a taxi from Cardiff to Bristol Airport?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Our taxi transfers from Cardiff to Bristol Airport start with fixed transparent pricing based on vehicle choice. Instant quotes are available online without hidden fees.",
+        text: "Our taxi transfers from Cardiff to Bristol Airport start with fixed, competitive pricing based on vehicle choice. Instant quotes are available online without hidden fees.",
       },
     },
     {

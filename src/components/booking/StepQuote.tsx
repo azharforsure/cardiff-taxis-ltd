@@ -428,7 +428,7 @@ export const StepQuote = ({ onNext, onBack }: StepQuoteProps) => {
                 "{miniReviews[reviewIndex].text}"
               </p>
               <p className="text-white/50 text-[13px] font-semibold">
-                — {miniReviews[reviewIndex].name}
+                - {miniReviews[reviewIndex].name}
               </p>
             </motion.div>
           </AnimatePresence>
