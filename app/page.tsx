@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hero } from "../src/components/sections/Hero";
 import { Features } from "../src/components/sections/Features";
 import { About } from "../src/components/sections/About";
+import { Pricing } from "../src/components/sections/Pricing";
 import { Services } from "../src/components/sections/Services";
 import { Process } from "../src/components/sections/Process";
 import { Reviews } from "../src/components/sections/Reviews";
@@ -93,6 +94,8 @@ export default function HomePage() {
             <Process />
           </div>
         </div>
+
+        <Pricing />
 
         {/* Services Card */}
         <div className="px-1 md:px-1.5 py-1 md:py-1.5">

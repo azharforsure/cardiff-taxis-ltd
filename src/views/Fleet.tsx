@@ -1,3 +1,4 @@
+import { Pricing } from "../components/sections/Pricing";
 import { Reviews } from "../components/sections/Reviews";
 import { Faqs } from "../components/sections/Faqs";
 import { Link } from "../components/ui/Link";
@@ -208,6 +209,9 @@ export const Fleet = () => {
         </div>
       </div>
 
+
+      {/* Pricing Module - Matches Home naked section structure */}
+      <Pricing />
 
       {/* Reviews Card - Matches Home card wrapper rhythm */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">
