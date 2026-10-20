@@ -1,4 +1,3 @@
-import { Pricing } from "../components/sections/Pricing";
 import { Reviews } from "../components/sections/Reviews";
 import { Faqs } from "../components/sections/Faqs";
 import { Link } from "../components/ui/Link";
@@ -68,7 +67,7 @@ export const Fleet = () => {
             <span className="text-white/60 text-[15px] font-semibold tracking-[0.2em] uppercase mb-4 block">
               CARDIFF TAXI FLEET
             </span>
-            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-6 leading-[1.1] tracking-tight">Fleet and Pricing Options</h1>
+            <h1 className="text-[30px] sm:text-3xl md:text-[38px] lg:text-[44.4px] font-bold text-white mb-6 leading-[1.1] tracking-tight">Cardiff Taxi Fleet & Vehicles</h1>
             <p className="text-[15px] font-semibold text-white/80 max-w-[600px] mx-auto leading-relaxed mb-10">
               We offer comfortable saloons for solo travellers and spacious minibuses for larger groups. Select the ideal vehicle for any journey.
             </p>
@@ -209,8 +208,6 @@ export const Fleet = () => {
         </div>
       </div>
 
-      {/* Pricing Module - Matches Home naked section structure */}
-      <Pricing />
 
       {/* Reviews Card - Matches Home card wrapper rhythm */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">

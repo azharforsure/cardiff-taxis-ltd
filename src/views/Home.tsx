@@ -2,7 +2,6 @@ import { AirportButtons } from "../components/sections/AirportButtons";
 import { Hero } from "../components/sections/Hero";
 import { Features } from "../components/sections/Features";
 import { About } from "../components/sections/About";
-import { Pricing } from "../components/sections/Pricing";
 import { Services } from "../components/sections/Services";
 import { Process } from "../components/sections/Process";
 import { Reviews } from "../components/sections/Reviews";
@@ -26,8 +25,6 @@ export const Home = () => {
           <Process />
         </div>
       </div>
-
-      <Pricing />
 
       {/* Services Card */}
       <div className="px-1 md:px-1.5 py-1 md:py-1.5">

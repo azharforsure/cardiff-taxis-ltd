@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Hero } from "../src/components/sections/Hero";
 import { Features } from "../src/components/sections/Features";
 import { About } from "../src/components/sections/About";
-import { Pricing } from "../src/components/sections/Pricing";
 import { Services } from "../src/components/sections/Services";
 import { Process } from "../src/components/sections/Process";
 import { Reviews } from "../src/components/sections/Reviews";
@@ -41,7 +40,7 @@ const homeFaqJsonLd = {
       name: "What are your rates for airport transfers?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Our rates are fixed depending on the car you choose. Please see our pricing list. You will not pay any extra hidden fees.",
+        text: "Our rates are fixed depending on the vehicle you choose. You can get an instant quote online or call us directly. You will not pay any extra hidden fees.",
       },
     },
     {
@@ -94,8 +93,6 @@ export default function HomePage() {
             <Process />
           </div>
         </div>
-
-        <Pricing />
 
         {/* Services Card */}
         <div className="px-1 md:px-1.5 py-1 md:py-1.5">

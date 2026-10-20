@@ -14,7 +14,7 @@ export const AirportFaqs = () => {
     },
     {
       q: "What are your rates for airport transfers?",
-      a: "Our rates are fixed depending on the car you choose. Please see our pricing list. You will not pay any extra hidden fees.",
+      a: "Our rates are fixed depending on the vehicle you choose. You can get an instant quote using our online booking tool or by calling us directly. You will not pay any extra hidden fees.",
     },
     {
       q: "Do you monitor flight times for delays?",
