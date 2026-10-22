@@ -14,7 +14,7 @@ The live state of this engagement. Any tool reads this first and updates it befo
 | Domain / id | `cardiff-taxis-ltd` |
 | Shape | Local services — private hire and airport transfers. A **service-area business**, not a shopfront. |
 | Platform | Not recorded on disk. `metadata.json` describes the business; the folder contains a Next.js/Vite app (`next.config.mjs`, `app/`, `src/`). **Confirm the live platform before quoting any technical work.** |
-| Order | **Website build** (operator-confirmed 2026-10-23; this folder is its working state). **Price and delivery date still not recorded** — write them down before invoicing or handover |
+| Order | **Website build — PKR 35,000, delivered within two weeks** (operator-confirmed 2026-10-23; calendar dates unrecorded). This folder is its working state. Payment status not recorded on disk |
 | Current phase | **Not recorded.** Establish it from the folder contents and the live site. |
 | Blocked on | **Unknown — and this is the first thing to fix.** A folder with no recorded scope or price cannot be handed off reliably. |
 
@@ -73,3 +73,10 @@ Next action: unchanged — read before acting.
   is the uncle of the operator's friend Qasim. Commercial spend and publication are operator-gated there.
 - Next action (build): record price and delivery date for this build folder. Next action (marketing): the
   new folder's `STATE.md`.
+
+### 2026-10-23 (3) · OpenCode (GLM) · Operator's agent — commercial record
+
+**Order recorded from the operator:** this build was **PKR 35,000 and was delivered within two weeks**.
+State block updated (order row). Still not on disk: the calendar dates of the two weeks, and whether the
+invoice was paid — `_data/finance/invoices.csv` is the home for that row when you can state both. The
+engagement is delivered; engagement #2 (SEO/marketing upsell) continues separately.

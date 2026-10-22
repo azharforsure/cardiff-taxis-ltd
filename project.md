@@ -3,17 +3,17 @@ name: cardiff-taxis-website-build-2026-10
 slug: cardiff-taxis-website-build-2026-10
 workspace: freelance
 client: cardiff-taxis
-status: active
+status: delivered
 opened: 2026-10-14
 ---
 
 # cardiff-taxis-website-build-2026-10
 
-**Client:** cardiff-taxis · **Opened:** 2026-10-14 · **Migrated** wholesale from `clients/cardiff-taxis/` on 2026-10-23 (the clients/projects split). This is the engagement's own git repository.
+**Client:** cardiff-taxis · **Opened:** 2026-10-14 · **Migrated** wholesale from `clients/cardiff-taxis/` on 2026-10-23 (the clients/projects split). **Renamed** from `cardiff-taxis-engagement-2026-10` on 2026-10-23 (the old slug said nothing). This is the engagement's own git repository.
 
 ## Scope
 
-**Website build** for Cardiff Taxis Ltd (operator-confirmed 2026-10-23) — the Next.js/Vite application in this folder (`app/`, `src/`, `dist/`, `server.js`) is its working state. **Price and delivery date are still not recorded** — write them down before any invoice or handover.
+**Website build** for Cardiff Taxis Ltd — the Next.js/Vite application in this folder (`app/`, `src/`, `dist/`, `server.js`) is its working state. **Price: PKR 35,000. Delivered within two weeks** of start (dates not recorded — calendar dates for the two weeks would make this row complete).
 
 **SEO + marketing is a separate engagement**: [`../cardiff-taxis-seo-marketing-2026-10/`](../cardiff-taxis-seo-marketing-2026-10/) — pitched, not yet accepted.
 
