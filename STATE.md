@@ -14,7 +14,7 @@ The live state of this engagement. Any tool reads this first and updates it befo
 | Domain / id | `cardiff-taxis-ltd` |
 | Shape | Local services — private hire and airport transfers. A **service-area business**, not a shopfront. |
 | Platform | Not recorded on disk. `metadata.json` describes the business; the folder contains a Next.js/Vite app (`next.config.mjs`, `app/`, `src/`). **Confirm the live platform before quoting any technical work.** |
-| Order | **Not recorded on disk.** No order, price or delivery date appears in `client.md`, `metadata.json` or `README.md`. Record it here before the next session. |
+| Order | **Website build** (operator-confirmed 2026-10-23; this folder is its working state). **Price and delivery date still not recorded** — write them down before invoicing or handover |
 | Current phase | **Not recorded.** Establish it from the folder contents and the live site. |
 | Blocked on | **Unknown — and this is the first thing to fix.** A folder with no recorded scope or price cannot be handed off reliably. |
 
@@ -60,3 +60,16 @@ clients/projects split (`docs/operations/engagement-lifecycle.md` v1.1.0): `clie
 the client card, `projects/<client>-<slug>/` holds one engagement. **Contents untouched; no engagement
 work done.** `project.md` registered at the root with the scope recorded from `STATE.md`/`client.md`.
 Next action: unchanged — read before acting.
+
+### 2026-10-23 (2) · OpenCode (GLM) · Operator's agent — scope record + split
+
+- **Order recorded:** this is the **website build** for Cardiff Taxis Ltd (operator-confirmed). Price and
+  delivery date remain unrecorded — still the blocking fact for any invoice/handover.
+- **Project folder renamed** `cardiff-taxis-engagement-2026-10/` → `cardiff-taxis-website-build-2026-10/`
+  (the old slug said nothing). Git history unaffected.
+- **Engagement #2 opened:** SEO + marketing upsell lives separately in
+  `../cardiff-taxis-seo-marketing-2026-10/` — **pitched, not accepted, not priced.** Recorded strategy:
+  goodwill-first (make the site money before proposing a retainer). Client relationship context: the client
+  is the uncle of the operator's friend Qasim. Commercial spend and publication are operator-gated there.
+- Next action (build): record price and delivery date for this build folder. Next action (marketing): the
+  new folder's `STATE.md`.

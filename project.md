@@ -1,19 +1,21 @@
 ---
-name: cardiff-taxis-engagement-2026-10
-slug: cardiff-taxis-engagement-2026-10
+name: cardiff-taxis-website-build-2026-10
+slug: cardiff-taxis-website-build-2026-10
 workspace: freelance
 client: cardiff-taxis
 status: active
 opened: 2026-10-14
 ---
 
-# cardiff-taxis-engagement-2026-10
+# cardiff-taxis-website-build-2026-10
 
 **Client:** cardiff-taxis · **Opened:** 2026-10-14 · **Migrated** wholesale from `clients/cardiff-taxis/` on 2026-10-23 (the clients/projects split). This is the engagement's own git repository.
 
 ## Scope
 
-**Not recorded on disk.** No order, price or delivery date appears anywhere in `STATE.md`, `client.md` or the folder. Recording the engagement record is the first action of the next session — do not quote or perform work before it.
+**Website build** for Cardiff Taxis Ltd (operator-confirmed 2026-10-23) — the Next.js/Vite application in this folder (`app/`, `src/`, `dist/`, `server.js`) is its working state. **Price and delivery date are still not recorded** — write them down before any invoice or handover.
+
+**SEO + marketing is a separate engagement**: [`../cardiff-taxis-seo-marketing-2026-10/`](../cardiff-taxis-seo-marketing-2026-10/) — pitched, not yet accepted.
 
 ## Position
 
