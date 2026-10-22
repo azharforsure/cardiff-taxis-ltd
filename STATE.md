@@ -15,8 +15,8 @@ The live state of this engagement. Any tool reads this first and updates it befo
 | Shape | Local services — private hire and airport transfers. A **service-area business**, not a shopfront. |
 | Platform | Not recorded on disk. `metadata.json` describes the business; the folder contains a Next.js/Vite app (`next.config.mjs`, `app/`, `src/`). **Confirm the live platform before quoting any technical work.** |
 | Order | **Website build — PKR 35,000, delivered within two weeks** (operator-confirmed 2026-10-23; calendar dates unrecorded). This folder is its working state. Payment status not recorded on disk |
-| Current phase | **Not recorded.** Establish it from the folder contents and the live site. |
-| Blocked on | **Unknown — and this is the first thing to fix.** A folder with no recorded scope or price cannot be handed off reliably. |
+| Current phase | **Delivered** — PKR 35,000, within two weeks (operator-confirmed 2026-10-23). SEO/marketing upsell runs separately |
+| Blocked on | Nothing for delivery. Open records: calendar dates of the two-week delivery, and payment status (for `_data/finance/invoices.csv`) |
 
 ### Done
 

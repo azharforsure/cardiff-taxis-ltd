@@ -13,7 +13,7 @@ opened: 2026-10-14
 
 ## Scope
 
-**Website build** for Cardiff Taxis Ltd — the Next.js/Vite application in this folder (`app/`, `src/`, `dist/`, `server.js`) is its working state. **Price: PKR 35,000. Delivered within two weeks** of start (dates not recorded — calendar dates for the two weeks would make this row complete).
+**Website build** for Cardiff Taxis Ltd — a **direct engagement, not Fiverr**: the client came through Qasim (the operator's friend). The Next.js/Vite application in this folder (`app/`, `src/`, `dist/`, `server.js`) is its working state. **Price: PKR 35,000. Delivered within two weeks** of start (dates not recorded — calendar dates for the two weeks would make this row complete).
 
 **SEO + marketing is a separate engagement**: [`../cardiff-taxis-seo-marketing-2026-10/`](../cardiff-taxis-seo-marketing-2026-10/) — pitched, not yet accepted.
 
