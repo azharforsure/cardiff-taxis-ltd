@@ -302,3 +302,27 @@ why fleet and drivers not showing real fleets we have on the site with images?
    - Created `src/lib/fleet-data.ts` for clean shared type-safe fleet assets.
    - Committed (`2739e95`) and pushed to `main`.
    - Verified automated build `01a1ce69-7b42-708d-83ff-33bdf6868ed1` completed with 0 errors.
+
+
+## Turn - 2026-11-12 (Sole Owner-Operator & Header Cleanup)
+
+### Operator
+we don't have any drivers yet, it's just the main owner.
+i think top header is redundant, we should just remove it.
+
+### Antigravity
+1. **Removed Dummy Drivers & Set Owner-Operator**:
+   - Cleaned up the 4 seeded test drivers (Tariq, David, Ali, Gareth) from the Hostinger MySQL database.
+   - Set the sole driver record to the actual owner (Qasim, phone 07817 385655, callsign Owner).
+   - Updated /admin/drivers to highlight the owner-operator card with an official "Owner & Operator" gold badge and direct WhatsApp/call shortcuts.
+   - Added an empty-state guidance card clarifying that Cardiff Taxis is operated directly by the owner, with an "+ Add Driver" shortcut ready whenever a new team driver is hired.
+   - Updated the Dashboard overview KPI to display 1 Owner-operator instead of 4 fleet drivers.
+2. **Removed Redundant Top Header**:
+   - Completely eliminated the duplicate top header bar on desktop screens.
+   - Content on desktop now starts directly at the top with clean spacing and no duplicated buttons or clutter.
+   - Retained only a compact, mobile-only navigation bar (md:hidden) with the menu trigger and logo so phone users can still open the sidebar drawer.
+3. **Database Seed & Deployment**:
+   - Updated prisma/seed.ts so future seeds only register the owner-operator profile.
+   - Verified clean production build with 30/30 static and dynamic routes.
+   - Pushed commit 8b46db5 to GitHub main.
+   - Hostinger automated deployment 01a1ce88-eaf6-7301-b987-d9f55111ad1a completed and restarted successfully.
