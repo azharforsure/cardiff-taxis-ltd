@@ -23,6 +23,7 @@ export interface SumUpCheckoutRequest {
   description: string;
   customerEmail?: string;
   redirectUrl?: string;
+  bookingData?: any;
 }
 
 export interface SumUpCheckoutResponse {

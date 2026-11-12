@@ -84,6 +84,29 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
         checkoutReference: ref,
         description: `Cardiff Taxis - ${booking.selectedVehicle?.name} - ${booking.pickup?.address} to ${booking.dropoff?.address}`,
         customerEmail: booking.email,
+        bookingData: {
+          ref,
+          name: booking.name,
+          phone: booking.phone,
+          email: booking.email,
+          date: booking.date,
+          time: booking.time,
+          vehicle: booking.selectedVehicle?.name,
+          journeyType: booking.journeyType,
+          pickup: booking.pickup?.address,
+          dropoff: booking.dropoff?.address,
+          stops: booking.stops,
+          distanceMiles: booking.distanceMiles,
+          durationSeconds: booking.durationSeconds,
+          returnDate: booking.returnDate,
+          returnTime: booking.returnTime,
+          flightNumber: booking.flightNumber,
+          returnFlightNumber: booking.returnFlightNumber,
+          returnArrivalTime: booking.returnArrivalTime,
+          luggage: booking.luggage,
+          passengers: booking.selectedVehicle?.maxPassengers || 4,
+          price,
+        },
       });
 
       // Step 2: Mount the SumUp payment widget
@@ -110,6 +133,12 @@ export const StepConfirm = ({ onBack }: StepConfirmProps) => {
               pickup: booking.pickup?.address,
               dropoff: booking.dropoff?.address,
             });
+            // Update status on server store
+            fetch("/api/update-booking-status", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ref, status: "PAID", transactionId: (body as any).transaction_id || (body as any).id }),
+            }).catch(() => {});
             await sendBookingConfirmation(ref);
             window.scrollTo({ top: 0, behavior: "smooth" });
           } else {

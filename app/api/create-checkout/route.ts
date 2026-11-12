@@ -1,13 +1,29 @@
 import { NextResponse } from "next/server";
+import { saveBooking } from "../../../src/lib/bookings-store";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { amount, currency, checkoutReference, description, customerEmail, redirectUrl } = body;
+    const { amount, currency, checkoutReference, description, customerEmail, redirectUrl, bookingData } = body;
 
     // Validate
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
+    }
+
+    // Persist full booking details immediately on server
+    if (bookingData && checkoutReference) {
+      try {
+        saveBooking({
+          ...bookingData,
+          ref: checkoutReference,
+          price: parseFloat(amount.toFixed(2)),
+          status: "PENDING_PAYMENT",
+          createdAt: new Date().toISOString(),
+        });
+      } catch (saveErr) {
+        console.error("Failed to persist booking on server:", saveErr);
+      }
     }
 
     const SUMUP_API_KEY = process.env.SUMUP_API_KEY;
@@ -17,12 +33,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Payment service not configured on server" }, { status: 500 });
     }
 
+    // Format rich description so owner sees Date, Time, Phone, and Addresses directly in SumUp
+    let finalDescription = description || "Cardiff Taxis Booking";
+    if (bookingData) {
+      const returnPart = bookingData.returnDate ? ` | Ret: ${bookingData.returnDate} ${bookingData.returnTime || ""}` : "";
+      finalDescription = `${bookingData.vehicle || "Taxi"} | ${bookingData.date || ""} ${bookingData.time || ""}${returnPart} | Tel: ${bookingData.phone || ""} | ${bookingData.name || ""} | ${bookingData.pickup || ""} to ${bookingData.dropoff || ""}`.slice(0, 250);
+    }
+
     const payload: any = {
       amount: parseFloat(amount.toFixed(2)),
       currency: currency || "GBP",
       checkout_reference: checkoutReference,
       merchant_code: SUMUP_MERCHANT_CODE,
-      description: description || "Cardiff Taxis Booking",
+      description: finalDescription,
       personal_details: customerEmail
         ? {
             email: customerEmail,
