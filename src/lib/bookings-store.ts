@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import prisma from "./prisma";
 
 export interface BookingRecord {
   ref: string;
@@ -72,9 +73,63 @@ export function saveBooking(booking: BookingRecord): void {
       });
     }
 
-    // Keep the most recent 200 bookings
     const trimmed = existing.slice(0, 200);
     fs.writeFileSync(DATA_FILE, JSON.stringify(trimmed, null, 2), "utf-8");
+
+    // Also persist to MySQL via Prisma
+    prisma.booking
+      .upsert({
+        where: { bookingReference: booking.ref },
+        update: {
+          customerName: booking.name,
+          customerEmail: booking.email,
+          customerPhone: booking.phone,
+          pickupAddress: booking.pickup,
+          dropoffAddress: booking.dropoff,
+          pickupDate: booking.date,
+          pickupTime: booking.time,
+          isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
+          returnDate: booking.returnDate || null,
+          returnTime: booking.returnTime || null,
+          tripType: booking.journeyType,
+          vehicleType: booking.vehicle,
+          passengers: booking.passengers || 1,
+          luggage: parseInt(booking.luggage, 10) || 1,
+          price: booking.price,
+          flightNumber: booking.flightNumber || null,
+          status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
+          paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
+          paymentId: booking.transactionId || null,
+        },
+        create: {
+          bookingReference: booking.ref,
+          customerName: booking.name,
+          customerEmail: booking.email,
+          customerPhone: booking.phone,
+          pickupAddress: booking.pickup,
+          dropoffAddress: booking.dropoff,
+          pickupDate: booking.date,
+          pickupTime: booking.time,
+          isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
+          returnDate: booking.returnDate || null,
+          returnTime: booking.returnTime || null,
+          tripType: booking.journeyType,
+          vehicleType: booking.vehicle,
+          passengers: booking.passengers || 1,
+          luggage: parseInt(booking.luggage, 10) || 1,
+          price: booking.price,
+          flightNumber: booking.flightNumber || null,
+          source: "ONLINE",
+          status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
+          paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
+          paymentMethod: "sumup",
+          paymentId: booking.transactionId || null,
+          createdAt: booking.createdAt ? new Date(booking.createdAt) : new Date(),
+        },
+      })
+      .catch((err) => {
+        console.warn("Prisma background booking sync notice:", err.message);
+      });
   } catch (err) {
     console.error("Failed to save booking:", err);
   }
@@ -100,6 +155,20 @@ export function updateBookingStatus(
       }
       existing[index].updatedAt = new Date().toISOString();
       fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2), "utf-8");
+
+      prisma.booking
+        .updateMany({
+          where: { bookingReference: ref },
+          data: {
+            status: status === "PAID" ? "CONFIRMED" : status === "FAILED" ? "CANCELLED" : "PENDING",
+            paymentStatus: status === "PAID" ? "PAID" : "UNPAID",
+            paymentId: meta?.transactionId || undefined,
+          },
+        })
+        .catch((err) => {
+          console.warn("Prisma background update notice:", err.message);
+        });
+
       return existing[index];
     }
     return null;

@@ -1,0 +1,91 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("ADMIN") // OWNER, ADMIN, DISPATCHER
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Driver {
+  id           String    @id @default(cuid())
+  name         String
+  phone        String
+  email        String?
+  callsign     String?   // e.g. "Car 10", "D-01"
+  vehicleMake  String?   // e.g. "Skoda Octavia", "Mercedes Vito"
+  vehiclePlate String?   // e.g. "CF22 ABC"
+  vehicleType  String    @default("Saloon") // Saloon, Estate, MPV, Minibus
+  status       String    @default("AVAILABLE") // AVAILABLE, ON_TRIP, OFF_DUTY
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  bookings     Booking[]
+}
+
+model Booking {
+  id               String    @id @default(cuid())
+  bookingReference String    @unique
+  customerName     String
+  customerEmail    String
+  customerPhone    String
+  pickupAddress    String    @db.Text
+  dropoffAddress   String    @db.Text
+  pickupDate       String    // YYYY-MM-DD
+  pickupTime       String    // HH:mm
+  isReturn         Boolean   @default(false)
+  returnDate       String?
+  returnTime       String?
+  tripType         String    @default("one-way")
+  vehicleType      String    @default("Saloon")
+  passengers       Int       @default(1)
+  luggage          Int       @default(1)
+  price            Float
+  flightNumber     String?
+  specialRequests  String?   @db.Text
+  source           String    @default("ONLINE") // ONLINE, PHONE, WALK_IN
+  status           String    @default("PENDING") // PENDING, CONFIRMED, DISPATCHED, COMPLETED, CANCELLED
+  paymentStatus    String    @default("PAID") // PAID, UNPAID, CASH, REFUNDED
+  paymentMethod    String    @default("sumup") // sumup, cash, account, card
+  paymentId        String?
+  notes            String?   @db.Text
+  driverId         String?
+  driver           Driver?   @relation(fields: [driverId], references: [id])
+  dispatchedAt     DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([pickupDate])
+  @@index([status])
+  @@index([driverId])
+}
+
+model PricingSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  label       String
+  category    String   @default("GENERAL") // FARES, AIRPORTS, SURCHARGES, VEHICLES
+  updatedAt   DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  details   String?  @db.Text
+  userName  String?
+  bookingId String?
+  createdAt DateTime @default(now())
+}
