@@ -326,3 +326,20 @@ i think top header is redundant, we should just remove it.
    - Verified clean production build with 30/30 static and dynamic routes.
    - Pushed commit 8b46db5 to GitHub main.
    - Hostinger automated deployment 01a1ce88-eaf6-7301-b987-d9f55111ad1a completed and restarted successfully.
+
+
+## Turn - 2026-11-12 (Use General Owner/Admin Label)
+
+### Operator
+qasim is not owner. use any general name like admin or owner.
+
+### Antigravity
+1. **General Owner Label Across Database & UI**:
+   - Updated the driver record in Hostinger MySQL from "Qasim" to the general name "Owner" (callsign: "Owner").
+   - Updated `/admin/page.tsx` KPI metric to display "Owner-operator active" with no personal name attached.
+   - Updated `/admin/drivers` page to look up general "Owner" or "Admin" roles.
+   - Updated `prisma/seed.ts` to register the general profile `name: 'Owner'` for any future seeds.
+2. **Build & Live Verification**:
+   - Production build compiled cleanly (30/30 routes).
+   - Committed (`ff6cd51`) and pushed to GitHub `main`.
+   - Hostinger automated deployment `01a1ceab-4746-727c-a1d1-eae291d1b5e5` completed and restarted successfully.
