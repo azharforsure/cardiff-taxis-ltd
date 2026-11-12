@@ -152,10 +152,10 @@ export default function AdminDriversPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Fleet & Authorized Drivers
+            Fleet & Drivers
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Real Cardiff Taxis fleet vehicles, driver assignments, and live availability
+            Official vehicle fleet categories, owner-operator profile, and dispatch roster
           </p>
         </div>
 
@@ -177,7 +177,7 @@ export default function AdminDriversPage() {
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm shadow-md shadow-amber-500/20 transition cursor-pointer"
         >
           <PlusCircle className="w-4 h-4" />
-          Add Driver & Vehicle
+          Add Driver
         </button>
       </div>
 
@@ -258,6 +258,11 @@ export default function AdminDriversPage() {
             <Users className="w-5 h-5 text-emerald-400" />
             <h2 className="text-base font-bold text-white">
               Fleet Drivers Roster ({filteredDrivers.length})
+              {drivers.length === 1 && (
+                <span className="ml-2 text-xs font-normal text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+                  Owner-Operated
+                </span>
+              )}
             </h2>
           </div>
 
@@ -299,6 +304,10 @@ export default function AdminDriversPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredDrivers.map((d) => {
               const vehicleImg = getVehicleImage(d.vehicleType);
+              const isOwner =
+                d.callsign?.toLowerCase() === "owner" ||
+                d.name?.toLowerCase().includes("owner") ||
+                d.name?.toLowerCase().includes("qasim");
 
               return (
                 <div
@@ -315,8 +324,9 @@ export default function AdminDriversPage() {
                       />
 
                       {/* Callsign Pill */}
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-xs shadow-md">
-                        {d.callsign || "CAR"}
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-xs shadow-md flex items-center gap-1">
+                        {isOwner && <ShieldCheck className="w-3.5 h-3.5 text-slate-950" />}
+                        {isOwner ? "OWNER" : d.callsign || "CAR"}
                       </span>
 
                       {/* Status Selector */}
@@ -343,7 +353,14 @@ export default function AdminDriversPage() {
                     <div className="p-5 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="text-base font-bold text-white">{d.name}</h3>
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-base font-bold text-white">{d.name}</h3>
+                            {isOwner && (
+                              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                                Owner
+                              </span>
+                            )}
+                          </div>
                           <p className="text-xs text-slate-400">{d.vehicleMake || d.vehicleType}</p>
                         </div>
 
@@ -368,7 +385,7 @@ export default function AdminDriversPage() {
                           className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center gap-1.5 text-xs font-semibold transition"
                         >
                           <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                          Call Driver
+                          {isOwner ? "Call Owner" : "Call Driver"}
                         </a>
                         <a
                           href={`https://wa.me/${d.phone.replace(/\D/g, "")}`}
@@ -394,18 +411,53 @@ export default function AdminDriversPage() {
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        onClick={() => handleDeleteDriver(d)}
-                        className="p-1.5 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
-                        title="Delete Driver"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                      {!isOwner && (
+                        <button
+                          onClick={() => handleDeleteDriver(d)}
+                          className="p-1.5 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                          title="Delete Driver"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
               );
             })}
+
+            {/* Additional Drivers Prompt Card */}
+            {drivers.length <= 1 && filterType === "ALL" && (
+              <div className="rounded-2xl border-2 border-dashed border-slate-800 p-6 flex flex-col items-center justify-center text-center bg-slate-900/30 hover:border-slate-700 transition">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-3">
+                  <Users className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold text-white">Owner-Operated Business</h4>
+                <p className="text-xs text-slate-400 max-w-xs mt-1.5 leading-relaxed">
+                  Cardiff Taxis is currently operated directly by the owner. When you recruit new team drivers or contractors, register them here to enable multi-driver dispatch.
+                </p>
+                <button
+                  onClick={() => {
+                    setEditingDriver(null);
+                    setForm({
+                      name: "",
+                      phone: "",
+                      email: "",
+                      callsign: `Car 0${drivers.length + 1}`,
+                      vehicleMake: "",
+                      vehiclePlate: "",
+                      vehicleType: "Saloon",
+                      status: "AVAILABLE",
+                    });
+                    setShowAddModal(true);
+                  }}
+                  className="mt-4 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold inline-flex items-center gap-1.5 transition cursor-pointer"
+                >
+                  <PlusCircle className="w-3.5 h-3.5 text-amber-400" />
+                  + Add Driver
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

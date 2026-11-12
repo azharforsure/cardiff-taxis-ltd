@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
                 {metrics.needsDriverCount} booking{metrics.needsDriverCount > 1 ? "s require" : " requires"} driver assignment!
               </p>
               <p className="text-xs text-amber-400/90">
-                Assign available drivers to ensure smooth passenger pickups.
+                Confirm pickup details and assign to owner or driver for dispatch.
               </p>
             </div>
           </div>
@@ -156,10 +156,13 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Needs Driver */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden">
+        <Link
+          href="/admin/bookings?status=NEEDS_DRIVER"
+          className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group"
+        >
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Unassigned</span>
-            <AlertTriangle className={`w-4 h-4 ${metrics.needsDriverCount > 0 ? "text-amber-400" : "text-slate-500"}`} />
+            <AlertTriangle className={`w-4 h-4 ${metrics.needsDriverCount > 0 ? "text-amber-400" : "text-slate-500"} group-hover:scale-110 transition`} />
           </div>
           <div className="mt-3">
             <span className={`text-2xl sm:text-3xl font-extrabold ${metrics.needsDriverCount > 0 ? "text-amber-400" : "text-slate-300"}`}>
@@ -167,21 +170,29 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <p className="mt-1 text-[11px] text-slate-400">Pending driver assignment</p>
-        </div>
+        </Link>
 
         {/* Active Fleet */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden">
+        <Link
+          href="/admin/drivers"
+          className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group"
+        >
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Active Drivers</span>
-            <Car className="w-4 h-4 text-sky-400" />
+            <Car className="w-4 h-4 text-sky-400 group-hover:scale-110 transition" />
           </div>
-          <div className="mt-3">
+          <div className="mt-3 flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-extrabold text-white">
               {metrics.activeDriversCount}
             </span>
+            <span className="text-xs text-amber-400 font-medium">
+              {metrics.activeDriversCount === 1 ? "Owner" : "Drivers"}
+            </span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">Registered fleet drivers</p>
-        </div>
+          <p className="mt-1 text-[11px] text-slate-400">
+            {metrics.activeDriversCount === 1 ? "Owner-operator (Qasim)" : "Registered fleet drivers"}
+          </p>
+        </Link>
       </div>
 
       {/* Recent Bookings Section */}

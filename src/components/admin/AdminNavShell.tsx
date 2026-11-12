@@ -14,9 +14,7 @@ import {
   Menu,
   X,
   ExternalLink,
-  PlusCircle,
   PhoneCall,
-  Clock,
 } from "lucide-react";
 
 interface AdminNavShellProps {
@@ -28,7 +26,6 @@ export default function AdminNavShell({ user, children }: AdminNavShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState("");
 
   const isLoginPage = pathname === "/admin/login";
 
@@ -37,22 +34,6 @@ export default function AdminNavShell({ user, children }: AdminNavShellProps) {
       router.push("/admin/login");
     }
   }, [user, isLoginPage, router]);
-
-  useEffect(() => {
-    const update = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   if (isLoginPage) {
     return <>{children}</>;
@@ -178,37 +159,30 @@ export default function AdminNavShell({ user, children }: AdminNavShellProps) {
 
       {/* Main Content Column */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        {/* Top Header */}
-        <header className="h-16 flex items-center justify-between px-4 sm:px-6 bg-slate-900/90 border-b border-slate-800 backdrop-blur-md z-10">
+        {/* Mobile Header Bar (Only visible on mobile screens) */}
+        <header className="md:hidden h-14 flex items-center justify-between px-4 bg-slate-900 border-b border-slate-800 z-10">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              className="p-1.5 -ml-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              aria-label="Open navigation menu"
             >
               <Menu className="w-6 h-6" />
             </button>
-            <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="hidden sm:inline">Dispatch System Online</span>
-              <span className="sm:hidden">Online</span>
-            </div>
+            <Link href="/admin" className="flex items-center">
+              <img
+                src="/logo-concept-3-motion-light.svg"
+                alt="Cardiff Taxis Ltd"
+                className="h-7 w-auto"
+              />
+            </Link>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Live Clock */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950/60 border border-slate-800 text-xs font-mono text-slate-300">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
-              <span>{currentTime}</span>
-            </div>
-
-            {/* Quick manual booking shortcut */}
-            <Link
-              href="/admin/bookings?new=true"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20 transition"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>New Booking</span>
-            </Link>
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
+              Online
+            </span>
           </div>
         </header>
 

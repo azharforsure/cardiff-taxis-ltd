@@ -28,20 +28,23 @@ async function main() {
   });
   console.log('Admin user initialized:', adminUser.email);
 
-  // 2. Initial fleet drivers
-  const sampleDrivers = [
-    { name: 'Tariq Hussain', phone: '07700 900123', callsign: 'Car 01', vehicleMake: 'Skoda Superb (2023)', vehiclePlate: 'CF23 TQX', vehicleType: 'Saloon' },
-    { name: 'David Evans', phone: '07700 900456', callsign: 'Car 02', vehicleMake: 'Toyota Corolla Touring', vehiclePlate: 'CF72 DEV', vehicleType: 'Estate' },
-    { name: 'Ali Mohammed', phone: '07700 900789', callsign: 'Car 03', vehicleMake: 'Ford Tourneo Custom', vehiclePlate: 'CF71 ALI', vehicleType: 'MPV' },
-    { name: 'Gareth Lewis', phone: '07700 900321', callsign: 'Car 04', vehicleMake: 'Mercedes-Benz Vito', vehiclePlate: 'CF24 GLX', vehicleType: 'Minibus' },
-  ];
+  // 2. Owner-driver profile (Cardiff Taxis is run by the owner)
+  const ownerDriver = {
+    name: 'Qasim',
+    phone: '07817 385655',
+    email: 'bookings@cardifftaxisltd.co.uk',
+    callsign: 'Owner',
+    vehicleMake: 'Cardiff Taxis Fleet',
+    vehiclePlate: 'CF23 CTL',
+    vehicleType: 'Saloon',
+    status: 'AVAILABLE',
+    active: true,
+  };
 
-  for (const d of sampleDrivers) {
-    const existing = await prisma.driver.findFirst({ where: { phone: d.phone } });
-    if (!existing) {
-      await prisma.driver.create({ data: d });
-      console.log('Added driver:', d.name);
-    }
+  const existingDriver = await prisma.driver.findFirst({ where: { phone: ownerDriver.phone } });
+  if (!existingDriver) {
+    await prisma.driver.create({ data: ownerDriver });
+    console.log('Added owner driver:', ownerDriver.name);
   }
 
   // 3. Pricing settings
