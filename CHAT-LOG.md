@@ -283,3 +283,22 @@ show the proper website logo on admin as well.
    - Committed (`a626ead`) and pushed to `main`.
    - Verified the live Hostinger build succeeded (`01a1ce58-9a6e-7073-9b23-18bef2fa604a` - completed).
    - Confirmed live on `https://cardifftaxisltd.co.uk/admin/login` that no public nav/footer appears, no email is leaked, and the official logo displays properly.
+
+
+## Turn - 2026-11-12 (Fleet & Drivers Real Vehicle Showcase & Image Integration)
+
+### Operator
+why fleet and drivers not showing real fleets we have on the site with images?
+
+### Antigravity
+1. **Fleet Showcase Integration**:
+   - Pulled the real fleet classes and image assets from the website (`Saloon`, `Estate`, `Executive`, `People Carrier / MPV`, and `8-Seater Minibus`).
+   - Added an interactive top section on `/admin/drivers` showing the 5 official vehicle classes with passenger/luggage capacities and driver count filters.
+2. **Driver Vehicle Photo Cards**:
+   - Each driver card now displays the real vehicle photo banner on top, styled UK yellow license plate badge, driver callsign, phone/WhatsApp shortcuts, and status.
+   - Updated the driver creation modal to preview the vehicle photo in real-time as the vehicle category is selected.
+   - Enhanced the booking drawer to also display the vehicle thumbnail alongside ride details.
+3. **Deploy & Verification**:
+   - Created `src/lib/fleet-data.ts` for clean shared type-safe fleet assets.
+   - Committed (`2739e95`) and pushed to `main`.
+   - Verified automated build `01a1ce69-7b42-708d-83ff-33bdf6868ed1` completed with 0 errors.
