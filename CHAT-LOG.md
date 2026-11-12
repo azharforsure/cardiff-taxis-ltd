@@ -231,3 +231,55 @@ you can do it through mcp, first update mcp confige file so it can directly prom
    - Browser prompt opened and sign-in completed successfully.
    - Verified the connection live: connected to account `u440345526` for `cardifftaxisltd.co.uk`.
    - Checked database list (0 databases currently exist; ready to create the new database for the admin system).
+
+
+## Turn - 2026-11-12 (Complete Backend Portal Built & Deployed to Live)
+
+### Operator
+go ahead and do it all.
+
+### Antigravity
+1. **Hostinger MySQL Provisioning**:
+   - Created MySQL database `u440345526_cardiff_admin` with user `u440345526_cardiff_user` directly on Hostinger cloud infrastructure (`srv1987.hstgr.io:3306`).
+   - Enabled remote connections for database synchronization.
+2. **Prisma ORM Setup & Seed**:
+   - Configured Prisma schema with models for AdminUser, Driver, Booking, PricingSetting, and AuditLog.
+   - Pushed schema to Hostinger MySQL with `prisma db push`.
+   - Seeded initial admin account (`admin@cardifftaxisltd.co.uk` / `cardiff786`), 4 sample fleet drivers, and standard fare/airport pricing matrices.
+3. **Admin Portal UI & Dispatch Features**:
+   - Built protected `/admin` portal with responsive mobile and desktop layout.
+   - Built `/admin/login` with secure 30-day session cookies.
+   - Built `/admin` overview dashboard showing live bookings, revenue, and driver assignment alerts.
+   - Built `/admin/bookings` with filtering, search, status management, driver assignment, manual phone booking creation, and 1-click WhatsApp driver dispatch message generator.
+   - Built `/admin/drivers` for fleet management (Car 01-04, vehicle types, phone numbers, active status toggle).
+   - Built `/admin/pricing` for live rate-card editing (fares, mileage, and fixed airport transfers).
+   - Built `/admin/settings` showing connected Hostinger MySQL infrastructure status and profile password management.
+4. **Environment Sync & Deployment**:
+   - Synced Node.js environment variables (including `DATABASE_URL` and `ADMIN_SESSION_SECRET`) directly to Hostinger.
+   - Committed changes and pushed to GitHub `main` (`d00bc57`).
+   - Verified automated build on Hostinger completed with 0 errors.
+   - Tested live login, stats, driver list, pricing fetch, and booking dispatch endpoints on `https://cardifftaxisltd.co.uk/admin`.
+
+
+## Turn - 2026-11-12 (Header/Footer Isolation, Login Security & Proper Logo)
+
+### Operator
+why it's showing website header/footer on admin?
+
+why it's showing hardcoded email in here that public can see. you should work on the security side as well.
+
+show the proper website logo on admin as well.
+
+### Antigravity
+1. **Header & Footer Isolation**:
+   - Created `PublicLayoutWrapper` so the public customer `Navbar`, `AirportButtons`, and `Footer` only render on public website routes (`/`, `/book`, etc.).
+   - Admin routes (`/admin/*`) are now completely clean, isolated workspaces without any overlapping public headers or footers.
+2. **Login Security Hardening**:
+   - Removed the prefilled admin email from the login page. The input starts completely blank with a generic placeholder (`name@example.com`).
+   - Added anti-bruteforce delay on failed attempts to protect against automated password attacks.
+3. **Official Brand Logo**:
+   - Replaced generic icons with the official Cardiff Taxis Ltd logo (`/logo-concept-3-motion-light.svg`) across `/admin/login`, the desktop sidebar, and the mobile navigation drawer.
+4. **Deploy & Live Verification**:
+   - Committed (`a626ead`) and pushed to `main`.
+   - Verified the live Hostinger build succeeded (`01a1ce58-9a6e-7073-9b23-18bef2fa604a` - completed).
+   - Confirmed live on `https://cardifftaxisltd.co.uk/admin/login` that no public nav/footer appears, no email is leaked, and the official logo displays properly.
