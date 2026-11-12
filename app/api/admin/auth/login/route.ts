@@ -16,22 +16,24 @@ export async function POST(req: NextRequest) {
 
     const trimmedEmail = String(email).trim().toLowerCase();
 
-    // Find admin user in database
+    // Constant-time sleep on failures to mitigate timing attacks / rapid brute forcing
     const user = await prisma.adminUser.findUnique({
       where: { email: trimmedEmail },
     });
 
     if (!user || !user.active) {
+      await new Promise((r) => setTimeout(r, 600));
       return NextResponse.json(
-        { error: "Invalid email or password." },
+        { error: "Invalid login credentials." },
         { status: 401 }
       );
     }
 
     const isValid = await bcrypt.compare(String(password), user.passwordHash);
     if (!isValid) {
+      await new Promise((r) => setTimeout(r, 600));
       return NextResponse.json(
-        { error: "Invalid email or password." },
+        { error: "Invalid login credentials." },
         { status: 401 }
       );
     }

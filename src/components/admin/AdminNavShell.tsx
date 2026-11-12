@@ -96,13 +96,19 @@ export default function AdminNavShell({ user, children }: AdminNavShellProps) {
       <aside className="hidden md:flex md:w-64 md:flex-col md:inset-y-0 bg-slate-900 border-r border-slate-800">
         <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
           {/* Brand header */}
-          <div className="flex items-center gap-3 px-6 pb-5 border-b border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-400 flex items-center justify-center text-slate-950 font-black shadow-md shadow-amber-500/20">
-              <Car className="w-6 h-6" />
-            </div>
-            <div>
-              <h1 className="text-sm font-bold text-white tracking-wide">Cardiff Taxis Ltd</h1>
-              <p className="text-[11px] text-amber-400 font-semibold uppercase tracking-wider">Operations Portal</p>
+          <div className="px-6 pb-5 border-b border-slate-800">
+            <Link href="/admin" className="block">
+              <img
+                src="/logo-concept-3-motion-light.svg"
+                alt="Cardiff Taxis Ltd"
+                className="h-10 w-auto"
+              />
+            </Link>
+            <div className="flex items-center gap-1.5 mt-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <p className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
+                Operations Portal
+              </p>
             </div>
           </div>
 
@@ -212,13 +218,16 @@ export default function AdminNavShell({ user, children }: AdminNavShellProps) {
             <div className="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-slate-800 p-5 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <Car className="w-6 h-6 text-amber-400" />
-                    <span className="font-bold text-white text-sm">Cardiff Taxis Ltd</span>
-                  </div>
+                  <Link href="/admin" onClick={() => setMobileMenuOpen(false)}>
+                    <img
+                      src="/logo-concept-3-motion-light.svg"
+                      alt="Cardiff Taxis Ltd"
+                      className="h-9 w-auto"
+                    />
+                  </Link>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="p-1 rounded-lg text-slate-400 hover:text-white"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "../src/index.css";
-import { Navbar } from "../src/components/layout/Navbar";
-import { Footer } from "../src/components/layout/Footer";
-import { AirportButtons } from "../src/components/sections/AirportButtons";
+import { PublicLayoutWrapper } from "../src/components/layout/PublicLayoutWrapper";
 import { AnalyticsTracker } from "../src/components/analytics/AnalyticsTracker";
 import { GA_TRACKING_ID } from "../src/lib/gtag";
 
@@ -154,34 +152,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-white font-sans text-brand-graphite selection:bg-brand-accent/30 relative overflow-x-hidden antialiased">
+      <body className="min-h-screen bg-slate-950 font-sans text-brand-graphite selection:bg-brand-accent/30 relative overflow-x-hidden antialiased">
         <AnalyticsTracker />
-        {/* Background base */}
-        <div className="fixed inset-0 bg-brand-white z-[0]"></div>
-
-        {/* Background Vertical Lines Overlay */}
-        <div className="fixed inset-x-0 top-0 bottom-0 pointer-events-none hidden md:flex justify-center z-[1]">
-          <div className="w-full max-w-[1400px] h-full px-[30px] relative">
-            <div className="w-full h-full border-l border-r border-black/[0.08] relative"></div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="relative z-10 w-full flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-
-          <div className="mt-4 mb-1">
-            <AirportButtons />
-          </div>
-
-          {/* Footer Card */}
-          <div className="px-1 md:px-1.5 pb-1 md:pb-1.5">
-            <div className="rounded-[12px] md:rounded-[22px] overflow-hidden shadow-md relative ring-1 ring-black/[0.05]">
-              <Footer />
-            </div>
-          </div>
-        </div>
+        <PublicLayoutWrapper>{children}</PublicLayoutWrapper>
       </body>
     </html>
   );
