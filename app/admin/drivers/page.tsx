@@ -13,11 +13,17 @@ import {
   Trash2,
   ShieldCheck,
   MessageSquare,
+  Luggage,
+  User,
+  Filter,
 } from "lucide-react";
+import { FLEET_CLASSES, getVehicleImage } from "@/lib/fleet-data";
 
 export default function AdminDriversPage() {
   const [drivers, setDrivers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filterType, setFilterType] = useState<string>("ALL");
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingDriver, setEditingDriver] = useState<any | null>(null);
   const [saving, setSaving] = useState(false);
@@ -106,6 +112,20 @@ export default function AdminDriversPage() {
     }
   };
 
+  const handleDeleteDriver = async (driver: any) => {
+    if (!confirm(`Are you sure you want to remove driver ${driver.name}?`)) return;
+    try {
+      const res = await fetch(`/api/admin/drivers/${driver.id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        fetchDrivers();
+      }
+    } catch (err) {
+      console.error("Delete driver error:", err);
+    }
+  };
+
   const openEdit = (driver: any) => {
     setEditingDriver(driver);
     setForm({
@@ -121,16 +141,21 @@ export default function AdminDriversPage() {
     setShowAddModal(true);
   };
 
+  const filteredDrivers = drivers.filter((d) => {
+    if (filterType === "ALL") return true;
+    return d.vehicleType?.toLowerCase() === filterType.toLowerCase();
+  });
+
   return (
-    <div className="space-y-6">
-      {/* Title Bar */}
+    <div className="space-y-8">
+      {/* Page Title & Add Button */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Fleet & Drivers
+            Fleet & Authorized Drivers
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Manage authorized fleet drivers, vehicles and availability
+            Real Cardiff Taxis fleet vehicles, driver assignments, and live availability
           </p>
         </div>
 
@@ -141,7 +166,7 @@ export default function AdminDriversPage() {
               name: "",
               phone: "",
               email: "",
-              callsign: "",
+              callsign: `Car 0${drivers.length + 1}`,
               vehicleMake: "",
               vehiclePlate: "",
               vehicleType: "Saloon",
@@ -152,132 +177,269 @@ export default function AdminDriversPage() {
           className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm shadow-md shadow-amber-500/20 transition cursor-pointer"
         >
           <PlusCircle className="w-4 h-4" />
-          Add Driver
+          Add Driver & Vehicle
         </button>
       </div>
 
-      {/* Drivers Cards Grid */}
-      {loading ? (
-        <div className="p-16 text-center text-slate-400">
-          <svg className="animate-spin h-6 w-6 text-amber-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-          </svg>
-          Loading fleet roster...
+      {/* 1. Official Fleet Categories Showcase (from Website) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Car className="w-5 h-5 text-amber-400" />
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300">
+              Official Website Fleet Classes
+            </h2>
+          </div>
+          <span className="text-xs text-slate-500">
+            {FLEET_CLASSES.length} Vehicle Categories
+          </span>
         </div>
-      ) : drivers.length === 0 ? (
-        <div className="p-16 text-center text-slate-500 rounded-2xl bg-slate-900 border border-slate-800">
-          <Users className="w-8 h-8 mx-auto text-slate-600 mb-2" />
-          <p className="text-sm">No drivers registered yet. Click &quot;Add Driver&quot; above.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {drivers.map((d) => (
-            <div
-              key={d.id}
-              className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700/80 transition shadow-lg flex flex-col justify-between"
-            >
-              <div>
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-xs">
-                      {d.callsign || "CAR"}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-white text-base">{d.name}</h3>
-                      <p className="text-xs text-slate-400 font-mono">{d.callsign || "Driver"}</p>
-                    </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          {FLEET_CLASSES.map((fleet) => {
+            const driverCount = drivers.filter(
+              (d) => d.vehicleType?.toLowerCase() === fleet.id.toLowerCase()
+            ).length;
+            const isSelected = filterType.toLowerCase() === fleet.id.toLowerCase();
+
+            return (
+              <div
+                key={fleet.id}
+                onClick={() => setFilterType(isSelected ? "ALL" : fleet.id)}
+                className={`p-3.5 rounded-2xl border transition cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? "bg-amber-500/10 border-amber-500/50 ring-2 ring-amber-500/30"
+                    : "bg-slate-900/90 border-slate-800 hover:border-slate-700"
+                }`}
+              >
+                <div>
+                  {/* Vehicle Image */}
+                  <div className="w-full h-20 rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center mb-2.5 border border-slate-800">
+                    <img
+                      src={fleet.image}
+                      alt={fleet.name}
+                      className="w-full h-full object-contain p-1"
+                    />
                   </div>
 
-                  {/* Status Badge Dropdown */}
-                  <select
-                    value={d.status}
-                    onChange={(e) => handleToggleStatus(d, e.target.value)}
-                    className={`text-[11px] font-bold py-1 px-2 rounded-lg border focus:outline-none ${
-                      d.status === "AVAILABLE"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                        : d.status === "ON_TRIP"
-                        ? "bg-sky-500/10 text-sky-400 border-sky-500/20"
-                        : "bg-slate-800 text-slate-400 border-slate-700"
-                    }`}
-                  >
-                    <option value="AVAILABLE">AVAILABLE</option>
-                    <option value="ON_TRIP">ON TRIP</option>
-                    <option value="OFF_DUTY">OFF DUTY</option>
-                  </select>
-                </div>
+                  <h3 className="font-bold text-white text-xs leading-tight">
+                    {fleet.name}
+                  </h3>
 
-                {/* Vehicle Details */}
-                <div className="mt-4 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-1.5 text-xs text-slate-300">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Vehicle:</span>
-                    <span className="font-medium text-white">{d.vehicleMake || "Not specified"}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Plate:</span>
-                    <span className="font-mono text-amber-400 font-semibold">{d.vehiclePlate || "N/A"}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Type:</span>
-                    <span className="font-medium text-white">{d.vehicleType}</span>
+                  <div className="flex items-center gap-2 mt-1.5 text-[11px] text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <User className="w-3 h-3 text-slate-500" />
+                      {fleet.passengers}
+                    </span>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <Luggage className="w-3 h-3 text-slate-500" />
+                      {fleet.suitcases}
+                    </span>
                   </div>
                 </div>
 
-                {/* Contact Links */}
-                <div className="mt-3 flex items-center gap-2 text-xs">
-                  <a
-                    href={`tel:${d.phone}`}
-                    className="flex-1 py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center gap-1.5 font-medium transition"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                    Call
-                  </a>
-                  <a
-                    href={`https://wa.me/${d.phone.replace(/\D/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-1.5 px-3 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/20 flex items-center justify-center gap-1.5 font-medium transition"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    WhatsApp
-                  </a>
+                <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-400">Drivers:</span>
+                  <span className={`font-bold ${driverCount > 0 ? "text-emerald-400" : "text-slate-500"}`}>
+                    {driverCount} active
+                  </span>
                 </div>
               </div>
+            );
+          })}
+        </div>
+      </div>
 
-              {/* Footer Actions */}
-              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                <span>{d._count?.bookings || 0} total jobs</span>
-                <button
-                  onClick={() => openEdit(d)}
-                  className="p-1.5 hover:text-white hover:bg-slate-800 rounded-lg transition"
-                  title="Edit Driver"
+      {/* 2. Fleet Drivers Roster with Vehicle Photos */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-800">
+          <div className="flex items-center gap-2">
+            <Users className="w-5 h-5 text-emerald-400" />
+            <h2 className="text-base font-bold text-white">
+              Fleet Drivers Roster ({filteredDrivers.length})
+            </h2>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
+            <span className="text-slate-500 mr-1 flex items-center gap-1">
+              <Filter className="w-3 h-3" /> Filter:
+            </span>
+            {["ALL", "Saloon", "Estate", "MPV", "Minibus"].map((t) => (
+              <button
+                key={t}
+                onClick={() => setFilterType(t)}
+                className={`px-2.5 py-1 rounded-lg font-medium transition cursor-pointer ${
+                  filterType === t
+                    ? "bg-amber-500 text-slate-950 font-bold"
+                    : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="p-16 text-center text-slate-400">
+            <svg className="animate-spin h-6 w-6 text-amber-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            Loading fleet roster...
+          </div>
+        ) : filteredDrivers.length === 0 ? (
+          <div className="p-16 text-center text-slate-500 rounded-2xl bg-slate-900 border border-slate-800">
+            <Car className="w-8 h-8 mx-auto text-slate-600 mb-2" />
+            <p className="text-sm">No drivers found matching this filter.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filteredDrivers.map((d) => {
+              const vehicleImg = getVehicleImage(d.vehicleType);
+
+              return (
+                <div
+                  key={d.id}
+                  className="rounded-2xl bg-slate-900/90 border border-slate-800 overflow-hidden shadow-xl hover:border-slate-700 transition flex flex-col justify-between"
                 >
-                  <Edit2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+                  <div>
+                    {/* Top Image Banner */}
+                    <div className="relative h-36 bg-gradient-to-b from-slate-950 to-slate-900/60 p-3 flex items-center justify-center border-b border-slate-800/80">
+                      <img
+                        src={vehicleImg}
+                        alt={d.vehicleType}
+                        className="h-full w-auto object-contain drop-shadow-lg"
+                      />
 
-      {/* Add / Edit Modal */}
+                      {/* Callsign Pill */}
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-black text-xs shadow-md">
+                        {d.callsign || "CAR"}
+                      </span>
+
+                      {/* Status Selector */}
+                      <div className="absolute top-3 right-3">
+                        <select
+                          value={d.status}
+                          onChange={(e) => handleToggleStatus(d, e.target.value)}
+                          className={`text-[11px] font-bold py-1 px-2 rounded-lg border focus:outline-none cursor-pointer ${
+                            d.status === "AVAILABLE"
+                              ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+                              : d.status === "ON_TRIP"
+                              ? "bg-sky-500/20 text-sky-400 border-sky-500/30"
+                              : "bg-slate-800 text-slate-400 border-slate-700"
+                          }`}
+                        >
+                          <option value="AVAILABLE">🟢 AVAILABLE</option>
+                          <option value="ON_TRIP">🔵 ON TRIP</option>
+                          <option value="OFF_DUTY">⚪ OFF DUTY</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Driver & Vehicle Details */}
+                    <div className="p-5 space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="text-base font-bold text-white">{d.name}</h3>
+                          <p className="text-xs text-slate-400">{d.vehicleMake || d.vehicleType}</p>
+                        </div>
+
+                        {/* UK Style Yellow Registration Plate */}
+                        {d.vehiclePlate && (
+                          <div className="px-2.5 py-1 rounded bg-[#ffdb00] text-black font-mono font-black text-xs tracking-wider border border-black/30 shadow-sm uppercase">
+                            {d.vehiclePlate}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Vehicle Spec Badges */}
+                      <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs text-slate-300">
+                        <span className="text-slate-400">Class:</span>
+                        <span className="font-semibold text-white">{d.vehicleType}</span>
+                      </div>
+
+                      {/* Quick Contact Buttons */}
+                      <div className="grid grid-cols-2 gap-2 pt-1">
+                        <a
+                          href={`tel:${d.phone}`}
+                          className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center gap-1.5 text-xs font-semibold transition"
+                        >
+                          <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                          Call Driver
+                        </a>
+                        <a
+                          href={`https://wa.me/${d.phone.replace(/\D/g, "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="py-2 px-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/20 flex items-center justify-center gap-1.5 text-xs font-semibold transition"
+                        >
+                          <MessageSquare className="w-3.5 h-3.5" />
+                          WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="px-5 py-3 border-t border-slate-800/80 bg-slate-950/40 flex items-center justify-between text-xs text-slate-400">
+                    <span>{d._count?.bookings || 0} jobs completed</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => openEdit(d)}
+                        className="p-1.5 hover:text-white hover:bg-slate-800 rounded-lg transition"
+                        title="Edit Driver & Vehicle"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteDriver(d)}
+                        className="p-1.5 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition"
+                        title="Delete Driver"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Add / Edit Driver Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg shadow-2xl">
-            <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="p-5 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-900 z-10">
               <h3 className="text-base font-bold text-white">
-                {editingDriver ? "Edit Fleet Driver" : "Register New Fleet Driver"}
+                {editingDriver ? "Edit Driver & Assigned Vehicle" : "Register Fleet Driver & Vehicle"}
               </h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleSaveDriver} className="p-6 space-y-4">
+              {/* Selected Vehicle Class Preview */}
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center gap-4">
+                <img
+                  src={getVehicleImage(form.vehicleType)}
+                  alt={form.vehicleType}
+                  className="h-14 w-auto object-contain"
+                />
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-amber-400">Selected Fleet Class</span>
+                  <p className="text-xs font-bold text-white">{form.vehicleType}</p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1">Driver Name *</label>
@@ -315,16 +477,17 @@ export default function AdminDriversPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Vehicle Category</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Fleet Category *</label>
                   <select
                     value={form.vehicleType}
                     onChange={(e) => setForm({ ...form, vehicleType: e.target.value })}
                     className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
                   >
-                    <option value="Saloon">Saloon</option>
-                    <option value="Estate">Estate</option>
-                    <option value="MPV">6-Seater MPV</option>
-                    <option value="Minibus">8-Seater Minibus</option>
+                    <option value="Saloon">Saloon (4 Pax, 2 Bags)</option>
+                    <option value="Estate">Estate (4 Pax, 3 Bags)</option>
+                    <option value="Executive">Executive (4 Pax, 2 Bags)</option>
+                    <option value="MPV">People Carrier MPV (6 Pax, 4 Bags)</option>
+                    <option value="Minibus">8-Seater Minibus (8 Pax, 7 Bags)</option>
                   </select>
                 </div>
               </div>
@@ -336,23 +499,23 @@ export default function AdminDriversPage() {
                     type="text"
                     value={form.vehicleMake}
                     onChange={(e) => setForm({ ...form, vehicleMake: e.target.value })}
-                    placeholder="e.g. Skoda Superb"
+                    placeholder="e.g. Skoda Superb (2023)"
                     className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Vehicle Plate (Reg)</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">UK License Plate (Reg)</label>
                   <input
                     type="text"
                     value={form.vehiclePlate}
-                    onChange={(e) => setForm({ ...form, vehiclePlate: e.target.value })}
+                    onChange={(e) => setForm({ ...form, vehiclePlate: e.target.value.toUpperCase() })}
                     placeholder="e.g. CF23 TQX"
-                    className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
+                    className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-mono uppercase focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
-              <div className="pt-3 flex items-center justify-end gap-2">
+              <div className="pt-3 flex items-center justify-end gap-2 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}

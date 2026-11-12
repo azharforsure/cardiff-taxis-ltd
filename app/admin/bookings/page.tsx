@@ -21,6 +21,7 @@ import {
   AlertCircle,
   FileText,
 } from "lucide-react";
+import { getVehicleImage } from "@/lib/fleet-data";
 
 function BookingsContent() {
   const searchParams = useSearchParams();
@@ -464,9 +465,16 @@ function BookingsContent() {
 
               {/* Trip Details Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800">
-                  <span className="text-[10px] uppercase text-slate-400">Vehicle</span>
-                  <p className="text-xs font-bold text-white mt-0.5">{selectedBooking.vehicleType}</p>
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-2.5">
+                  <img
+                    src={getVehicleImage(selectedBooking.vehicleType)}
+                    alt={selectedBooking.vehicleType}
+                    className="h-10 w-auto object-contain"
+                  />
+                  <div>
+                    <span className="text-[10px] uppercase text-slate-400">Vehicle</span>
+                    <p className="text-xs font-bold text-white mt-0.5">{selectedBooking.vehicleType}</p>
+                  </div>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800">
                   <span className="text-[10px] uppercase text-slate-400">Passengers / Bags</span>
