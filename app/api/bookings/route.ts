@@ -3,28 +3,103 @@ import { getAllBookings } from "../../../src/lib/bookings-store";
 
 export const dynamic = "force-dynamic";
 
+const ADMIN_PASSCODE =
+  process.env.ADMIN_PASSCODE || process.env.ADMIN_SECRET_KEY || "cardiff786";
+
+function isAuthorized(req: Request): boolean {
+  const url = new URL(req.url);
+  const keyParam = url.searchParams.get("key") || url.searchParams.get("pin");
+  if (keyParam === ADMIN_PASSCODE) return true;
+
+  const authHeader = req.headers.get("authorization");
+  if (authHeader && authHeader.replace(/^Bearer\s+/i, "") === ADMIN_PASSCODE) {
+    return true;
+  }
+
+  const cookieHeader = req.headers.get("cookie") || "";
+  const match = cookieHeader.match(/admin_token=([^;]+)/);
+  if (match && decodeURIComponent(match[1]) === ADMIN_PASSCODE) {
+    return true;
+  }
+
+  return false;
+}
+
+export async function POST(req: Request) {
+  try {
+    const contentType = req.headers.get("content-type") || "";
+    let pin = "";
+
+    if (contentType.includes("application/x-www-form-urlencoded")) {
+      const formData = await req.formData();
+      pin = formData.get("pin")?.toString() || "";
+    } else {
+      const body = await req.json().catch(() => ({}));
+      pin = body.pin || "";
+    }
+
+    if (pin === ADMIN_PASSCODE) {
+      const response = NextResponse.redirect(new URL("/api/bookings", req.url), 303);
+      response.cookies.set("admin_token", ADMIN_PASSCODE, {
+        httpOnly: true,
+        path: "/",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+      return response;
+    }
+
+    return new Response(renderLoginScreen("Incorrect passcode. Please try again."), {
+      status: 401,
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    });
+  } catch (err: any) {
+    return NextResponse.json({ error: "Authentication failed" }, { status: 500 });
+  }
+}
+
 export async function GET(req: Request) {
   try {
-    const bookings = getAllBookings();
     const url = new URL(req.url);
     const format = url.searchParams.get("format");
     const accept = req.headers.get("accept") || "";
+    const isJson =
+      format === "json" ||
+      (!accept.includes("text/html") && accept.includes("application/json"));
 
-    // If API client asks for JSON explicitly
-    if (format === "json" || (!accept.includes("text/html") && accept.includes("application/json"))) {
+    // Check authorization
+    if (!isAuthorized(req)) {
+      if (isJson) {
+        return NextResponse.json(
+          { error: "Unauthorized. Please provide valid admin credentials." },
+          { status: 401 }
+        );
+      }
+      return new Response(renderLoginScreen(), {
+        status: 401,
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
+    }
+
+    const bookings = getAllBookings();
+
+    // Authorized JSON client
+    if (isJson) {
       return NextResponse.json({ success: true, count: bookings.length, bookings });
     }
 
-    // Otherwise render clean, mobile-friendly dashboard for the owner
-    const cardsHtml = bookings.length === 0
-      ? `<div style="text-align: center; padding: 40px; color: #888;">No bookings recorded yet.</div>`
-      : bookings.map((b) => {
-          const isPaid = b.status === "PAID";
-          const statusBg = isPaid ? "#dcfce7" : "#fef9c3";
-          const statusColor = isPaid ? "#15803d" : "#854d0e";
-          const statusText = isPaid ? "✅ PAID" : "⏳ PENDING / IN PROGRESS";
+    // Authorized HTML client
+    const cardsHtml =
+      bookings.length === 0
+        ? `<div style="text-align: center; padding: 40px; color: #888;">No bookings recorded yet.</div>`
+        : bookings
+            .map((b) => {
+              const isPaid = b.status === "PAID";
+              const statusBg = isPaid ? "#dcfce7" : "#fef9c3";
+              const statusColor = isPaid ? "#15803d" : "#854d0e";
+              const statusText = isPaid ? "✅ PAID" : "⏳ PENDING / IN PROGRESS";
 
-          return `
+              return `
             <div style="background: #fff; border-radius: 14px; border: 1px solid #e5e7eb; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #f3f4f6; padding-bottom: 10px;">
                 <div>
@@ -55,12 +130,16 @@ export async function GET(req: Request) {
                   <strong>📅 Outbound:</strong> <span style="font-weight: bold; color: #111;">${b.date} at ${b.time}</span>
                   ${b.flightNumber ? ` (Flight: ${b.flightNumber})` : ""}
                 </div>
-                ${b.returnDate ? `
+                ${
+                  b.returnDate
+                    ? `
                   <div style="margin-top: 4px; color: #1d4ed8;">
                     <strong>🔁 Return:</strong> <span style="font-weight: bold;">${b.returnDate} at ${b.returnTime || "TBD"}</span>
                     ${b.returnFlightNumber ? ` (Flight: ${b.returnFlightNumber})` : ""}
                   </div>
-                ` : ""}
+                `
+                    : ""
+                }
               </div>
 
               <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #374151;">
@@ -69,7 +148,8 @@ export async function GET(req: Request) {
               </div>
             </div>
           `;
-        }).join("");
+            })
+            .join("");
 
     const pageHtml = `
       <!DOCTYPE html>
@@ -91,7 +171,7 @@ export async function GET(req: Request) {
           <div class="header">
             <div>
               <h1 class="title">Cardiff Taxis Bookings</h1>
-              <div style="font-size: 12px; color: #6b7280;">Live server store (${bookings.length} recorded)</div>
+              <div style="font-size: 12px; color: #6b7280;">Secure portal (${bookings.length} recorded)</div>
             </div>
             <a href="/api/bookings" class="refresh-btn">🔄 Refresh</a>
           </div>
@@ -109,4 +189,38 @@ export async function GET(req: Request) {
     console.error("Failed to list bookings:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
+}
+
+function renderLoginScreen(errorMsg?: string): string {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Admin Access | Cardiff Taxis LTD</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #111; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+        .box { background: #fff; border-radius: 16px; padding: 32px 24px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        h2 { margin: 0 0 8px 0; font-size: 20px; color: #111; }
+        p { margin: 0 0 24px 0; font-size: 13px; color: #666; }
+        input { width: 100%; box-sizing: border-box; padding: 14px; font-size: 16px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 16px; text-align: center; font-weight: bold; }
+        button { width: 100%; padding: 14px; font-size: 16px; font-weight: bold; background: #ffca28; color: #111; border: none; border-radius: 10px; cursor: pointer; }
+        button:hover { background: #f5b700; }
+        .error { color: #dc2626; font-size: 13px; margin-bottom: 16px; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <div class="box">
+        <h2>🔒 Admin Portal</h2>
+        <p>Cardiff Taxis LTD Bookings Access</p>
+        ${errorMsg ? `<div class="error">${errorMsg}</div>` : ""}
+        <form method="POST" action="/api/bookings">
+          <input type="password" name="pin" placeholder="Enter Admin Passcode" autofocus required />
+          <button type="submit">Unlock Dashboard</button>
+        </form>
+      </div>
+    </body>
+    </html>
+  `;
 }
