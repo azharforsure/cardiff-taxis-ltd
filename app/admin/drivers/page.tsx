@@ -307,7 +307,7 @@ export default function AdminDriversPage() {
               const isOwner =
                 d.callsign?.toLowerCase() === "owner" ||
                 d.name?.toLowerCase().includes("owner") ||
-                d.name?.toLowerCase().includes("qasim");
+                d.name?.toLowerCase().includes("admin");
 
               return (
                 <div

@@ -30,7 +30,7 @@ async function main() {
 
   // 2. Owner-driver profile (Cardiff Taxis is run by the owner)
   const ownerDriver = {
-    name: 'Qasim',
+    name: 'Owner',
     phone: '07817 385655',
     email: 'bookings@cardifftaxisltd.co.uk',
     callsign: 'Owner',

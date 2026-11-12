@@ -190,7 +190,7 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <p className="mt-1 text-[11px] text-slate-400">
-            {metrics.activeDriversCount === 1 ? "Owner-operator (Qasim)" : "Registered fleet drivers"}
+            {metrics.activeDriversCount === 1 ? "Owner-operator active" : "Registered fleet drivers"}
           </p>
         </Link>
       </div>
