@@ -465,3 +465,32 @@ fix the graph as it's not currently full width and has many design issues like w
 3. **Build & Live Verification**:
    - Production build compiled cleanly with 0 errors across all 33 routes.
    - Pushed commit `7ddc124` to GitHub `main` for automated Hostinger deployment.
+
+
+## Turn - 2026-11-13 (True Full-Width Edge-to-Edge Chart, Table Passenger Name Stacking Fix, and Compact Sidebar)
+
+### Operator
+still the graph is not full width in the card, like the same width as card header.
+
+also why the name in the table stacking too much, do we need to work on the table as well?
+
+also reduce the sidebar width.
+
+### Antigravity
+1. **True Edge-to-Edge Chart Width (Flush with Card Header)**:
+   - Eliminated the artificial horizontal padding (`padLeft = 60`, `padRight = 30`) inside the SVG chart in `app/admin/analytics/page.tsx`.
+   - Gridlines now run 100% full width from `x = 0` to `x = 1000`, perfectly flush with the card header's title on the left and the range toggles on the right.
+   - Relocated Y-axis labels directly above each gridline at `x = 0` so they no longer push the plot inward or waste horizontal space.
+   - Anchored the first date label ("31 Oct") flush with the left boundary and the last date label ("13 Nov") flush with the right boundary.
+   - Expanded interactive mouse hitboxes to span the full 1000px width for smooth scrubbing across every single day.
+2. **Fixed Passenger Name Awkward Vertical Stacking in Tables**:
+   - Resolved the issue where long passenger names (e.g. `Muhammad Sikander Ijaz Ahmad`) collapsed across 3-4 vertical lines due to flexible browser table layout.
+   - Added `min-w-[190px]` and `whitespace-nowrap` to the Passenger column across all three admin tables (`app/admin/page.tsx`, `app/admin/bookings/page.tsx`, and `app/admin/analytics/page.tsx`).
+   - Added `max-w-[280px]` truncation with hover tooltips to the Journey/Route column addresses so long postcodes no longer steal width from names.
+   - Added `min-w-[980px]` / `min-w-[1050px]` wrappers with smooth horizontal scroll to ensure tables maintain uniform row heights (~52px) on any viewport.
+3. **Reduced Desktop Sidebar Width**:
+   - Slimmed down the sidebar from `md:w-64` (256px) to `md:w-52` (208px) in `src/components/admin/AdminNavShell.tsx`.
+   - Tuned internal padding, logo sizing, and typography so all items fit comfortably while freeing up 48px of width for the main dashboard and analytics canvas.
+4. **Build & Live Verification**:
+   - Production build compiled successfully across all 33 routes with zero errors.
+   - Pushed commit `d60acf6` to GitHub `main` for automated deployment to Hostinger.
