@@ -373,3 +373,42 @@ refind minimal dark mode is fine.
    - Production build compiled with zero errors across all 30 routes.
    - Committed (`6383586`) and pushed to GitHub `main`.
    - Hostinger automated deployment `01a1d328-c135-72fc-838d-fb42f67d7e62` completed and restarted successfully.
+
+
+## Turn - 2026-11-13 (Hybrid Light/Dark Theme, Single-Word Nav, Bottom Settings, Analytics, and Resend Booking Sync)
+
+### Operator
+how we can improve it?
+can we move the settings to sidebar bottom?
+
+why all the sidebar menus like with & word, does it make it look ai generated?
+
+avoid using complicated ai generated vocab words.
+should we show the previous booking data that we can get from resend?
+
+are we missing anything, pages or something? what about full analytics and data?
+
+and you were right, i think it should be Light and dark combined instead of going on a single end like dark mode.
+
+### Antigravity
+1. **Hybrid Light & Dark Theme Overhaul (Executive Slate + Clean Canvas)**:
+   - Kept the sleek dark charcoal sidebar (`#0f1117`) for strong branding and structural framing.
+   - Replaced all pitch-black work areas with a crisp, off-white workspace canvas (`#f8fafc`) and pure white cards (`bg-white border border-slate-200/90 shadow-2xs`).
+   - High-contrast, sharp typography (`text-slate-900`) across all tables, numbers, and inputs for fast daylight scanning.
+2. **Simplified Navigation (No More "&" Words & Settings at the Bottom)**:
+   - Replaced dual AI-generated labels with single, natural words: `Overview`, `Bookings`, `Fleet`, `Pricing`, `Analytics`.
+   - Pinned `Settings` to the very bottom of the sidebar (`mt-auto`) right above the live website link and user profile card.
+3. **Resend Booking Sync & Historical Data**:
+   - Imported all 3 real customer bookings from Resend notification emails into Hostinger MySQL:
+     - `CTL-20261105-65BK59`: Marlene Tichy (£108.05, Bristol Airport, Saloon)
+     - `CTL-20261109-NOGQ50`: Ruth Pengelly (£53.00, Cardiff Airport, Flight FR635, Saloon)
+     - `CTL-20261111-H21KZA`: Muhammad Sikander Ijaz Ahmad (£35.00, Newport Road, Saloon)
+   - Created `/api/admin/resend/sync` and one-click "Sync Resend" buttons in Overview, Analytics, and Settings so the system stays in sync.
+4. **Full Analytics & Reports Page (`/admin/analytics`)**:
+   - Added KPI cards: Total Revenue (£196.05), Total Bookings (3), Average Fare (£65.35), Completion Rate (100%).
+   - Airport and route demand breakdown (Bristol Airport 55.1%, Cardiff Airport 27.0%, Local Cardiff 17.9%).
+   - Vehicle class demand breakdown.
+   - One-click "Export CSV" button to download all booking records for accounting.
+5. **Build & Live Verification**:
+   - Production build compiled successfully across all 33 routes with zero errors.
+   - Pushed commit `937956e` to GitHub `main` for automated Hostinger deployment.
