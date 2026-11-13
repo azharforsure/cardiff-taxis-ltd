@@ -444,3 +444,24 @@ reduce the border radius to very minimal on the cards.
 5. **Build & Live Verification**:
    - Production build compiled cleanly with 0 errors across all 33 routes.
    - Pushed commit `2a7b653` to GitHub `main` for automated Hostinger deployment.
+
+
+## Turn - 2026-11-13 (Remove KPI Cards from Analytics, Fix Full-Width Chart Scaling, and Fix Hover Glitches)
+
+### Operator
+i don't want kpi cards on analytics page as it now looks more like a dashboard.
+
+fix the graph as it's not currently full width and has many design issues like when i hover.
+
+### Antigravity
+1. **Removed KPI Cards from Analytics**:
+   - Completely removed the 4 duplicate KPI summary cards from `/admin/analytics` so it focuses strictly on deep performance trends, route corridors, scheduling, and reports rather than duplicating the Overview dashboard.
+2. **Fixed Full-Width Graph & Eliminated Hover Glitches**:
+   - Replaced fixed-width SVG coordinates with a true 100% responsive `viewBox="0 0 1000 260"` chart that spans edge-to-edge across the entire card width.
+   - Fixed the misplaced, floating black box tooltip by anchoring both a live dynamic header readout (e.g. `12 Nov: £143.05 (2 bookings)`) and an internal SVG-anchored tooltip with bound checks that stays precisely on the curve and cannot detach or jump under buttons.
+   - Removed the messy clutter of flat orange dots along zero-revenue days, showing clean activity points only when there are actual bookings.
+   - Added seamless full-height hover slices with a vertical dashed crosshair guide line for smooth mouse scrubbing.
+   - Added time range selectors (7D, 14D, 30D) alongside the Revenue (£) vs Booking Volume toggle.
+3. **Build & Live Verification**:
+   - Production build compiled cleanly with 0 errors across all 33 routes.
+   - Pushed commit `7ddc124` to GitHub `main` for automated Hostinger deployment.
