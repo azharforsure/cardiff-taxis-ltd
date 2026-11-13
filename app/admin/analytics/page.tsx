@@ -133,14 +133,14 @@ export default function AnalyticsPage() {
     );
   });
 
-  // SVG Chart Geometry Calculations (True Full-Width 1000 x 260)
+  // SVG Chart Geometry Calculations (True Full-Width 1000 x 240, flush with Card Header)
   const svgWidth = 1000;
-  const svgHeight = 260;
-  const padLeft = 60;
-  const padRight = 30;
-  const padTop = 30;
-  const padBottom = 40;
-  const chartW = svgWidth - padLeft - padRight;
+  const svgHeight = 240;
+  const padLeft = 0;
+  const padRight = 0;
+  const padTop = 22;
+  const padBottom = 28;
+  const chartW = svgWidth;
   const chartH = svgHeight - padTop - padBottom;
 
   const rawMax = Math.max(
@@ -156,7 +156,7 @@ export default function AnalyticsPage() {
       : Math.max(Math.ceil((rawMax * 1.3) / 2) * 2, 4);
 
   const points = timeline.map((d: any, i: number) => {
-    const x = padLeft + (i / Math.max(timeline.length - 1, 1)) * chartW;
+    const x = (i / Math.max(timeline.length - 1, 1)) * chartW;
     const val = activeMetric === "revenue" ? d.revenue : d.bookings;
     const y = padTop + chartH - (val / yMax) * chartH;
     return { ...d, x, y, val };
@@ -315,26 +315,26 @@ export default function AnalyticsPage() {
               </linearGradient>
             </defs>
 
-            {/* Horizontal Gridlines & Y-Axis Labels */}
+            {/* Horizontal Gridlines & Y-Axis Labels (Edge-to-Edge across full card width) */}
             {[0, 0.25, 0.5, 0.75, 1].map((pct) => {
               const y = padTop + chartH * pct;
               const val = Math.round(yMax * (1 - pct));
               return (
                 <g key={pct}>
                   <line
-                    x1={padLeft}
+                    x1={0}
                     y1={y}
-                    x2={svgWidth - padRight}
+                    x2={svgWidth}
                     y2={y}
                     stroke="#E2E8F0"
                     strokeDasharray="4 4"
                     strokeWidth="1"
                   />
                   <text
-                    x={padLeft - 10}
-                    y={y + 4}
-                    textAnchor="end"
-                    className="text-[11px] fill-slate-400 font-mono"
+                    x={0}
+                    y={y - 6}
+                    textAnchor="start"
+                    className="text-[11px] fill-slate-400 font-mono font-medium"
                   >
                     {activeMetric === "revenue" ? `£${val}` : val}
                   </text>
@@ -381,21 +381,23 @@ export default function AnalyticsPage() {
               );
             })}
 
-            {/* Bottom X-Axis Date Labels */}
+            {/* Bottom X-Axis Date Labels (Flush on ends, centered between) */}
             {points.map((pt, i) => {
               // Show evenly spaced date markers
               const step = daysRange <= 7 ? 1 : daysRange <= 14 ? 2 : 4;
-              const isLabelVisible = i % step === 0 || i === points.length - 1;
+              const isFirst = i === 0;
+              const isLast = i === points.length - 1;
+              const isLabelVisible = isFirst || isLast || i % step === 0;
 
               if (!isLabelVisible) return null;
 
               return (
                 <text
                   key={pt.date}
-                  x={pt.x}
-                  y={svgHeight - 12}
-                  textAnchor="middle"
-                  className="text-[11px] fill-slate-400 font-mono"
+                  x={isFirst ? 0 : isLast ? svgWidth : pt.x}
+                  y={svgHeight - 6}
+                  textAnchor={isFirst ? "start" : isLast ? "end" : "middle"}
+                  className="text-[11px] fill-slate-400 font-mono font-medium"
                 >
                   {pt.label}
                 </text>
@@ -420,7 +422,7 @@ export default function AnalyticsPage() {
                   transform={`translate(${
                     hoveredData.x > svgWidth - 140
                       ? hoveredData.x - 130
-                      : hoveredData.x < padLeft + 70
+                      : hoveredData.x < 70
                         ? hoveredData.x + 10
                         : hoveredData.x - 60
                   }, ${Math.max(hoveredData.y - 55, padTop + 5)})`}
@@ -452,7 +454,9 @@ export default function AnalyticsPage() {
                     fontWeight="bold"
                     className="font-mono"
                   >
-                    £{hoveredData.revenue.toFixed(2)} ({hoveredData.bookings})
+                    {activeMetric === "revenue"
+                      ? `£${hoveredData.revenue.toFixed(2)}`
+                      : `${hoveredData.bookings} ride${hoveredData.bookings === 1 ? "" : "s"}`}
                   </text>
                 </g>
               </g>
@@ -461,7 +465,7 @@ export default function AnalyticsPage() {
             {/* Interactive Slices for Seamless Hover Hit Testing Across Entire Chart */}
             {points.map((pt, i) => {
               const sliceWidth = chartW / points.length;
-              const sliceX = pt.x - sliceWidth / 2;
+              const sliceX = (i / points.length) * chartW;
 
               return (
                 <rect
@@ -605,16 +609,16 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-sm min-w-[980px]">
             <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider text-xs border-b border-slate-200 font-semibold">
               <tr>
-                <th className="py-3 px-5">Ref</th>
-                <th className="py-3 px-5">Customer</th>
-                <th className="py-3 px-5">Journey</th>
-                <th className="py-3 px-5">Pickup Date & Time</th>
-                <th className="py-3 px-5">Vehicle</th>
-                <th className="py-3 px-5 text-right">Fare</th>
-                <th className="py-3 px-5 text-center">Status</th>
+                <th className="py-3 px-5 whitespace-nowrap">Ref</th>
+                <th className="py-3 px-5 min-w-[190px]">Customer</th>
+                <th className="py-3 px-5 min-w-[240px]">Journey</th>
+                <th className="py-3 px-5 whitespace-nowrap">Pickup Date & Time</th>
+                <th className="py-3 px-5 whitespace-nowrap">Vehicle</th>
+                <th className="py-3 px-5 text-right whitespace-nowrap">Fare</th>
+                <th className="py-3 px-5 text-center whitespace-nowrap">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -633,24 +637,24 @@ export default function AnalyticsPage() {
                     <td className="py-3.5 px-5 font-mono font-medium text-slate-900 whitespace-nowrap">
                       {b.bookingReference}
                     </td>
-                    <td className="py-3.5 px-5">
-                      <p className="font-semibold text-slate-900">
+                    <td className="py-3.5 px-5 whitespace-nowrap min-w-[190px]">
+                      <p className="font-semibold text-slate-900 whitespace-nowrap">
                         {b.customerName}
                       </p>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">
+                      <p className="text-xs text-slate-500 font-mono mt-0.5 whitespace-nowrap">
                         {b.customerPhone}
                       </p>
                     </td>
-                    <td className="py-3.5 px-5 max-w-sm">
+                    <td className="py-3.5 px-5 min-w-[240px] max-w-xs">
                       <p
-                        className="truncate text-slate-900 font-medium"
+                        className="truncate text-slate-900 font-medium max-w-[280px]"
                         title={b.pickupAddress}
                       >
                         <span className="text-slate-400 font-normal">From: </span>
                         {b.pickupAddress}
                       </p>
                       <p
-                        className="truncate text-slate-600 text-xs mt-0.5"
+                        className="truncate text-slate-600 text-xs mt-0.5 max-w-[280px]"
                         title={b.dropoffAddress}
                       >
                         <span className="text-slate-400 font-normal">To: </span>

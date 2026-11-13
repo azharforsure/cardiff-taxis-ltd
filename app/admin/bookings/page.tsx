@@ -296,18 +296,18 @@ function BookingsContent() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-sm min-w-[1050px]">
               <thead className="bg-slate-50/80 border-b border-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 <tr>
-                  <th className="py-3 px-5">Ref</th>
-                  <th className="py-3 px-5">Date & Time</th>
-                  <th className="py-3 px-5">Passenger</th>
-                  <th className="py-3 px-5">Route</th>
-                  <th className="py-3 px-5">Vehicle</th>
-                  <th className="py-3 px-5">Assigned</th>
-                  <th className="py-3 px-5 text-right">Fare</th>
-                  <th className="py-3 px-5 text-center">Status</th>
-                  <th className="py-3 px-5 text-right">Actions</th>
+                  <th className="py-3 px-5 whitespace-nowrap">Ref</th>
+                  <th className="py-3 px-5 whitespace-nowrap">Date & Time</th>
+                  <th className="py-3 px-5 min-w-[190px]">Passenger</th>
+                  <th className="py-3 px-5 min-w-[240px]">Route</th>
+                  <th className="py-3 px-5 whitespace-nowrap">Vehicle</th>
+                  <th className="py-3 px-5 whitespace-nowrap">Assigned</th>
+                  <th className="py-3 px-5 text-right whitespace-nowrap">Fare</th>
+                  <th className="py-3 px-5 text-center whitespace-nowrap">Status</th>
+                  <th className="py-3 px-5 text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -329,21 +329,27 @@ function BookingsContent() {
                         {b.pickupTime}
                       </div>
                     </td>
-                    <td className="py-3.5 px-5">
-                      <div className="font-semibold text-slate-900">
+                    <td className="py-3.5 px-5 whitespace-nowrap min-w-[190px]">
+                      <div className="font-semibold text-slate-900 whitespace-nowrap">
                         {b.customerName}
                       </div>
-                      <div className="text-xs font-mono text-slate-500 flex items-center gap-1 mt-0.5">
-                        <Phone className="w-3.5 h-3.5 text-slate-400" />
+                      <div className="text-xs font-mono text-slate-500 flex items-center gap-1 mt-0.5 whitespace-nowrap">
+                        <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                         {b.customerPhone}
                       </div>
                     </td>
-                    <td className="py-3.5 px-5 max-w-sm truncate">
-                      <div className="truncate text-slate-900 text-sm flex items-center gap-1.5 font-medium">
+                    <td className="py-3.5 px-5 min-w-[240px] max-w-xs">
+                      <div
+                        className="truncate text-slate-900 text-sm flex items-center gap-1.5 font-medium max-w-[280px]"
+                        title={b.pickupAddress}
+                      >
                         <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
                         <span className="truncate">{b.pickupAddress}</span>
                       </div>
-                      <div className="truncate text-slate-500 text-xs flex items-center gap-1.5 mt-0.5">
+                      <div
+                        className="truncate text-slate-500 text-xs flex items-center gap-1.5 mt-0.5 max-w-[280px]"
+                        title={b.dropoffAddress}
+                      >
                         <span className="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>
                         <span className="truncate">{b.dropoffAddress}</span>
                       </div>
