@@ -1,5 +1,4 @@
 import React from "react";
-import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/lib/admin-auth";
 import AdminNavShell from "@/components/admin/AdminNavShell";
 
@@ -15,9 +14,8 @@ export default async function AdminLayout({
 }) {
   const admin = await getCurrentAdmin();
 
-  // If user is not logged in, AdminNavShell handles login view or redirect
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-amber-500/30">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 antialiased selection:bg-amber-500/30">
       <AdminNavShell user={admin}>{children}</AdminNavShell>
     </div>
   );
