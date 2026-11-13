@@ -412,3 +412,35 @@ and you were right, i think it should be Light and dark combined instead of goin
 5. **Build & Live Verification**:
    - Production build compiled successfully across all 33 routes with zero errors.
    - Pushed commit `937956e` to GitHub `main` for automated Hostinger deployment.
+
+
+## Turn - 2026-11-13 (Automatic Live Booking Recording, Visual Analytics Charts, Normal Scale, and Minimal Card Radius)
+
+### Operator
+why do i need to resync with resend?
+we could record the numbers automatically while the customer booking instead of relying on resend?
+
+analytics page is basic, doesn't have charts or anything.
+
+why everything looks zoomed out after our redesign.
+
+reduce the border radius to very minimal on the cards.
+
+### Antigravity
+1. **Automatic Live Database Recording (No Resend Dependency)**:
+   - Clarified that Resend was only used once to recover old past booking emails from before the MySQL database was created.
+   - Refactored `src/lib/bookings-store.ts`, `app/api/create-checkout/route.ts`, `app/api/update-booking-status/route.ts`, and `app/api/sumup-webhook/route.ts` so that every new booking and payment is awaited and committed directly to Hostinger MySQL in real-time.
+   - Removed the "Sync Resend" button from the main Overview header, moving it to an internal recovery tool in Settings.
+2. **Visual Interactive Charts on Analytics (`/admin/analytics`)**:
+   - Built an interactive SVG Revenue & Booking Volume Area/Bar Chart with animated data points, gradient fills, and hover tooltips.
+   - Built a Time of Day & Peak Booking Hours chart (Early Morning, Morning Peak, Afternoon, Evening/Night).
+   - Built an Airport & Transfer Destinations demand chart with visual progress bars.
+3. **Fixed "Zoomed Out" Sizing Across Admin Workspace**:
+   - Scaled body typography from `text-xs` (12px) to standard comfortable `text-sm` (14px).
+   - Scaled table cells, inputs (`h-10`), and buttons (`h-10 px-4 text-sm font-semibold`) to standard desktop proportions.
+   - Adjusted the content container from overly wide `max-w-7xl` to a balanced, centered `max-w-6xl` with comfortable padding.
+4. **Minimal Border Radius on Cards**:
+   - Replaced bubbly `rounded-xl` (12px) and `rounded-lg` (8px) with minimal, razor-sharp `rounded-md` (6px) across all cards, KPI tiles, data tables, and modal dialogs.
+5. **Build & Live Verification**:
+   - Production build compiled cleanly with 0 errors across all 33 routes.
+   - Pushed commit `2a7b653` to GitHub `main` for automated Hostinger deployment.
