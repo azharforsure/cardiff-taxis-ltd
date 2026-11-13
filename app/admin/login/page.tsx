@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Shield, Lock, Mail, ArrowRight } from "lucide-react";
+import { Lock, Mail, ArrowRight, ShieldCheck } from "lucide-react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -39,39 +39,39 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4 text-slate-100">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-block mb-4">
+    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4 text-zinc-100 antialiased">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm text-center">
+        <Link href="/" className="inline-block mb-3">
           <img
             src="/logo-concept-3-motion-light.svg"
             alt="Cardiff Taxis Ltd"
-            className="h-12 sm:h-14 w-auto mx-auto drop-shadow-md"
+            className="h-9 w-auto mx-auto"
           />
         </Link>
-        <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
-          Operations & Dispatch Portal
+        <h2 className="text-base font-semibold tracking-tight text-zinc-100">
+          Operations Portal
         </h2>
-        <p className="mt-1.5 text-xs text-slate-400">
-          Authorized personnel only. Please sign in to manage fleet operations.
+        <p className="mt-1 text-xs text-zinc-400">
+          Sign in to access dispatch and fleet controls
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-slate-900 border border-slate-800 py-8 px-6 shadow-2xl rounded-2xl sm:px-10">
+      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="bg-[#121215] border border-white/[0.08] p-6 rounded-lg shadow-xl">
           {error && (
-            <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold">
+            <div className="mb-4 p-2.5 rounded-md bg-rose-950/40 border border-rose-800/40 text-rose-300 text-xs font-medium">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
                 Authorized Email
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Mail className="h-4 w-4" />
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-zinc-500">
+                  <Mail className="h-3.5 w-3.5" />
                 </div>
                 <input
                   type="email"
@@ -79,19 +79,19 @@ export default function AdminLoginPage() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition"
+                  className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-white/[0.08] rounded-md text-xs text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none transition-colors"
                   placeholder="name@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-                Passcode / Password
+              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Lock className="h-4 w-4" />
+                <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-zinc-500">
+                  <Lock className="h-3.5 w-3.5" />
                 </div>
                 <input
                   type="password"
@@ -99,42 +99,45 @@ export default function AdminLoginPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-sm transition"
+                  className="w-full pl-8 pr-3 py-1.5 bg-zinc-900 border border-white/[0.08] rounded-md text-xs text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none transition-colors"
                   placeholder="••••••••••••"
                 />
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-1">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-lg shadow-amber-500/20 disabled:opacity-50 transition cursor-pointer"
+                className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-md text-xs font-semibold text-zinc-950 bg-amber-400 hover:bg-amber-300 shadow-sm disabled:opacity-50 transition-colors cursor-pointer"
               >
                 {loading ? (
-                  <span className="flex items-center gap-2">
-                    <svg className="animate-spin h-4 w-4 text-slate-950" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                    </svg>
-                    Verifying credentials...
-                  </span>
+                  <span>Authenticating...</span>
                 ) : (
                   <>
-                    Sign In
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Sign In</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}
               </button>
             </div>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-slate-800 text-center">
-            <div className="inline-flex items-center gap-1.5 text-[11px] text-slate-500">
-              <Shield className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Encrypted Session & Access Control</span>
-            </div>
+          <div className="mt-5 pt-4 border-t border-white/[0.06] text-center">
+            <span className="text-[11px] font-mono text-zinc-500 flex items-center justify-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" />
+              Protected Hostinger MySQL Database
+            </span>
           </div>
+        </div>
+
+        <div className="mt-4 text-center">
+          <Link
+            href="/"
+            className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+          >
+            ← Return to Public Website
+          </Link>
         </div>
       </div>
     </div>

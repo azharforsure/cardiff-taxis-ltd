@@ -12,6 +12,7 @@ import {
   Server,
   Phone,
   Mail,
+  RefreshCw,
 } from "lucide-react";
 
 export default function AdminSettingsPage() {
@@ -79,12 +80,9 @@ export default function AdminSettingsPage() {
 
   if (loading) {
     return (
-      <div className="py-20 flex flex-col items-center justify-center text-slate-400">
-        <svg className="animate-spin h-8 w-8 text-amber-400 mb-3" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-        </svg>
-        <p className="text-sm">Loading system configuration...</p>
+      <div className="py-16 text-center text-zinc-400 text-xs font-mono">
+        <RefreshCw className="w-4 h-4 animate-spin text-amber-400 mx-auto mb-2" />
+        Loading system configuration...
       </div>
     );
   }
@@ -95,159 +93,173 @@ export default function AdminSettingsPage() {
   return (
     <div className="space-y-6">
       {/* Title */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          System & Business Settings
+      <div className="pb-2 border-b border-white/[0.06]">
+        <h1 className="text-xl font-semibold tracking-tight text-zinc-100">
+          Settings & Infrastructure
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Connected database infrastructure, company information and admin credentials
+        <p className="text-xs text-zinc-400 mt-0.5">
+          Connected database configuration, business profiles and access credentials
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Database Infrastructure Status */}
-        <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-white font-bold text-base">
-            <Database className="w-5 h-5 text-emerald-400" />
+        <div className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] space-y-3">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-white/[0.06] text-xs font-mono uppercase tracking-wider text-zinc-300">
+            <Database className="w-3.5 h-3.5 text-zinc-400" />
             <span>Database Infrastructure</span>
           </div>
 
-          <div className="space-y-3">
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Database Engine:</span>
-              <span className="font-semibold text-white flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Hostinger Cloud MySQL (Active)
+          <div className="space-y-2 text-xs">
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Database Engine</span>
+              <span className="font-medium text-zinc-200 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Hostinger Cloud MySQL
               </span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Host Server:</span>
-              <span className="font-mono text-amber-400">{sys.databaseHost}</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Host Server</span>
+              <span className="font-mono text-zinc-300">{sys.databaseHost}</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Total Bookings in Database:</span>
-              <span className="font-bold text-white">{sys.totalBookings} records</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Stored Bookings</span>
+              <span className="font-mono font-medium text-zinc-200">{sys.totalBookings} records</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Active Drivers in Fleet:</span>
-              <span className="font-bold text-white">{sys.totalDrivers} drivers</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Active Driver Profile</span>
+              <span className="font-mono font-medium text-zinc-200">{sys.totalDrivers} active</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
-              <span className="text-slate-400">Pricing Matrix Items:</span>
-              <span className="font-bold text-white">{sys.pricingKeys} rate keys</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Tariff Keys</span>
+              <span className="font-mono font-medium text-zinc-200">{sys.pricingKeys} rates</span>
             </div>
           </div>
         </div>
 
         {/* Business Office Details */}
-        <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-white font-bold text-base">
-            <Building className="w-5 h-5 text-amber-400" />
-            <span>Business Information</span>
+        <div className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] space-y-3">
+          <div className="flex items-center gap-2 pb-2.5 border-b border-white/[0.06] text-xs font-mono uppercase tracking-wider text-zinc-300">
+            <Building className="w-3.5 h-3.5 text-zinc-400" />
+            <span>Business Profile</span>
           </div>
 
-          <div className="space-y-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between">
-              <span className="text-slate-400">Trading Name:</span>
-              <span className="font-semibold text-white">{sys.businessName}</span>
+          <div className="space-y-2 text-xs">
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Company Name</span>
+              <span className="font-medium text-zinc-200">{sys.businessName}</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between">
-              <span className="text-slate-400">Customer Helpline:</span>
-              <a href="tel:02920454545" className="font-bold text-amber-400 hover:underline">
-                {sys.businessPhone}
-              </a>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Phone Helpline</span>
+              <span className="font-mono text-zinc-300">{sys.phoneOffice}</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between">
-              <span className="text-slate-400">Notification Email:</span>
-              <span className="font-mono text-white">{sys.businessEmail}</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Mobile / Dispatch</span>
+              <span className="font-mono text-zinc-300">{sys.phoneMobile}</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between">
-              <span className="text-slate-400">Office Location:</span>
-              <span className="text-white">{sys.registeredOffice}</span>
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Bookings Email</span>
+              <span className="font-mono text-zinc-300">{sys.emailSupport}</span>
+            </div>
+
+            <div className="p-2.5 rounded-md bg-white/[0.02] border border-white/[0.04] flex items-center justify-between">
+              <span className="text-zinc-400">Companies House Reg</span>
+              <span className="font-mono text-zinc-300">{sys.companyNumber}</span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Admin Profile & Password Change */}
-        <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4 lg:col-span-2">
-          <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-white font-bold text-base">
-            <Lock className="w-5 h-5 text-sky-400" />
-            <span>Admin Account Credentials</span>
+      {/* Admin Credentials & Password Change */}
+      <div className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] max-w-xl space-y-3">
+        <div className="flex items-center gap-2 pb-2.5 border-b border-white/[0.06] text-xs font-mono uppercase tracking-wider text-zinc-300">
+          <Lock className="w-3.5 h-3.5 text-zinc-400" />
+          <span>Access Credentials</span>
+        </div>
+
+        {passwordStatus && (
+          <div
+            className={`p-2.5 rounded-md text-xs font-medium ${
+              passwordStatus.success
+                ? "bg-emerald-950/40 text-emerald-300 border border-emerald-800/40"
+                : "bg-rose-950/40 text-rose-300 border border-rose-800/40"
+            }`}
+          >
+            {passwordStatus.message}
+          </div>
+        )}
+
+        <form onSubmit={handleUpdateProfile} className="space-y-3">
+          <div>
+            <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+              Admin Name
+            </label>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full py-1.5 px-2.5 bg-zinc-900 border border-white/[0.08] rounded-md text-xs text-zinc-100 focus:border-zinc-500 focus:outline-none"
+            />
           </div>
 
-          {passwordStatus && (
-            <div
-              className={`p-3.5 rounded-xl text-xs font-semibold flex items-center gap-2 ${
-                passwordStatus.success
-                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                  : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-              }`}
-            >
-              {passwordStatus.success ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-              {passwordStatus.message}
-            </div>
-          )}
+          <div>
+            <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+              Account Email
+            </label>
+            <input
+              type="email"
+              disabled
+              value={admin.email || ""}
+              className="w-full py-1.5 px-2.5 bg-zinc-950 border border-white/[0.04] rounded-md text-xs text-zinc-500 cursor-not-allowed font-mono"
+            />
+          </div>
 
-          <form onSubmit={handleUpdateProfile} className="space-y-4 max-w-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Display Name
+              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                Current Password
               </label>
               <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
+                type="password"
+                placeholder="••••••••"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="w-full py-1.5 px-2.5 bg-zinc-900 border border-white/[0.08] rounded-md text-xs text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  placeholder="Enter current password"
-                  className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Leave blank to keep same"
-                  className="w-full py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-amber-500"
-                />
-              </div>
+            <div>
+              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                New Password
+              </label>
+              <input
+                type="password"
+                placeholder="Minimum 6 characters"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full py-1.5 px-2.5 bg-zinc-900 border border-white/[0.08] rounded-md text-xs text-zinc-100 placeholder-zinc-500 focus:border-zinc-500 focus:outline-none"
+              />
             </div>
+          </div>
 
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={saving}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition cursor-pointer"
-              >
-                <Save className="w-4 h-4" />
-                {saving ? "Updating..." : "Update Profile"}
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="pt-2 flex justify-end">
+            <button
+              type="submit"
+              disabled={saving}
+              className="px-3 py-1.5 rounded-md bg-amber-400 hover:bg-amber-300 text-zinc-950 font-semibold text-xs shadow-sm transition-colors cursor-pointer disabled:opacity-50"
+            >
+              {saving ? "Saving..." : "Update Credentials"}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

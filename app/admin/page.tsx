@@ -7,13 +7,11 @@ import {
   PoundSterling,
   Car,
   AlertTriangle,
-  ArrowUpRight,
   Clock,
-  MapPin,
   UserCheck,
-  CheckCircle2,
   RefreshCw,
   Phone,
+  ArrowRight,
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
@@ -38,19 +36,17 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     fetchStats();
-    // Auto-refresh every 30 seconds
     const interval = setInterval(fetchStats, 30000);
     return () => clearInterval(interval);
   }, []);
 
   if (loading) {
     return (
-      <div className="py-20 flex flex-col items-center justify-center text-slate-400">
-        <svg className="animate-spin h-8 w-8 text-amber-400 mb-3" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-        </svg>
-        <p className="text-sm font-medium">Loading live dispatch operations...</p>
+      <div className="py-24 flex flex-col items-center justify-center text-zinc-400">
+        <div className="flex items-center gap-2 text-xs font-mono">
+          <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-400" />
+          Loading dispatch data...
+        </div>
       </div>
     );
   }
@@ -68,13 +64,13 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-white/[0.06]">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Dispatch Overview
+          <h1 className="text-xl font-semibold tracking-tight text-zinc-100">
+            Overview
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Real-time fleet monitoring, bookings and revenue
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Daily bookings, live dispatch and revenue summary
           </p>
         </div>
 
@@ -85,15 +81,17 @@ export default function AdminDashboardPage() {
               fetchStats();
             }}
             disabled={refreshing}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-medium text-zinc-300 hover:text-white transition-colors cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-amber-400" : ""}`} />
-            Refresh
+            <RefreshCw
+              className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-amber-400" : ""}`}
+            />
+            <span>Refresh</span>
           </button>
 
           <Link
             href="/admin/bookings?new=true"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/20 transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-amber-400 hover:bg-amber-300 text-zinc-950 font-semibold text-xs shadow-sm transition-colors"
           >
             + Phone Booking
           </Link>
@@ -102,207 +100,212 @@ export default function AdminDashboardPage() {
 
       {/* Unassigned Dispatch Alert */}
       {metrics.needsDriverCount > 0 && (
-        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start sm:items-center justify-between gap-3 text-amber-300">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0">
-              <AlertTriangle className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">
-                {metrics.needsDriverCount} booking{metrics.needsDriverCount > 1 ? "s require" : " requires"} driver assignment!
-              </p>
-              <p className="text-xs text-amber-400/90">
-                Confirm pickup details and assign to owner or driver for dispatch.
-              </p>
-            </div>
+        <div className="p-3.5 rounded-lg bg-amber-950/20 border border-amber-800/40 flex items-center justify-between gap-3 text-amber-200">
+          <div className="flex items-center gap-2.5">
+            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <p className="text-xs font-medium">
+              <span className="font-semibold text-white">
+                {metrics.needsDriverCount} booking{metrics.needsDriverCount > 1 ? "s" : ""}
+              </span>{" "}
+              pending driver assignment.
+            </p>
           </div>
           <Link
             href="/admin/bookings?status=NEEDS_DRIVER"
-            className="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition whitespace-nowrap shrink-0"
+            className="px-2.5 py-1 rounded bg-amber-400 hover:bg-amber-300 text-zinc-950 font-semibold text-[11px] transition-colors whitespace-nowrap"
           >
             View Rides →
           </Link>
         </div>
       )}
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+      {/* KPI Metrics */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Today's Rides */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Today's Bookings</span>
-            <CalendarDays className="w-4 h-4 text-amber-400" />
-          </div>
-          <div className="mt-3">
-            <span className="text-2xl sm:text-3xl font-extrabold text-white">
-              {metrics.todayBookings}
+        <div className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] hover:border-white/[0.12] transition-colors">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+              Today's Bookings
             </span>
+            <CalendarDays className="w-3.5 h-3.5 text-zinc-400" />
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">Scheduled for today</p>
+          <div className="mt-2 text-2xl font-semibold tracking-tight text-zinc-100 font-mono">
+            {metrics.todayBookings}
+          </div>
+          <p className="mt-1 text-[11px] text-zinc-400">Scheduled for today</p>
         </div>
 
         {/* Today's Revenue */}
-        <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 relative overflow-hidden">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Today's Revenue</span>
-            <PoundSterling className="w-4 h-4 text-emerald-400" />
-          </div>
-          <div className="mt-3">
-            <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400">
-              £{metrics.todayRevenue.toFixed(2)}
+        <div className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] hover:border-white/[0.12] transition-colors">
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+              Today's Revenue
             </span>
+            <PoundSterling className="w-3.5 h-3.5 text-zinc-400" />
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">Paid trips today</p>
+          <div className="mt-2 text-2xl font-semibold tracking-tight text-emerald-400 font-mono">
+            £{metrics.todayRevenue.toFixed(2)}
+          </div>
+          <p className="mt-1 text-[11px] text-zinc-400">Paid trips today</p>
         </div>
 
-        {/* Needs Driver */}
+        {/* Unassigned Rides */}
         <Link
           href="/admin/bookings?status=NEEDS_DRIVER"
-          className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group"
+          className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] hover:border-white/[0.12] transition-colors block group"
         >
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Unassigned</span>
-            <AlertTriangle className={`w-4 h-4 ${metrics.needsDriverCount > 0 ? "text-amber-400" : "text-slate-500"} group-hover:scale-110 transition`} />
-          </div>
-          <div className="mt-3">
-            <span className={`text-2xl sm:text-3xl font-extrabold ${metrics.needsDriverCount > 0 ? "text-amber-400" : "text-slate-300"}`}>
-              {metrics.needsDriverCount}
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+              Unassigned
             </span>
+            <AlertTriangle
+              className={`w-3.5 h-3.5 ${
+                metrics.needsDriverCount > 0 ? "text-amber-400" : "text-zinc-400"
+              }`}
+            />
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">Pending driver assignment</p>
+          <div
+            className={`mt-2 text-2xl font-semibold tracking-tight font-mono ${
+              metrics.needsDriverCount > 0 ? "text-amber-300" : "text-zinc-100"
+            }`}
+          >
+            {metrics.needsDriverCount}
+          </div>
+          <p className="mt-1 text-[11px] text-zinc-400">Pending driver dispatch</p>
         </Link>
 
         {/* Active Fleet */}
         <Link
           href="/admin/drivers"
-          className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group"
+          className="p-4 rounded-lg bg-[#121215] border border-white/[0.06] hover:border-white/[0.12] transition-colors block group"
         >
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Active Drivers</span>
-            <Car className="w-4 h-4 text-sky-400 group-hover:scale-110 transition" />
-          </div>
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-extrabold text-white">
-              {metrics.activeDriversCount}
+          <div className="flex items-center justify-between text-zinc-400">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400">
+              Active Driver
             </span>
-            <span className="text-xs text-amber-400 font-medium">
-              {metrics.activeDriversCount === 1 ? "Owner" : "Drivers"}
-            </span>
+            <Car className="w-3.5 h-3.5 text-zinc-400" />
           </div>
-          <p className="mt-1 text-[11px] text-slate-400">
-            {metrics.activeDriversCount === 1 ? "Owner-operator active" : "Registered fleet drivers"}
+          <div className="mt-2 text-2xl font-semibold tracking-tight text-zinc-100 font-mono">
+            {metrics.activeDriversCount}
+          </div>
+          <p className="mt-1 text-[11px] text-zinc-400">
+            {metrics.activeDriversCount === 1 ? "Owner-operator active" : "Fleet registered"}
           </p>
         </Link>
       </div>
 
-      {/* Recent Bookings Section */}
-      <div className="rounded-2xl bg-slate-900/90 border border-slate-800 overflow-hidden shadow-xl">
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+      {/* Recent Bookings Table */}
+      <div className="rounded-lg bg-[#121215] border border-white/[0.06] overflow-hidden">
+        <div className="px-4 py-3 border-b border-white/[0.06] bg-white/[0.02] flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-white">Recent Bookings & Rides</h2>
-            <p className="text-xs text-slate-400">Latest online and phone reservations</p>
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
+              Recent Reservations
+            </h2>
+            <p className="text-[11px] text-zinc-400 mt-0.5">
+              Latest customer bookings from website and phone
+            </p>
           </div>
           <Link
             href="/admin/bookings"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-amber-400 hover:text-amber-300 transition"
+            className="text-xs font-medium text-amber-400 hover:text-amber-300 inline-flex items-center gap-1 transition-colors"
           >
-            View All ({metrics.totalBookings})
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <span>View All ({metrics.totalBookings})</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {recent.length === 0 ? (
-          <div className="p-12 text-center text-slate-500">
-            <p className="text-sm">No bookings recorded yet.</p>
+          <div className="p-12 text-center text-zinc-400 text-xs">
+            No bookings recorded yet.
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-950/60 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800/80">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-white/[0.02] border-b border-white/[0.06] text-[10px] font-mono uppercase tracking-wider text-zinc-400">
                 <tr>
-                  <th className="py-3 px-4 font-semibold">Ref</th>
-                  <th className="py-3 px-4 font-semibold">Passenger</th>
-                  <th className="py-3 px-4 font-semibold">Pickup / Dropoff</th>
-                  <th className="py-3 px-4 font-semibold">Date & Time</th>
-                  <th className="py-3 px-4 font-semibold">Driver</th>
-                  <th className="py-3 px-4 font-semibold">Fare</th>
-                  <th className="py-3 px-4 font-semibold">Status</th>
-                  <th className="py-3 px-4 font-semibold text-right">Action</th>
+                  <th className="py-2.5 px-4 font-medium">Ref</th>
+                  <th className="py-2.5 px-4 font-medium">Passenger</th>
+                  <th className="py-2.5 px-4 font-medium">Route</th>
+                  <th className="py-2.5 px-4 font-medium">Date & Time</th>
+                  <th className="py-2.5 px-4 font-medium">Assigned</th>
+                  <th className="py-2.5 px-4 font-medium">Fare</th>
+                  <th className="py-2.5 px-4 font-medium">Status</th>
+                  <th className="py-2.5 px-4 font-medium text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-300">
-                {recent.map((b: any) => {
-                  const isUnassigned = !b.driver;
-                  return (
-                    <tr key={b.id} className="hover:bg-slate-800/30 transition">
-                      <td className="py-3.5 px-4 font-mono font-semibold text-amber-400 text-xs">
-                        {b.bookingReference}
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <div className="font-semibold text-white">{b.customerName}</div>
-                        <a href={`tel:${b.customerPhone}`} className="text-[11px] text-slate-400 hover:text-amber-300 flex items-center gap-1 mt-0.5">
-                          <Phone className="w-3 h-3 text-slate-500" />
-                          {b.customerPhone}
-                        </a>
-                      </td>
-                      <td className="py-3.5 px-4 max-w-xs truncate">
-                        <div className="text-white truncate flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-                          {b.pickupAddress}
-                        </div>
-                        <div className="text-slate-400 text-[11px] truncate flex items-center gap-1 mt-0.5">
-                          <span className="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>
-                          {b.dropoffAddress}
-                        </div>
-                      </td>
-                      <td className="py-3.5 px-4 whitespace-nowrap">
-                        <div className="text-white font-medium">{b.pickupDate}</div>
-                        <div className="text-slate-400 text-[11px] flex items-center gap-1 mt-0.5">
-                          <Clock className="w-3 h-3 text-slate-500" />
-                          {b.pickupTime}
-                        </div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        {b.driver ? (
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white">
-                            <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
-                            <span>{b.driver.callsign || b.driver.name}</span>
-                          </div>
-                        ) : (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                            Unassigned
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-4 font-bold text-white whitespace-nowrap">
-                        £{Number(b.price).toFixed(2)}
-                      </td>
-                      <td className="py-3.5 px-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold ${
-                            b.status === "CONFIRMED"
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              : b.status === "DISPATCHED"
-                              ? "bg-sky-500/10 text-sky-400 border border-sky-500/20"
-                              : b.status === "COMPLETED"
-                              ? "bg-slate-800 text-slate-300"
-                              : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                          }`}
-                        >
-                          {b.status}
+              <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                {recent.map((b: any) => (
+                  <tr key={b.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-4 font-mono text-[11px] font-medium text-zinc-200">
+                      {b.bookingReference}
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-medium text-zinc-100">{b.customerName}</div>
+                      <a
+                        href={`tel:${b.customerPhone}`}
+                        className="text-[11px] font-mono text-zinc-400 hover:text-zinc-200 flex items-center gap-1 mt-0.5"
+                      >
+                        <Phone className="w-3 h-3 text-zinc-400" />
+                        {b.customerPhone}
+                      </a>
+                    </td>
+                    <td className="py-3 px-4 max-w-xs truncate">
+                      <div className="text-zinc-200 truncate flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+                        <span className="truncate">{b.pickupAddress}</span>
+                      </div>
+                      <div className="text-zinc-400 text-[11px] truncate flex items-center gap-1.5 mt-0.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0"></span>
+                        <span className="truncate">{b.dropoffAddress}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <div className="text-zinc-200 font-mono text-[11px]">{b.pickupDate}</div>
+                      <div className="text-zinc-400 text-[11px] font-mono flex items-center gap-1 mt-0.5">
+                        <Clock className="w-3 h-3 text-zinc-400" />
+                        {b.pickupTime}
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      {b.driver ? (
+                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-white/[0.04] border border-white/[0.06] text-zinc-200 font-mono">
+                          <UserCheck className="w-3 h-3 text-emerald-400" />
+                          {b.driver.callsign || b.driver.name}
                         </span>
-                      </td>
-                      <td className="py-3.5 px-4 text-right">
-                        <Link
-                          href={`/admin/bookings?selected=${b.id}`}
-                          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
-                        >
-                          Manage
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
+                      ) : (
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-amber-950/40 text-amber-300 border border-amber-800/40">
+                          Unassigned
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-3 px-4 font-mono font-semibold text-zinc-100 whitespace-nowrap">
+                      £{Number(b.price).toFixed(2)}
+                    </td>
+                    <td className="py-3 px-4 whitespace-nowrap">
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium ${
+                          b.status === "CONFIRMED"
+                            ? "bg-emerald-950/50 text-emerald-400 border border-emerald-800/40"
+                            : b.status === "DISPATCHED"
+                            ? "bg-sky-950/50 text-sky-400 border border-sky-800/40"
+                            : b.status === "COMPLETED"
+                            ? "bg-white/[0.04] text-zinc-400 border border-white/[0.06]"
+                            : "bg-amber-950/50 text-amber-300 border border-amber-800/40"
+                        }`}
+                      >
+                        {b.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-right whitespace-nowrap">
+                      <Link
+                        href={`/admin/bookings?selected=${b.id}`}
+                        className="px-2.5 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium text-zinc-300 hover:text-white border border-white/[0.08] transition-colors"
+                      >
+                        Manage
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
