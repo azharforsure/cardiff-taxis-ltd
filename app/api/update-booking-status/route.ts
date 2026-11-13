@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { updateBookingStatus } from "../../../src/lib/bookings-store";
+import { updateBookingStatusAsync } from "../../../src/lib/bookings-store";
 
 export async function POST(req: Request) {
   try {
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing ref or status" }, { status: 400 });
     }
 
-    const updated = updateBookingStatus(ref, status, { transactionId, emailSent });
+    const updated = await updateBookingStatusAsync(ref, status, { transactionId, emailSent });
     return NextResponse.json({ success: true, booking: updated });
   } catch (err: any) {
     console.error("Error updating booking status:", err);

@@ -54,8 +54,9 @@ export function getAllBookings(): BookingRecord[] {
   }
 }
 
-export function saveBooking(booking: BookingRecord): void {
+export async function saveBookingAsync(booking: BookingRecord): Promise<void> {
   try {
+    // 1. File cache update
     ensureDirectoryExists();
     const existing = getAllBookings();
     const index = existing.findIndex((b) => b.ref === booking.ref);
@@ -76,75 +77,78 @@ export function saveBooking(booking: BookingRecord): void {
     const trimmed = existing.slice(0, 200);
     fs.writeFileSync(DATA_FILE, JSON.stringify(trimmed, null, 2), "utf-8");
 
-    // Also persist to MySQL via Prisma
-    prisma.booking
-      .upsert({
-        where: { bookingReference: booking.ref },
-        update: {
-          customerName: booking.name,
-          customerEmail: booking.email,
-          customerPhone: booking.phone,
-          pickupAddress: booking.pickup,
-          dropoffAddress: booking.dropoff,
-          pickupDate: booking.date,
-          pickupTime: booking.time,
-          isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
-          returnDate: booking.returnDate || null,
-          returnTime: booking.returnTime || null,
-          tripType: booking.journeyType,
-          vehicleType: booking.vehicle,
-          passengers: booking.passengers || 1,
-          luggage: parseInt(booking.luggage, 10) || 1,
-          price: booking.price,
-          flightNumber: booking.flightNumber || null,
-          status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
-          paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
-          paymentId: booking.transactionId || null,
-        },
-        create: {
-          bookingReference: booking.ref,
-          customerName: booking.name,
-          customerEmail: booking.email,
-          customerPhone: booking.phone,
-          pickupAddress: booking.pickup,
-          dropoffAddress: booking.dropoff,
-          pickupDate: booking.date,
-          pickupTime: booking.time,
-          isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
-          returnDate: booking.returnDate || null,
-          returnTime: booking.returnTime || null,
-          tripType: booking.journeyType,
-          vehicleType: booking.vehicle,
-          passengers: booking.passengers || 1,
-          luggage: parseInt(booking.luggage, 10) || 1,
-          price: booking.price,
-          flightNumber: booking.flightNumber || null,
-          source: "ONLINE",
-          status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
-          paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
-          paymentMethod: "sumup",
-          paymentId: booking.transactionId || null,
-          createdAt: booking.createdAt ? new Date(booking.createdAt) : new Date(),
-        },
-      })
-      .catch((err) => {
-        console.warn("Prisma background booking sync notice:", err.message);
-      });
+    // 2. Direct MySQL persistence via Prisma (awaited so it is guaranteed)
+    await prisma.booking.upsert({
+      where: { bookingReference: booking.ref },
+      update: {
+        customerName: booking.name,
+        customerEmail: booking.email,
+        customerPhone: booking.phone,
+        pickupAddress: booking.pickup,
+        dropoffAddress: booking.dropoff,
+        pickupDate: booking.date,
+        pickupTime: booking.time,
+        isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
+        returnDate: booking.returnDate || null,
+        returnTime: booking.returnTime || null,
+        tripType: booking.journeyType,
+        vehicleType: booking.vehicle,
+        passengers: booking.passengers || 1,
+        luggage: parseInt(booking.luggage, 10) || 1,
+        price: booking.price,
+        flightNumber: booking.flightNumber || null,
+        status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
+        paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
+        paymentId: booking.transactionId || null,
+      },
+      create: {
+        bookingReference: booking.ref,
+        customerName: booking.name,
+        customerEmail: booking.email,
+        customerPhone: booking.phone,
+        pickupAddress: booking.pickup,
+        dropoffAddress: booking.dropoff,
+        pickupDate: booking.date,
+        pickupTime: booking.time,
+        isReturn: Boolean(booking.returnDate || booking.journeyType === "return"),
+        returnDate: booking.returnDate || null,
+        returnTime: booking.returnTime || null,
+        tripType: booking.journeyType,
+        vehicleType: booking.vehicle,
+        passengers: booking.passengers || 1,
+        luggage: parseInt(booking.luggage, 10) || 1,
+        price: booking.price,
+        flightNumber: booking.flightNumber || null,
+        source: "ONLINE",
+        status: booking.status === "PAID" ? "CONFIRMED" : "PENDING",
+        paymentStatus: booking.status === "PAID" ? "PAID" : "UNPAID",
+        paymentMethod: "sumup",
+        paymentId: booking.transactionId || null,
+        createdAt: booking.createdAt ? new Date(booking.createdAt) : new Date(),
+      },
+    });
   } catch (err) {
-    console.error("Failed to save booking:", err);
+    console.error("Failed to save booking to database:", err);
   }
 }
 
-export function updateBookingStatus(
+export function saveBooking(booking: BookingRecord): void {
+  saveBookingAsync(booking).catch((err) => {
+    console.error("saveBooking async error:", err);
+  });
+}
+
+export async function updateBookingStatusAsync(
   ref: string,
   status: "PENDING_PAYMENT" | "PAID" | "FAILED",
   meta?: { emailSent?: boolean; transactionId?: string }
-): BookingRecord | null {
+): Promise<BookingRecord | null> {
   try {
     ensureDirectoryExists();
     const existing = getAllBookings();
     const index = existing.findIndex((b) => b.ref === ref);
 
+    let updatedRecord: BookingRecord | null = null;
     if (index >= 0) {
       existing[index].status = status;
       if (meta?.emailSent !== undefined) {
@@ -155,27 +159,38 @@ export function updateBookingStatus(
       }
       existing[index].updatedAt = new Date().toISOString();
       fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2), "utf-8");
-
-      prisma.booking
-        .updateMany({
-          where: { bookingReference: ref },
-          data: {
-            status: status === "PAID" ? "CONFIRMED" : status === "FAILED" ? "CANCELLED" : "PENDING",
-            paymentStatus: status === "PAID" ? "PAID" : "UNPAID",
-            paymentId: meta?.transactionId || undefined,
-          },
-        })
-        .catch((err) => {
-          console.warn("Prisma background update notice:", err.message);
-        });
-
-      return existing[index];
+      updatedRecord = existing[index];
     }
-    return null;
+
+    // Await database status update
+    await prisma.booking.updateMany({
+      where: { bookingReference: ref },
+      data: {
+        status: status === "PAID" ? "CONFIRMED" : status === "FAILED" ? "CANCELLED" : "PENDING",
+        paymentStatus: status === "PAID" ? "PAID" : "UNPAID",
+        paymentId: meta?.transactionId || undefined,
+      },
+    });
+
+    return updatedRecord;
   } catch (err) {
-    console.error("Failed to update booking status:", err);
+    console.error("Failed to update booking status in database:", err);
     return null;
   }
+}
+
+export function updateBookingStatus(
+  ref: string,
+  status: "PENDING_PAYMENT" | "PAID" | "FAILED",
+  meta?: { emailSent?: boolean; transactionId?: string }
+): BookingRecord | null {
+  updateBookingStatusAsync(ref, status, meta).catch((err) => {
+    console.error("updateBookingStatus async error:", err);
+  });
+
+  const existing = getAllBookings();
+  const index = existing.findIndex((b) => b.ref === ref);
+  return index >= 0 ? existing[index] : null;
 }
 
 export function getBooking(ref: string): BookingRecord | null {

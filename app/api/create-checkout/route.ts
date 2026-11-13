@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { saveBooking } from "../../../src/lib/bookings-store";
+import { saveBookingAsync } from "../../../src/lib/bookings-store";
 
 export async function POST(req: Request) {
   try {
@@ -11,10 +11,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
 
-    // Persist full booking details immediately on server
+    // Persist full booking details immediately on server & MySQL
     if (bookingData && checkoutReference) {
       try {
-        saveBooking({
+        await saveBookingAsync({
           ...bookingData,
           ref: checkoutReference,
           price: parseFloat(amount.toFixed(2)),

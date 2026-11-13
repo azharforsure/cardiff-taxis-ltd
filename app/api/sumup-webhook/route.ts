@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllBookings, updateBookingStatus } from "../../../src/lib/bookings-store";
+import { getAllBookings, updateBookingStatusAsync } from "../../../src/lib/bookings-store";
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       );
 
       if (booking) {
-        updateBookingStatus(booking.ref, "PAID", { transactionId: checkoutId });
+        await updateBookingStatusAsync(booking.ref, "PAID", { transactionId: checkoutId });
 
         // If email hasn't been sent yet, trigger server-side dispatch
         if (!booking.emailSent && process.env.RESEND_API_KEY) {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
             }),
           }).catch((e) => console.error("Webhook email dispatch error:", e));
 
-          updateBookingStatus(booking.ref, "PAID", { emailSent: true });
+          await updateBookingStatusAsync(booking.ref, "PAID", { emailSent: true });
         }
       }
     }

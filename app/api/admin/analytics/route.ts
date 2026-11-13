@@ -28,7 +28,7 @@ export async function GET() {
       ["CONFIRMED", "PENDING", "DISPATCHED"].includes(b.status)
     ).length;
 
-    // Vehicle breakdown
+    // 1. Vehicle breakdown
     const vehicleBreakdown: Record<string, { count: number; revenue: number }> =
       {};
     for (const b of allBookings) {
@@ -40,7 +40,7 @@ export async function GET() {
       }
     }
 
-    // Top routes
+    // 2. Top routes
     const routeBreakdown: Record<string, { count: number; revenue: number }> =
       {};
     for (const b of allBookings) {
@@ -78,6 +78,66 @@ export async function GET() {
       }
     }
 
+    // 3. Daily timeline (last 7-14 days series for the visual revenue chart)
+    const daysMap: Record<string, { date: string; label: string; revenue: number; bookings: number }> = {};
+    const today = new Date();
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const iso = d.toISOString().split("T")[0];
+      const label = d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+      daysMap[iso] = { date: iso, label, revenue: 0, bookings: 0 };
+    }
+
+    for (const b of allBookings) {
+      const dateKey = b.pickupDate;
+      if (daysMap[dateKey]) {
+        daysMap[dateKey].bookings += 1;
+        if (b.paymentStatus === "PAID") {
+          daysMap[dateKey].revenue += b.price || 0;
+        }
+      } else {
+        // Fallback for earlier dates in range
+        const d = new Date(b.createdAt);
+        const iso = d.toISOString().split("T")[0];
+        if (daysMap[iso]) {
+          daysMap[iso].bookings += 1;
+          if (b.paymentStatus === "PAID") {
+            daysMap[iso].revenue += b.price || 0;
+          }
+        }
+      }
+    }
+
+    const timeline = Object.values(daysMap);
+
+    // 4. Time of Day Distribution
+    const timeSlots = [
+      { name: "Early Morning (04:00 - 08:00)", count: 0, revenue: 0 },
+      { name: "Morning Peak (08:00 - 12:00)", count: 0, revenue: 0 },
+      { name: "Afternoon (12:00 - 17:00)", count: 0, revenue: 0 },
+      { name: "Evening & Night (17:00 - 04:00)", count: 0, revenue: 0 },
+    ];
+
+    for (const b of allBookings) {
+      const time = b.pickupTime || "12:00";
+      const hour = parseInt(time.split(":")[0], 10) || 12;
+
+      if (hour >= 4 && hour < 8) {
+        timeSlots[0].count += 1;
+        if (b.paymentStatus === "PAID") timeSlots[0].revenue += b.price || 0;
+      } else if (hour >= 8 && hour < 12) {
+        timeSlots[1].count += 1;
+        if (b.paymentStatus === "PAID") timeSlots[1].revenue += b.price || 0;
+      } else if (hour >= 12 && hour < 17) {
+        timeSlots[2].count += 1;
+        if (b.paymentStatus === "PAID") timeSlots[2].revenue += b.price || 0;
+      } else {
+        timeSlots[3].count += 1;
+        if (b.paymentStatus === "PAID") timeSlots[3].revenue += b.price || 0;
+      }
+    }
+
     return NextResponse.json({
       metrics: {
         totalBookings,
@@ -86,6 +146,8 @@ export async function GET() {
         completedCount,
         upcomingCount,
       },
+      timeline,
+      timeSlots,
       vehicles: Object.entries(vehicleBreakdown).map(([name, data]) => ({
         name,
         count: data.count,
