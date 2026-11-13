@@ -494,3 +494,21 @@ also reduce the sidebar width.
 4. **Build & Live Verification**:
    - Production build compiled successfully across all 33 routes with zero errors.
    - Pushed commit `d60acf6` to GitHub `main` for automated deployment to Hostinger.
+
+
+## Turn - 2026-11-13 (Rebalance Sidebar Width to 240px and Restore Standard Desktop Scale)
+
+### Operator
+i think we extra reduced the sidebar width and everything in it now looks small.
+
+### Antigravity
+1. **Rebalanced Sidebar Width (`md:w-60` / 240px)**:
+   - Expanded the sidebar from the over-constricted 208px (`md:w-52`) to a balanced 240px (`md:w-60`), providing a 16px reduction from the original 256px without pinching content.
+2. **Restored Standard Desktop Typography & Sizing**:
+   - Restored navigation items to standard `text-sm font-medium` (14px) with `py-2.5 px-3` and `gap-3` click targets (replacing tiny `text-xs`).
+   - Restored the brand logo to crisp full height (`h-8 w-auto`) with proper margins.
+   - Restored standard font sizing on the user profile card (`text-sm` name, `text-xs` email, `w-4 h-4` logout button) and quick utility links.
+   - Preserved maximum available width for main analytics charts and tables while ensuring sidebar items are readable and comfortable.
+3. **Build & Live Verification**:
+   - Production build compiled cleanly with 0 errors across all 33 routes.
+   - Pushed commit `9a759d7` to GitHub `main` for automated Hostinger deployment.
