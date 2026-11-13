@@ -2,13 +2,17 @@ import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/admin-auth";
 import prisma from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(req: Request) {
   const admin = await getCurrentAdmin();
   if (!admin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
+    const { searchParams } = new URL(req.url);
+    const daysParam = parseInt(searchParams.get("days") || "14", 10);
+    const daysCount = Math.min(Math.max(daysParam, 7), 60);
+
     const allBookings = await prisma.booking.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -78,14 +82,20 @@ export async function GET() {
       }
     }
 
-    // 3. Daily timeline (last 7-14 days series for the visual revenue chart)
-    const daysMap: Record<string, { date: string; label: string; revenue: number; bookings: number }> = {};
+    // 3. Daily timeline for requested daysCount
+    const daysMap: Record<
+      string,
+      { date: string; label: string; revenue: number; bookings: number }
+    > = {};
     const today = new Date();
-    for (let i = 13; i >= 0; i--) {
+    for (let i = daysCount - 1; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(today.getDate() - i);
       const iso = d.toISOString().split("T")[0];
-      const label = d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+      const label = d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+      });
       daysMap[iso] = { date: iso, label, revenue: 0, bookings: 0 };
     }
 
@@ -97,7 +107,6 @@ export async function GET() {
           daysMap[dateKey].revenue += b.price || 0;
         }
       } else {
-        // Fallback for earlier dates in range
         const d = new Date(b.createdAt);
         const iso = d.toISOString().split("T")[0];
         if (daysMap[iso]) {
